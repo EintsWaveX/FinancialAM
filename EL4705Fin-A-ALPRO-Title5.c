@@ -1,10 +1,10 @@
 #include <assert.h>     // Assertion for truth testing
+#include <conio.h>      // Windows handling compatibility
 #include <ctype.h>      // Characters typing methods
 #include <errno.h>      // Error handling
 #include <fenv.h>       // File environment handling
 #include <float.h>      // Float conversion (more spesific)
 #include <limits.h>     // Limitations per data types
-#include <locale.h>     // Local variables handling (more spesific)
 #include <math.h>       // Mathematical functions
 #include <stdbool.h>    // Standard boolean values handling
 #include <stddef.h>     // Standard definitions for certain types
@@ -19,13 +19,66 @@
 #include <wctype.h>     // Wide character typing method (String type conversion)
 #include <windows.h>    // Windows header file (apps and notifications)
 
-#define BUFSIZE10   1024
-#define BUFSIZE11   2048
-#define BUFSIZE12   4096
-#define BUFSIZE13   8192
-#define BUFSIZE14   16384
-#define BUFSIZE15   32768
-#define BUFSIZE16   65536
+/*
+DEFINE::BUFFERSIZE
+Usage:  Used for setting a certain spesific buffer for
+        spesific variables that might have to work with
+        more than just a basic variables (pointers,
+        structs, and more).
+*/
+#define BUFSIZE10   1024        // 2^10 buffer size (min. defined)
+#define BUFSIZE11   2048        // 2^11 buffer size
+#define BUFSIZE12   4096        // 2^12 buffer size
+#define BUFSIZE13   8192        // 2^13 buffer size
+#define BUFSIZE14   16384       // 2^14 buffer size
+#define BUFSIZE15   32768       // 2^15 buffer size
+#define BUFSIZE16   65536       // 2^16 buffer size (max. defined)
+
+/*
+DEFINE::ARROWKEYWORD
+Usage:  For more safe-choice input session, so the user
+        can't make any rousy inputs that can interrupt
+        the whole core of the app functionality by some
+        unexpected errors or bugs.
+*/
+#define KEY_UP      72
+#define KEY_DOWN    80
+#define KEY_RIGHT   77
+#define KEY_LEFT    75
+#define KEY_ENTER   '\r'
+
+/*
+DEFINE::ANSICOLORFONTMODE
+Usage:  Creating a spesific colored font to highlight the
+        ARROWKEYWORD defining session for helping the user
+        to know spesifically the choice they're on while
+        in the restricted input mode.
+*/
+#define ANSI_COLOR_RESET           "\x1b[0;0m"
+#define ANSI_COLOR_DARKGRAY        "\x1b[0;30m"
+#define ANSI_COLOR_RED             "\x1b[0;31m"
+#define ANSI_COLOR_GREEN           "\x1b[0;32m"
+#define ANSI_COLOR_YELLOW          "\x1b[0;33m"
+#define ANSI_COLOR_BLUE            "\x1b[0;34m"
+#define ANSI_COLOR_MAGENTA         "\x1b[0;35m"
+#define ANSI_COLOR_CYAN            "\x1b[0;36m"
+#define ANSI_COLOR_WHITE           "\x1b[0;37m"
+#define ANSI_COLOR_LIGHTRESET      "\x1b[1;0m"
+#define ANSI_COLOR_LIGHTGRAY       "\x1b[1;30m"
+#define ANSI_COLOR_LIGHTRED        "\x1b[1;31m"
+#define ANSI_COLOR_LIGHTGREEN      "\x1b[1;32m"
+#define ANSI_COLOR_LIGHTYELLOW     "\x1b[1;33m"
+#define ANSI_COLOR_LIGHTBLUE       "\x1b[1;34m"
+#define ANSI_COLOR_LIGHTMAGENTA    "\x1b[1;35m"
+#define ANSI_COLOR_LIGHTCYAN       "\x1b[1;36m"
+#define ANSI_COLOR_LIGHTWHITE      "\x1b[1;37m"
+#define ANSI_STYLE_BOLD            "\x0b[1m"
+#define ANSI_STYLE_FAINT           "\x0b[2m"
+#define ANSI_STYLE_ITALIC          "\x0b[3m"
+#define ANSI_STYLE_UNDERLINE       "\x0b[4m"
+#define ANSI_STYLE_BLINK           "\x0b[5m"
+#define ANSI_STYLE_NEGATIVE        "\x0b[7m"
+#define ANSI_STYLE_CROSSED         "\x0b[9m"
 
 // ClearScreen() method, works for both Windows and UNIX.
 void ClearScreen(void) {
@@ -54,11 +107,12 @@ void ErrorHandling(const char* ErrorType, const char* ErrorSource) {
 /* PROTOTYPE FUNCTIONS DEFINITION */
 // Important Starting Features (CORE FEATURES)
 // Core features available: 5
-void MainMenu(void);
-void HelpMenu(void);
-void EncryptTxtFile(const char*, const char*, int, bool);
-void DecryptTxtFile(const char*, bool, int, char ReadDecryptedKeyString[BUFSIZE16]);
-char *TrimWhiteSpaces(char*);
+void    MainMenu(void);
+void    HelpMenu(void);
+void    EncryptTxtFile(const char*, const char*, int, bool);
+void    DecryptTxtFile(const char*, bool, int, char ReadDecryptedKeyString[BUFSIZE16]);
+int     ArrowKeyChoiceDialog(const char*);
+char    *TrimWhiteSpaces(char*);
 
 // Notifications Features (CORE FEATURES)
 // Notification features available: 4
@@ -277,6 +331,65 @@ void DecryptTxtFile(const char* DestinationTextFile, bool ReadDecryptedFile, int
     }
 }
 
+int ArrowKeyChoiceDialog(const char* AppModeMenu) {
+    if (strcmp(AppModeMenu, "Main Menu") == 0) {
+        int Selected = 0;
+        int AvailableOptions = 3;
+        bool Selecting = true, Updated = false, FirstRun = true;
+        char AKDC;
+
+        while (Selecting) {
+            if (!FirstRun) {
+                if ((Selected + 1) == 1) {
+                    puts("Available Options:\n" ANSI_COLOR_BLUE"  1. Option 1\n"ANSI_COLOR_RESET  "  2. Option 2\n  3. Option 3\n");
+                    printf("Which one is your preferable input: ");
+                } else if ((Selected + 1) == 2) {
+                    puts("Available Options:\n  1. Option 1\n" ANSI_COLOR_BLUE"  2. Option 2\n" ANSI_COLOR_RESET"  3. Option 3\n");
+                    printf("Which one is your preferable input: ");
+                } else if ((Selected + 1) == 3) {
+                    puts("Available Options:\n  1. Option 1\n  2. Option 2\n" ANSI_COLOR_BLUE"  3. Option 3\n"ANSI_COLOR_RESET);
+                    printf("Which one is your preferable input: ");
+                }
+            } else {
+                FirstRun = false;
+                printf(ANSI_COLOR_GREEN"INFO: Option %d is selected by the user.\n"ANSI_COLOR_RESET, (Selected + 1));
+                puts("Available Options:\n" ANSI_COLOR_BLUE"  1. Option 1\n"ANSI_COLOR_RESET  "  2. Option 2\n  3. Option 3\n");
+                printf("Which one is your preferable input: ");
+            }
+
+            switch (AKDC = _getch()) {
+                case KEY_UP:
+                    if (Selected > 0 && Selected < AvailableOptions) {
+                        --Selected; Updated = true;
+                    } else if (Selected <= 0) {
+                        Selected = (AvailableOptions - 1); Updated = true;
+                    } break;
+                case KEY_DOWN:
+                    if (Selected >= 0 && Selected < AvailableOptions - 1) {
+                        ++Selected; Updated = true;
+                    } else if (Selected >= AvailableOptions - 1) {
+                        Selected = 0; Updated = true;
+                    } break;
+                case KEY_ENTER:
+                    Selecting = false; Updated = true;
+                    break;
+                    
+                case 49: Selected = 0; Updated = true; break;
+                case 50: Selected = 1; Updated = true; break;
+                case 51: Selected = 2; Updated = true; break;
+                default: break;
+            } ClearScreen();
+
+            if (Updated) {
+                printf(ANSI_COLOR_GREEN"INFO: Option %d is selected by the user.\n"ANSI_COLOR_RESET, (Selected + 1));
+                Updated = false;
+            } else {
+                printf(ANSI_COLOR_YELLOW"INFO: Option %d is STILL being selected by the user.\n"ANSI_COLOR_RESET, (Selected + 1));
+            }
+        } printf(ANSI_COLOR_WHITE"INFO: Final arrow input selection: Option %d.\n"ANSI_COLOR_RESET, (Selected + 1));
+    }
+}
+
 /* STARTING THE DECLARATIONS: RANDOM NUMBER GENERATOR */
 /* Initialize functions and classes (if needed) */
 
@@ -315,7 +428,8 @@ int main(int argc, char **argv) {
     
     /* Need more works to be done, 'source.txt' may be a problem */;
     EncryptTxtFile("Source.txt", "Destination.txt", EncryptionKey, false);
-    DecryptTxtFile("Destination.txt", false, EncryptionKey, "Destination.txt > E-mail, Password, Encryption Key");
+    DecryptTxtFile("Destination.txt", false, EncryptionKey, "Destination.txt > arif");
+    ArrowKeyChoiceDialog("Main Menu");
     return 0;
 }
 
