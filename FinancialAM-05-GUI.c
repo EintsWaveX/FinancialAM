@@ -598,8 +598,8 @@ int main(int argc, char **argv) {
     ClearScreen();
     puts("Hello, World!");
     
-    if (access("RegisteredAccountData.txt", F_OK) != 0) { LanguageMenu(); }
-    else { AccountLoginMenu(); }
+    // if (access("RegisteredAccountData.txt", F_OK) != 0) { LanguageMenu(); }
+    // else { AccountLoginMenu(); }
     
     /* Need more works to be done, 'source.txt' may be a problem */;
     // EncryptTxtFile("Source.txt", "Destination.txt", EncryptionKey, false);
