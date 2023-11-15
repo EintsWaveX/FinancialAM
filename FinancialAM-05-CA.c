@@ -200,6 +200,7 @@ struct MoneytoryGroupingPerCategory {
     char *CashWithdrawal[BUFSIZE10], *CostAndTaxes[BUFSIZE10], *SendToBusiness[BUFSIZE10], *SendToPersonal[BUFSIZE10], *TopUpEWallet[BUFSIZE10], *TopUpCards[BUFSIZE10];
     
     char *UncategorizedByUsers[BUFSIZE10];
+    char *Others[BUFSIZE10];
 } MGPCInputs[BUFSIZE10];
 
 struct BudgetCreationAndMonitoring {
