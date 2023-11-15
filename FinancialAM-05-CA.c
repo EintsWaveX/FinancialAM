@@ -154,6 +154,11 @@ struct AccountLoginMenuInputs {
     char HiddenPasswordShown[BUFSIZE07];
 } ALMInputs[BUFSIZE10];
 
+struct AccountRecoveryMenuInputs {
+    char Email[BUFSIZE07], PhoneNumber[0], Username[BUFSIZE07], Password[BUFSIZE07];
+    char HiddenPasswordShown[BUFSIZE07];
+} ACMInputs[BUFSIZE10];
+
 struct MoneytoryTransactionsRegister {
     char *BankCharge[BUFSIZE10], *BillPayment[BUFSIZE10];
     char *CardRefund[BUFSIZE10], *CardTopUp[BUFSIZE10], *CashWithdrawal[BUFSIZE10], *CurrencyExchange[BUFSIZE10];
@@ -161,14 +166,14 @@ struct MoneytoryTransactionsRegister {
     char *Loan[BUFSIZE10], *Loans[BUFSIZE10];
     char *OutgoingTransfer[BUFSIZE10];
     char *PaymentWithCard[BUFSIZE10], *PrepaidTopUp[BUFSIZE10], *PrincipalPlacement[BUFSIZE10], PrincipalRepayment[BUFSIZE10];
-    char *QRPayment[BUFSIZE10], *QRPaymentRefund[BUFSIZE10],
+    char *QRPayment[BUFSIZE10], *QRPaymentRefund[BUFSIZE10];
     char *Reversal[BUFSIZE10];
     char *SalaryPayroll[BUFSIZE10], *SavingsWithdrawal[BUFSIZE10];
-    char *TaxOnInterest[BUFSIZE10], *TopUpSavingsBalances[BUFSIZE10]; *WalletCashback[BUFSIZE10];
+    char *TaxOnInterest[BUFSIZE10], *TopUpSavingsBalances[BUFSIZE10], *WalletCashback[BUFSIZE10];
 
     char TransactionDate[BUFSIZE07], IncomeOrExpenses[BUFSIZE07], TotalSpentMoney[BUFSIZE07];
     char FinancialUsesCategory[BUFSIZE07], MonthlyTotalBalance[BUFSIZE07], TransactionDescription[BUFSIZE07];
-    char LocalTimeTransactionMade[BUFSIZE07], 
+    char LocalTimeTransactionMade[BUFSIZE07];
 } MTRInputs[BUFSIZE10];
 
 struct MoneytoryGroupingPerCategory {
