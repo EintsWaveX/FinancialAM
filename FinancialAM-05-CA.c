@@ -789,7 +789,7 @@ int main(int argc, char **argv) {
     // QuestionMessageBox_YESNOCANCEL("Question Message: Confirmation on Deletion Over a 'Transactions'.", "We've noticed that you want to delete all currently recorded transactions on:\n\tDate (by month): October 2022,\n\tTotal Recorded Transactions: 87 Transactions.\n\nAre you sure to continue and delete all transactions that happening in October 2022, from the October 1st until 31st October?\n\nNOTE: Anything after the deletions will be PERMANENTLY deleted and NEVER BE ABLE TO BE RECOVERED by any means and such. Please think twice, that you may have to know all the recorded transactions over the past month so you can do the budget monitoring better than before ever was!");
     // ErrorMessageBox_OKCANCEL("Error Message: Default 'Category' Changings Error.", "You may have received this error pop-up message because you've been trying to do some changes on a system's default categories made in this app's core already. Several times before you only get knocked out from the menu, and because now you've been trying so badly to do it so even though you already knew that ALL default variables CANNOT EVER BE CHANGED WHATSOEVER!\n\nPlease keep in mind to not spamming this error messages, because from the first you got this messages within three days will always pop-up this. If you insist, then unfortunately you have to be banned from this menu for a temporary time!");
 
-    // ClearScreen();
+    ClearScreen();
     // puts("Hello, World!");
     
     if (access("RegisteredAccounts.txt", F_OK) != 0) { fflush(stdout); LanguageMenu(); }
@@ -1662,7 +1662,7 @@ void AccountLoginMenu(int ALMSelected) {
     bool ConfirmOrBackALM = false, ALMUpgrade = false;
     char AKDC, MessageID5[BUFSIZE10];
     char FirstName[BUFSIZE07], LastName[BUFSIZE07], Email[BUFSIZE07], PhoneNumber[BUFSIZE07], Username[BUFSIZE07], Password[BUFSIZE07];
-    char *ShowFirstName, *ShowLastName;
+    char *ShowFirstName, *ShowLastName, *ShowEmail, *ShowPhoneNumber, *ShowUsername, *ShowPassword;
 
     if ((LE && LPN && LU && LP) && !ALMUpgrade) { AvailableOptions += 1; ALMUpgrade = true; }
 
@@ -1746,16 +1746,21 @@ void AccountLoginMenu(int ALMSelected) {
                     system(DeleteTempDestinationTxtFile);
 
                     FirstName[strlen(FirstName) - 1] = '\0'; LastName[strlen(LastName) - 1] = '\0';
+                    Email[strlen(Email) - 1] = '\0'; PhoneNumber[strlen(PhoneNumber) - 1] = '\0'; Username[strlen(Username) - 1] = '\0'; Password[strlen(Password) - 1] = '\0';
                     strtok_r(FirstName, ":", &ShowFirstName); ShowFirstName = TrimWhiteSpaces(ShowFirstName);
                     strtok_r(LastName, ":", &ShowLastName); ShowLastName = TrimWhiteSpaces(ShowLastName);
+                    strtok_r(Email, ":", &ShowEmail); ShowEmail = TrimWhiteSpaces(ShowEmail);
+                    strtok_r(PhoneNumber, ":", &ShowPhoneNumber); ShowPhoneNumber = TrimWhiteSpaces(ShowPhoneNumber);
+                    strtok_r(Username, ":", &ShowUsername); ShowUsername = TrimWhiteSpaces(ShowUsername);
+                    strtok_r(Password, ":", &ShowPassword); ShowPassword = TrimWhiteSpaces(ShowPassword);
 
-                    if ((strstr(Email, ALMInputs[GlobalRegisteredAccounts].Email)             != NULL) && \
-                        (strstr(PhoneNumber, ALMInputs[GlobalRegisteredAccounts].PhoneNumber) != NULL) && \
-                        (strstr(Username, ALMInputs[GlobalRegisteredAccounts].Username)       != NULL) && \
-                        (strstr(Password, ALMInputs[GlobalRegisteredAccounts].Password)       != NULL)) {
+                    if ((strcmp(ShowEmail, ALMInputs[GlobalRegisteredAccounts].Email)             == 0) && \
+                        (strcmp(ShowPhoneNumber, ALMInputs[GlobalRegisteredAccounts].PhoneNumber) == 0) && \
+                        (strcmp(ShowUsername, ALMInputs[GlobalRegisteredAccounts].Username)       == 0) && \
+                        (strcmp(ShowPassword, ALMInputs[GlobalRegisteredAccounts].Password)       == 0)) {
                             puts(ANSI_COLOR_LIGHTBLUE"\n\tNote: You've successfully logged into your profile account!"ANSI_COLOR_RESET);
-                            puts(ANSI_COLOR_LIGHTBLUE"\t      Welcome to: Personal Financial Management System [CLI-Win32] Application!"ANSI_COLOR_RESET);
-                            printf(ANSI_COLOR_LIGHTGREEN"\n\tLogged in as: %s %s.\n", ShowFirstName, ShowLastName);
+                            puts(ANSI_COLOR_LIGHTBLUE"\tWelcome to: Personal Financial Management System [CLI-Win32] Application!"ANSI_COLOR_RESET);
+                            printf(ANSI_COLOR_LIGHTGREEN"\n\tLogged in as: %s %s.\n\t              "ANSI_COLOR_RESET ANSI_COLOR_GREEN"(Account No. %d)\n\n"ANSI_COLOR_RESET, ShowFirstName, ShowLastName, (GlobalRegisteredAccounts + 1));
                             puts(ANSI_COLOR_LIGHTMAGENTA"\tNow you may proceed to the main menu by pressing the [ENTER] button key on \n\tyour keyboard right away."ANSI_COLOR_RESET);
                             getchar();
                             MainMenu(0);
@@ -1845,16 +1850,21 @@ void AccountLoginMenu(int ALMSelected) {
                     system(DeleteTempDestinationTxtFile);
 
                     FirstName[strlen(FirstName) - 1] = '\0'; LastName[strlen(LastName) - 1] = '\0';
+                    Email[strlen(Email) - 1] = '\0'; PhoneNumber[strlen(PhoneNumber) - 1] = '\0'; Username[strlen(Username) - 1] = '\0'; Password[strlen(Password) - 1] = '\0';
                     strtok_r(FirstName, ":", &ShowFirstName); ShowFirstName = TrimWhiteSpaces(ShowFirstName);
                     strtok_r(LastName, ":", &ShowLastName); ShowLastName = TrimWhiteSpaces(ShowLastName);
+                    strtok_r(Email, ":", &ShowEmail); ShowEmail = TrimWhiteSpaces(ShowEmail);
+                    strtok_r(PhoneNumber, ":", &ShowPhoneNumber); ShowPhoneNumber = TrimWhiteSpaces(ShowPhoneNumber);
+                    strtok_r(Username, ":", &ShowUsername); ShowUsername = TrimWhiteSpaces(ShowUsername);
+                    strtok_r(Password, ":", &ShowPassword); ShowPassword = TrimWhiteSpaces(ShowPassword);
 
-                    if ((strstr(Email, ALMInputs[GlobalRegisteredAccounts].Email)             != NULL) && \
-                        (strstr(PhoneNumber, ALMInputs[GlobalRegisteredAccounts].PhoneNumber) != NULL) && \
-                        (strstr(Username, ALMInputs[GlobalRegisteredAccounts].Username)       != NULL) && \
-                        (strstr(Password, ALMInputs[GlobalRegisteredAccounts].Password)       != NULL)) {
+                    if ((strcmp(ShowEmail, ALMInputs[GlobalRegisteredAccounts].Email)             == 0) && \
+                        (strcmp(ShowPhoneNumber, ALMInputs[GlobalRegisteredAccounts].PhoneNumber) == 0) && \
+                        (strcmp(ShowUsername, ALMInputs[GlobalRegisteredAccounts].Username)       == 0) && \
+                        (strcmp(ShowPassword, ALMInputs[GlobalRegisteredAccounts].Password)       == 0)) {
                             puts(ANSI_COLOR_LIGHTBLUE"\n\tNote: You've successfully logged into your profile account!"ANSI_COLOR_RESET);
-                            puts(ANSI_COLOR_LIGHTBLUE"\t      Welcome to: Personal Financial Management System [CLI-Win32] Application!"ANSI_COLOR_RESET);
-                            printf(ANSI_COLOR_LIGHTGREEN"\n\tLogged in as: %s %s.\n", ShowFirstName, ShowLastName);
+                            puts(ANSI_COLOR_LIGHTBLUE"\tWelcome to: Personal Financial Management System [CLI-Win32] Application!"ANSI_COLOR_RESET);
+                            printf(ANSI_COLOR_LIGHTGREEN"\n\tLogged in as: %s %s.\n\t              "ANSI_COLOR_RESET ANSI_COLOR_GREEN"(Account No. %d)\n\n"ANSI_COLOR_RESET, ShowFirstName, ShowLastName, (GlobalRegisteredAccounts + 1));
                             puts(ANSI_COLOR_LIGHTMAGENTA"\tNow you may proceed to the main menu by pressing the [ENTER] button key on \n\tyour keyboard right away."ANSI_COLOR_RESET);
                             getchar();
                             MainMenu(0);
