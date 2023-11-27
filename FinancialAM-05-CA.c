@@ -115,12 +115,12 @@ Usage:  Creating a spesific colored font to highlight the
 #define BRIGHTMAGENTA218           "\x1b[0;38;5;218m"
 #define BRIGHTPURPLE219            "\x1b[0;38;5;219m"
 
-#define BRIGHTRED202               "\x1b[0;38;5;202m"
-#define BRIGHTRED203               "\x1b[0;38;5;203m"
-#define BRIGHTMAGENTA204           "\x1b[0;38;5;204m"
-#define BRIGHTMAGENTA205           "\x1b[0;38;5;205m"
-#define BRIGHTPURPLE206            "\x1b[0;38;5;206m"
-#define BRIGHTPURPLE207            "\x1b[0;38;5;207m"
+#define BRIGHTRED208               "\x1b[0;38;5;208m"
+#define BRIGHTRED209               "\x1b[0;38;5;209m"
+#define BRIGHTMAGENTA210           "\x1b[0;38;5;210m"
+#define BRIGHTMAGENTA211           "\x1b[0;38;5;211m"
+#define BRIGHTPURPLE212            "\x1b[0;38;5;212m"
+#define BRIGHTPURPLE213            "\x1b[0;38;5;213m"
 
 // ClearScreen() method, works for both Windows and UNIX.
 void ClearScreen(void) {
@@ -145,7 +145,7 @@ const char* DESTINATIONFILENULLERROR = "DestinationFileNotExists";
 
 const char* ApplicationPresent       = "SKYR Corp. Foundation Inc., PRESENTS:\n";
 const char* ApplicationTitle         = "SKYR Corp. :: Personal Financial Management System [CLI-Win32] Application\n";
-const char* ApplicationVersion       = "SKYR Corp. :: @PRE-RELEASE V1.0.39.3252 [ae32224][W: 43] (November 27, 2023)\n";
+const char* ApplicationVersion       = "SKYR Corp. :: @PRE-RELEASE V1.0.43.85.3274.52985752975054 [d89ce6a][W: 43][N: 2] (November 27, 2023)\n";
 const char* AppGuideOnUsageUDRL      = "\n\t   " ANSI_COLOR_LIGHTGREEN"[^]\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN"[>]"ANSI_COLOR_RESET ANSI_COLOR_LIGHTGREEN"[v]"ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN"[<]\n\n\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN ANSI_STYLE_ITALIC"[^]: Go UP, [v]: Go DOWN, "ANSI_COLOR_RESET ANSI_COLOR_CYAN ANSI_STYLE_ITALIC"[>]: Go RIGHT, [<]: Go LEFT\n"ANSI_COLOR_RESET;
 const char* AppMainMenuUDRL          = "\n\t   " ANSI_COLOR_LIGHTGREEN"[^]\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN"[>]"ANSI_COLOR_RESET ANSI_COLOR_LIGHTGREEN"[v]"ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN"[<]\n\n\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN ANSI_STYLE_ITALIC"[^]: Go UP, [v]: Go DOWN, "ANSI_COLOR_RESET ANSI_COLOR_CYAN ANSI_STYLE_ITALIC"[>]: Go RIGHT " ANSI_STYLE_UNDERLINE"(Profile Manager)"ANSI_COLOR_RESET ANSI_COLOR_CYAN ANSI_STYLE_ITALIC", [<]: Go LEFT " ANSI_STYLE_UNDERLINE"(About Application)\n"ANSI_COLOR_RESET;
 const char* AppProfileManagerUDRL    = "\n\t   " ANSI_COLOR_LIGHTGREEN"[^]\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN"[>]"ANSI_COLOR_RESET ANSI_COLOR_LIGHTGREEN"[v]"ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN"[<]\n\n\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN ANSI_STYLE_ITALIC"[^]: Go UP, [v]: Go DOWN, "ANSI_COLOR_RESET ANSI_COLOR_CYAN ANSI_STYLE_ITALIC"[>]: Go RIGHT " ANSI_STYLE_UNDERLINE"(About Application)"ANSI_COLOR_RESET ANSI_COLOR_CYAN ANSI_STYLE_ITALIC", [<]: Go LEFT " ANSI_STYLE_UNDERLINE"(Home Menu)\n"ANSI_COLOR_RESET;
@@ -1021,7 +1021,7 @@ void MainMenuProfileManager(int MMPMSelected) {
 
     while (Selecting) {
         if (!FirstRun) {
-            printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN"(STATUS) Profile Account Linked to: "ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN ANSI_STYLE_ITALIC ANSI_STYLE_UNDERLINE"%s.\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppMainMenuUI, UserName);
+            printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN"(STATUS) Profile Account Linked to: "ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN ANSI_STYLE_ITALIC ANSI_STYLE_UNDERLINE"%s.\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppProfileManagerUI, UserName);
 
             if ((MMAFSelected + 1) > 0 && (MMAFSelected + 1) <= 3 && (AvailableOptions == 3)) {
                 if ((MMAFSelected + 1) == 1) {
@@ -1036,7 +1036,7 @@ void MainMenuProfileManager(int MMPMSelected) {
             }
         } else {
             FirstRun = false;
-            printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN"(STATUS) Profile Account Linked to: "ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN ANSI_STYLE_ITALIC ANSI_STYLE_UNDERLINE"%s.\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppMainMenuUI, UserName);
+            printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN"(STATUS) Profile Account Linked to: "ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN ANSI_STYLE_ITALIC ANSI_STYLE_UNDERLINE"%s.\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppProfileManagerUI, UserName);
 
             if ((MMAFSelected + 1) > 0 && (MMAFSelected + 1) <= 3 && (AvailableOptions == 3)) {
                 if ((MMAFSelected + 1) == 1) {
@@ -1108,42 +1108,42 @@ void MainMenuApplicationInformations(int MMAISelected) {
     
     while (Selecting) {
         if (!FirstRun) {
-            printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN"(STATUS) Profile Account Linked to: "ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN ANSI_STYLE_ITALIC ANSI_STYLE_UNDERLINE"%s.\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppMainMenuUI, UserName);
+            printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN"(STATUS) Profile Account Linked to: "ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN ANSI_STYLE_ITALIC ANSI_STYLE_UNDERLINE"%s.\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppInformationsUI, UserName);
 
             if ((MMAISelected + 1) > 0 && (MMAISelected + 1) <= 6 && (AvailableOptions == 6)) {
                 if ((MMAISelected + 1) == 1) {
-                    printf("      " BRIGHTRED202 ANSI_STYLE_UNDERLINE"> Financial Moneytory Transaction(s) Registration\n\t"ANSI_COLOR_RESET "Financial Moneytory Transaction(s) Grouping per Category\n\tFinancial Moneytoring and Budget(s) Creations\n\tFinancial Moneytory Filtering and Searched History\n\tFinancial Moneytoring for Reminders and Notifications\n\tFinancial Moneytoring with Data and 2D Graphical Visualizations\n\n");
+                    printf("      " BRIGHTRED208 ANSI_STYLE_UNDERLINE"> Financial Moneytory Transaction(s) Registration\n\t"ANSI_COLOR_RESET "Financial Moneytory Transaction(s) Grouping per Category\n\tFinancial Moneytoring and Budget(s) Creations\n\tFinancial Moneytory Filtering and Searched History\n\tFinancial Moneytoring for Reminders and Notifications\n\tFinancial Moneytoring with Data and 2D Graphical Visualizations\n\n");
                 } else if ((MMAISelected + 1) == 2) {
-                    printf("\tFinancial Moneytory Transaction(s) Registration\n      " BRIGHTRED203 ANSI_STYLE_UNDERLINE"> Financial Moneytory Transaction(s) Grouping per Category\n\t"ANSI_COLOR_RESET "Financial Moneytoring and Budget(s) Creations\n\tFinancial Moneytory Filtering and Searched History\n\tFinancial Moneytoring for Reminders and Notifications\n\tFinancial Moneytoring with Data and 2D Graphical Visualizations\n\n");
+                    printf("\tFinancial Moneytory Transaction(s) Registration\n      " BRIGHTRED209 ANSI_STYLE_UNDERLINE"> Financial Moneytory Transaction(s) Grouping per Category\n\t"ANSI_COLOR_RESET "Financial Moneytoring and Budget(s) Creations\n\tFinancial Moneytory Filtering and Searched History\n\tFinancial Moneytoring for Reminders and Notifications\n\tFinancial Moneytoring with Data and 2D Graphical Visualizations\n\n");
                 } else if ((MMAISelected + 1) == 3) {
-                    printf("\tFinancial Moneytory Transaction(s) Registration\n\tFinancial Moneytory Transaction(s) Grouping per Category\n      " BRIGHTMAGENTA204 ANSI_STYLE_UNDERLINE"> Financial Moneytoring and Budget(s) Creations\n\t"ANSI_COLOR_RESET "Financial Moneytory Filtering and Searched History\n\tFinancial Moneytoring for Reminders and Notifications\n\tFinancial Moneytoring with Data and 2D Graphical Visualizations\n\n");
+                    printf("\tFinancial Moneytory Transaction(s) Registration\n\tFinancial Moneytory Transaction(s) Grouping per Category\n      " BRIGHTMAGENTA210 ANSI_STYLE_UNDERLINE"> Financial Moneytoring and Budget(s) Creations\n\t"ANSI_COLOR_RESET "Financial Moneytory Filtering and Searched History\n\tFinancial Moneytoring for Reminders and Notifications\n\tFinancial Moneytoring with Data and 2D Graphical Visualizations\n\n");
                 } else if ((MMAISelected + 1) == 4) {
-                    printf("\tFinancial Moneytory Transaction(s) Registration\n\tFinancial Moneytory Transaction(s) Grouping per Category\n\tFinancial Moneytoring and Budget(s) Creations\n      " BRIGHTMAGENTA205 ANSI_STYLE_UNDERLINE"> Financial Moneytory Filtering and Searched History\n\t"ANSI_COLOR_RESET "Financial Moneytoring for Reminders and Notifications\n\tFinancial Moneytoring with Data and 2D Graphical Visualizations\n\n");
+                    printf("\tFinancial Moneytory Transaction(s) Registration\n\tFinancial Moneytory Transaction(s) Grouping per Category\n\tFinancial Moneytoring and Budget(s) Creations\n      " BRIGHTMAGENTA211 ANSI_STYLE_UNDERLINE"> Financial Moneytory Filtering and Searched History\n\t"ANSI_COLOR_RESET "Financial Moneytoring for Reminders and Notifications\n\tFinancial Moneytoring with Data and 2D Graphical Visualizations\n\n");
                 } else if ((MMAISelected + 1) == 5) {
-                    printf("\tFinancial Moneytory Transaction(s) Registration\n\tFinancial Moneytory Transaction(s) Grouping per Category\n\tFinancial Moneytoring and Budget(s) Creations\n\tFinancial Moneytory Filtering and Searched History\n      " BRIGHTPURPLE206 ANSI_STYLE_UNDERLINE"> Financial Moneytoring for Reminders and Notifications\n\t"ANSI_COLOR_RESET "Financial Moneytoring with Data and 2D Graphical Visualizations\n\n");
+                    printf("\tFinancial Moneytory Transaction(s) Registration\n\tFinancial Moneytory Transaction(s) Grouping per Category\n\tFinancial Moneytoring and Budget(s) Creations\n\tFinancial Moneytory Filtering and Searched History\n      " BRIGHTPURPLE212 ANSI_STYLE_UNDERLINE"> Financial Moneytoring for Reminders and Notifications\n\t"ANSI_COLOR_RESET "Financial Moneytoring with Data and 2D Graphical Visualizations\n\n");
                 } else if ((MMAISelected + 1) == 6) {
-                    printf("\tFinancial Moneytory Transaction(s) Registration\n\tFinancial Moneytory Transaction(s) Grouping per Category\n\tFinancial Moneytoring and Budget(s) Creations\n\tFinancial Moneytory Filtering and Searched History\n\tFinancial Moneytoring for Reminders and Notifications\n      " BRIGHTPURPLE207 ANSI_STYLE_UNDERLINE"> Financial Moneytoring with Data and 2D Graphical Visualizations\n\n"ANSI_COLOR_RESET);
+                    printf("\tFinancial Moneytory Transaction(s) Registration\n\tFinancial Moneytory Transaction(s) Grouping per Category\n\tFinancial Moneytoring and Budget(s) Creations\n\tFinancial Moneytory Filtering and Searched History\n\tFinancial Moneytoring for Reminders and Notifications\n      " BRIGHTPURPLE213 ANSI_STYLE_UNDERLINE"> Financial Moneytoring with Data and 2D Graphical Visualizations\n\n"ANSI_COLOR_RESET);
                 }
 
                 printf("\n\n\n\n\n\n\t%s", AppInformationsUDRL);
             }
         } else {
             FirstRun = false;
-            printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN"(STATUS) Profile Account Linked to: "ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN ANSI_STYLE_ITALIC ANSI_STYLE_UNDERLINE"%s.\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppMainMenuUI, UserName);
+            printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN"(STATUS) Profile Account Linked to: "ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN ANSI_STYLE_ITALIC ANSI_STYLE_UNDERLINE"%s.\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppInformationsUI, UserName);
 
             if ((MMAISelected + 1) > 0 && (MMAISelected + 1) <= 6 && (AvailableOptions == 6)) {
                 if ((MMAISelected + 1) == 1) {
-                    printf("      " BRIGHTRED202 ANSI_STYLE_UNDERLINE"> Financial Moneytory Transaction(s) Registration\n\t"ANSI_COLOR_RESET "Financial Moneytory Transaction(s) Grouping per Category\n\tFinancial Moneytoring and Budget(s) Creations\n\tFinancial Moneytory Filtering and Searched History\n\tFinancial Moneytoring for Reminders and Notifications\n\tFinancial Moneytoring with Data and 2D Graphical Visualizations\n\n");
+                    printf("      " BRIGHTRED208 ANSI_STYLE_UNDERLINE"> Financial Moneytory Transaction(s) Registration\n\t"ANSI_COLOR_RESET "Financial Moneytory Transaction(s) Grouping per Category\n\tFinancial Moneytoring and Budget(s) Creations\n\tFinancial Moneytory Filtering and Searched History\n\tFinancial Moneytoring for Reminders and Notifications\n\tFinancial Moneytoring with Data and 2D Graphical Visualizations\n\n");
                 } else if ((MMAISelected + 1) == 2) {
-                    printf("\tFinancial Moneytory Transaction(s) Registration\n      " BRIGHTRED203 ANSI_STYLE_UNDERLINE"> Financial Moneytory Transaction(s) Grouping per Category\n\t"ANSI_COLOR_RESET "Financial Moneytoring and Budget(s) Creations\n\tFinancial Moneytory Filtering and Searched History\n\tFinancial Moneytoring for Reminders and Notifications\n\tFinancial Moneytoring with Data and 2D Graphical Visualizations\n\n");
+                    printf("\tFinancial Moneytory Transaction(s) Registration\n      " BRIGHTRED209 ANSI_STYLE_UNDERLINE"> Financial Moneytory Transaction(s) Grouping per Category\n\t"ANSI_COLOR_RESET "Financial Moneytoring and Budget(s) Creations\n\tFinancial Moneytory Filtering and Searched History\n\tFinancial Moneytoring for Reminders and Notifications\n\tFinancial Moneytoring with Data and 2D Graphical Visualizations\n\n");
                 } else if ((MMAISelected + 1) == 3) {
-                    printf("\tFinancial Moneytory Transaction(s) Registration\n\tFinancial Moneytory Transaction(s) Grouping per Category\n      " BRIGHTMAGENTA204 ANSI_STYLE_UNDERLINE"> Financial Moneytoring and Budget(s) Creations\n\t"ANSI_COLOR_RESET "Financial Moneytory Filtering and Searched History\n\tFinancial Moneytoring for Reminders and Notifications\n\tFinancial Moneytoring with Data and 2D Graphical Visualizations\n\n");
+                    printf("\tFinancial Moneytory Transaction(s) Registration\n\tFinancial Moneytory Transaction(s) Grouping per Category\n      " BRIGHTMAGENTA210 ANSI_STYLE_UNDERLINE"> Financial Moneytoring and Budget(s) Creations\n\t"ANSI_COLOR_RESET "Financial Moneytory Filtering and Searched History\n\tFinancial Moneytoring for Reminders and Notifications\n\tFinancial Moneytoring with Data and 2D Graphical Visualizations\n\n");
                 } else if ((MMAISelected + 1) == 4) {
-                    printf("\tFinancial Moneytory Transaction(s) Registration\n\tFinancial Moneytory Transaction(s) Grouping per Category\n\tFinancial Moneytoring and Budget(s) Creations\n      " BRIGHTMAGENTA205 ANSI_STYLE_UNDERLINE"> Financial Moneytory Filtering and Searched History\n\t"ANSI_COLOR_RESET "Financial Moneytoring for Reminders and Notifications\n\tFinancial Moneytoring with Data and 2D Graphical Visualizations\n\n");
+                    printf("\tFinancial Moneytory Transaction(s) Registration\n\tFinancial Moneytory Transaction(s) Grouping per Category\n\tFinancial Moneytoring and Budget(s) Creations\n      " BRIGHTMAGENTA211 ANSI_STYLE_UNDERLINE"> Financial Moneytory Filtering and Searched History\n\t"ANSI_COLOR_RESET "Financial Moneytoring for Reminders and Notifications\n\tFinancial Moneytoring with Data and 2D Graphical Visualizations\n\n");
                 } else if ((MMAISelected + 1) == 5) {
-                    printf("\tFinancial Moneytory Transaction(s) Registration\n\tFinancial Moneytory Transaction(s) Grouping per Category\n\tFinancial Moneytoring and Budget(s) Creations\n\tFinancial Moneytory Filtering and Searched History\n      " BRIGHTPURPLE207 ANSI_STYLE_UNDERLINE"> Financial Moneytoring for Reminders and Notifications\n\t"ANSI_COLOR_RESET "Financial Moneytoring with Data and 2D Graphical Visualizations\n\n");
+                    printf("\tFinancial Moneytory Transaction(s) Registration\n\tFinancial Moneytory Transaction(s) Grouping per Category\n\tFinancial Moneytoring and Budget(s) Creations\n\tFinancial Moneytory Filtering and Searched History\n      " BRIGHTPURPLE213 ANSI_STYLE_UNDERLINE"> Financial Moneytoring for Reminders and Notifications\n\t"ANSI_COLOR_RESET "Financial Moneytoring with Data and 2D Graphical Visualizations\n\n");
                 } else if ((MMAISelected + 1) == 6) {
-                    printf("\tFinancial Moneytory Transaction(s) Registration\n\tFinancial Moneytory Transaction(s) Grouping per Category\n\tFinancial Moneytoring and Budget(s) Creations\n\tFinancial Moneytory Filtering and Searched History\n\tFinancial Moneytoring for Reminders and Notifications\n      " BRIGHTPURPLE207 ANSI_STYLE_UNDERLINE"> Financial Moneytoring with Data and 2D Graphical Visualizations\n\n"ANSI_COLOR_RESET);
+                    printf("\tFinancial Moneytory Transaction(s) Registration\n\tFinancial Moneytory Transaction(s) Grouping per Category\n\tFinancial Moneytoring and Budget(s) Creations\n\tFinancial Moneytory Filtering and Searched History\n\tFinancial Moneytoring for Reminders and Notifications\n      " BRIGHTPURPLE213 ANSI_STYLE_UNDERLINE"> Financial Moneytoring with Data and 2D Graphical Visualizations\n\n"ANSI_COLOR_RESET);
                 }
 
                 printf("\n\n\n\n\n\n\t%s", AppInformationsUDRL);
@@ -1448,7 +1448,7 @@ void AccountRegistrationMenu(int ARMSelected) {
                     printf("\tInfo: You have all the main required information listing above of all \n\t      nine (9) personal infos, and you may proceed to the final step, and \n\t      it's about giving optional information about your career profiling, \n\t      degree of experience, and such else.\n");
                     printf("\n\t" ANSI_COLOR_LIGHTBLUE"(Optional)"ANSI_COLOR_RESET " Here all are the given choices before you proceed... \n\t" ANSI_COLOR_LIGHTRED"> CONFIRM: "ANSI_COLOR_RESET ANSI_COLOR_RED"Stop Here"ANSI_COLOR_RESET " and " ANSI_COLOR_GREEN"Save All"ANSI_COLOR_RESET" the given informations, or \n\t" ANSI_COLOR_LIGHTGREEN"> CANCEL: "ANSI_COLOR_RESET ANSI_COLOR_GREEN"Keep All"ANSI_COLOR_RESET " the information and " ANSI_COLOR_CYAN"Continue to Fill In"ANSI_COLOR_RESET " the last section of \n\tyour personal profile infos?\n\n");
                     
-                    snprintf(MessageID02, BUFSIZE10, "\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRegisterUI);
+                    snprintf(MessageID02, BUFSIZE10, ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRegisterUI);
                     MessagesShown_ArrowKeyChoiceDialog[2] = MessageID02;
                     MessagesShown_ArrowKeyChoiceDialog[3] = "\tInfo: You have all the main required information listing above of all \n\t      nine (9) personal infos, and you may proceed to the final step, and \n\t      it's about giving optional information about your career profiling, \n\t      degree of experience, and such else.";
                     MessagesShown_ArrowKeyChoiceDialog[4] = "\n\t" ANSI_COLOR_LIGHTBLUE"(Optional)"ANSI_COLOR_RESET " Here all are the given choices before you proceed... \n\t" ANSI_COLOR_LIGHTRED"> CONFIRM: "ANSI_COLOR_RESET ANSI_COLOR_RED"Stop Here"ANSI_COLOR_RESET " and " ANSI_COLOR_GREEN"Save All"ANSI_COLOR_RESET" the given informations, or \n\t" ANSI_COLOR_LIGHTGREEN"> CANCEL: "ANSI_COLOR_RESET ANSI_COLOR_GREEN"Keep All"ANSI_COLOR_RESET " the information and " ANSI_COLOR_CYAN"Continue to Fill In"ANSI_COLOR_RESET " the last section of \n\tyour personal profile infos?\n";
@@ -1515,12 +1515,12 @@ void AccountRegistrationMenu(int ARMSelected) {
 
                         puts(ANSI_COLOR_LIGHTBLUE"\n\tInfo: Your account profile has been saved and ecrypted."ANSI_COLOR_RESET);
                         puts(ANSI_COLOR_LIGHTYELLOW"\n\t      Now you may proceed to refresh the app before going to singing in by pressing the [ENTER] \n\t      button key on your keyboard in order to be able to update your listed profile accounts. \n\t      "ANSI_COLOR_RESET ANSI_COLOR_LIGHTGREEN"Proceed to re-open the app after this and you'll be prompted onto the login profile account \n\t      section, and all the features will be accessible by stay logged in within 30 days!"ANSI_COLOR_RESET);
-                        getchar(); sleep(RandInt(1, 3));
 
                         LE = false; LPN = false; LU = false; LP = false;
                         strcpy(RegAccInsider, "Registered Accounts: "); strcat(RegAccInsider, GRA); strcat(RegAccInsider, " account(s) in total.");
                         OverWriteStringAtLine("TempRegisteredAccounts.txt", RegAccInsider, 0, 9);
                         EncryptTxtFile("TempRegisteredAccounts.txt", "RegisteredAccounts.txt", EncryptionKey, true);
+                        getchar(); sleep(RandInt(1, 3));
                         exit(0);
 
                     } else { ARMSelected = 0; AccountRegistrationMenu(ARMSelected); }
@@ -1622,7 +1622,7 @@ void AccountRegistrationMenu(int ARMSelected) {
                     printf("\tInfo: You have all the main required information listing above of all \n\t      nine (9) personal infos, and you may proceed to the final step, and \n\t      it's about giving optional information about your career profiling, \n\t      degree of experience, and such else.\n");
                     printf("\n\t" ANSI_COLOR_LIGHTBLUE"(Optional)"ANSI_COLOR_RESET " Here all are the given choices before you proceed... \n\t" ANSI_COLOR_LIGHTRED"> CONFIRM: "ANSI_COLOR_RESET ANSI_COLOR_RED"Stop Here"ANSI_COLOR_RESET " and " ANSI_COLOR_GREEN"Save All"ANSI_COLOR_RESET" the given informations, or \n\t" ANSI_COLOR_LIGHTGREEN"> CANCEL: "ANSI_COLOR_RESET ANSI_COLOR_GREEN"Keep All"ANSI_COLOR_RESET " the information and " ANSI_COLOR_CYAN"Continue to Fill In"ANSI_COLOR_RESET " the last section of \n\tyour personal profile infos?\n\n");
                     
-                    snprintf(MessageID02, BUFSIZE10, "\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRegisterUI);
+                    snprintf(MessageID02, BUFSIZE10, ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRegisterUI);
                     MessagesShown_ArrowKeyChoiceDialog[2] = MessageID02;
                     MessagesShown_ArrowKeyChoiceDialog[3] = "\tInfo: You have all the main required information listing above of all \n\t      nine (9) personal infos, and you may proceed to the final step, and \n\t      it's about giving optional information about your career profiling, \n\t      degree of experience, and such else.";
                     MessagesShown_ArrowKeyChoiceDialog[4] = "\n\t" ANSI_COLOR_LIGHTBLUE"(Optional)"ANSI_COLOR_RESET " Here all are the given choices before you proceed... \n\t" ANSI_COLOR_LIGHTRED"> CONFIRM: "ANSI_COLOR_RESET ANSI_COLOR_RED"Stop Here"ANSI_COLOR_RESET " and " ANSI_COLOR_GREEN"Save All"ANSI_COLOR_RESET" the given informations, or \n\t" ANSI_COLOR_LIGHTGREEN"> CANCEL: "ANSI_COLOR_RESET ANSI_COLOR_GREEN"Keep All"ANSI_COLOR_RESET " the information and " ANSI_COLOR_CYAN"Continue to Fill In"ANSI_COLOR_RESET " the last section of \n\tyour personal profile infos?\n";
@@ -1689,12 +1689,12 @@ void AccountRegistrationMenu(int ARMSelected) {
 
                         puts(ANSI_COLOR_LIGHTBLUE"\n\tInfo: Your account profile has been saved and ecrypted."ANSI_COLOR_RESET);
                         puts(ANSI_COLOR_LIGHTYELLOW"\n\t      Now you may proceed to refresh the app before going to singing in by pressing the [ENTER] \n\t      button key on your keyboard in order to be able to update your listed profile accounts. \n\t      "ANSI_COLOR_RESET ANSI_COLOR_LIGHTGREEN"Proceed to re-open the app after this and you'll be prompted onto the login profile account \n\t      section, and all the features will be accessible by stay logged in within 30 days!"ANSI_COLOR_RESET);
-                        getchar(); sleep(RandInt(1, 3));
 
                         LE = false; LPN = false; LU = false; LP = false;
                         strcpy(RegAccInsider, "Registered Accounts: "); strcat(RegAccInsider, GRA); strcat(RegAccInsider, " account(s) in total.");
                         OverWriteStringAtLine("TempRegisteredAccounts.txt", RegAccInsider, 0, 9);
                         EncryptTxtFile("TempRegisteredAccounts.txt", "RegisteredAccounts.txt", EncryptionKey, true);
+                        getchar(); sleep(RandInt(1, 3));
                         exit(0);
 
                     } else { ARMSelected = 0; AccountRegistrationMenu(ARMSelected); }
@@ -1765,6 +1765,7 @@ void AccountRegistrationMenu(int ARMSelected) {
         InputFirstName[strlen(InputFirstName) - 1] = '\0';
         FN = true;
         strcpy(ARMInputs[GlobalRegisteredAccounts].FirstName, InputFirstName);
+        InputFirstName[0] = 0;
         AccountRegistrationMenu(ARMSelected);
     }
 
@@ -1804,6 +1805,7 @@ void AccountRegistrationMenu(int ARMSelected) {
         InputLastName[strlen(InputLastName) - 1] = '\0';
         LN = true;
         strcpy(ARMInputs[GlobalRegisteredAccounts].LastName, InputLastName);
+        InputLastName[0] = 0;
         AccountRegistrationMenu(ARMSelected);
     }
 
@@ -1843,6 +1845,7 @@ void AccountRegistrationMenu(int ARMSelected) {
         InputEmail[strlen(InputEmail) - 1] = '\0';
         E = true;
         strcpy(ARMInputs[GlobalRegisteredAccounts].Email, InputEmail);
+        InputEmail[0] = 0;
         AccountRegistrationMenu(ARMSelected);
     }
 
@@ -1882,6 +1885,7 @@ void AccountRegistrationMenu(int ARMSelected) {
         InputUsername[strlen(InputUsername) - 1] = '\0';
         U = true;
         strcpy(ARMInputs[GlobalRegisteredAccounts].Username, InputUsername);
+        InputUsername[0] = 0;
         AccountRegistrationMenu(ARMSelected);
     }
 
@@ -1926,6 +1930,7 @@ void AccountRegistrationMenu(int ARMSelected) {
             else        { strcat(HiddenPassword, "*"); }
         } strcpy(ARMInputs[GlobalRegisteredAccounts].Password, InputPassword);
         strcpy(ARMInputs[GlobalRegisteredAccounts].HiddenPasswordShown, HiddenPassword);
+        InputPassword[0] = 0; HiddenPassword[0] = 0;
         AccountRegistrationMenu(ARMSelected);
     }
 
@@ -2022,6 +2027,10 @@ void AccountRegistrationMenu(int ARMSelected) {
         strcat(ARMInputs[GlobalRegisteredAccounts].DateOfBirth, MonthsOfYear[Month - 1]);
         strcat(ARMInputs[GlobalRegisteredAccounts].DateOfBirth, " ");
         strcat(ARMInputs[GlobalRegisteredAccounts].DateOfBirth, DOBTempY);
+
+        for (int i = 0; i < 7; i++)  { DaysOfWeek[i][0] = 0; }
+        for (int j = 0; j < 12; j++) { MonthsOfYear[j][0] = 0; }
+        NumericalPattern[0] = 0;
         AccountRegistrationMenu(ARMSelected);
     }
 
@@ -2081,6 +2090,7 @@ void AccountRegistrationMenu(int ARMSelected) {
         InputAgeOnPresent[strlen(InputAgeOnPresent) - 1] = '\0';
         A = true;
         strcpy(ARMInputs[GlobalRegisteredAccounts].AgeOnPresent, InputAgeOnPresent);
+        InputAgeOnPresent[0] = 0;
         AccountRegistrationMenu(ARMSelected);
     }
 
@@ -2091,8 +2101,8 @@ void AccountRegistrationMenu(int ARMSelected) {
 
         printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRegisterUI);
 
-        if (A) {
-            printf(ANSI_COLOR_GREEN"\tInfo: We'd checked that you earlier had already insert your phone number as: \n\t          >> %s.\n\n\t      But don't worry, if you want to make a change, then you may proceed to do so.\n\n"ANSI_COLOR_RESET, ARMInputs[GlobalRegisteredAccounts].PhoneNumber);
+        if (PN) {
+            printf(ANSI_COLOR_GREEN"\tInfo: We'd checked that you earlier had already insert your phone number as: %s.\n\t      But don't worry, if you want to make a change, then you may proceed to do so.\n\n"ANSI_COLOR_RESET, ARMInputs[GlobalRegisteredAccounts].PhoneNumber);
             printf("\tDate of Birth:\t\t%s\n\tAge on Present:\t\t%s\n      " ANSI_COLOR_LIGHTGREEN"> Phone Number:\t\t%s\n\t"ANSI_COLOR_RESET "Sex/Gender:\t\t%s\n", ARMInputs[GlobalRegisteredAccounts].DateOfBirth, ARMInputs[GlobalRegisteredAccounts].AgeOnPresent, ARMInputs[GlobalRegisteredAccounts].PhoneNumber, ARMInputs[GlobalRegisteredAccounts].Sex);
             puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTGREEN"Phone Number."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your phone number into your profile account.");
             puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The phone number must be started with the country code '+XXX', and the next 4 to 13 \n\t      digits are for the phone number you owned. \n\t      Separate the country code and the digits by a single space, and for the digits you can \n\t      insert thoroughly (without spaces or so). \n\n\t      Phone number format insertion: +<COUNTRY_CODE> XXXXXXXXXXX \n\t      Example: +62 12345678901"ANSI_COLOR_RESET);
@@ -2160,6 +2170,10 @@ void AccountRegistrationMenu(int ARMSelected) {
             else                               { strncat(TempDigitsNumberTemp, &TempDigitsNumber[i - 1], 1); }
         } strcat(TempFinalPhoneNumber, TempDigitsNumberTemp);
         strcpy(ARMInputs[GlobalRegisteredAccounts].PhoneNumber, TempFinalPhoneNumber);
+        
+        TempDigitsNumber[0] = 0;
+        TempFinalPhoneNumber[0] = 0;
+        TempDigitsNumberTemp[0] = 0;
         AccountRegistrationMenu(ARMSelected);
     }
 
@@ -2212,6 +2226,7 @@ void AccountRegistrationMenu(int ARMSelected) {
         if (strcmp(InputSex, "MALE") == 0)   { strcpy(InputSex, "Male"); }
         if (strcmp(InputSex, "FEMALE") == 0) { strcpy(InputSex, "Female"); }
         strcpy(ARMInputs[GlobalRegisteredAccounts].Sex, InputSex);
+        InputSex[0] = 0;
         AccountRegistrationMenu(ARMSelected);
     }
 }
@@ -2649,6 +2664,7 @@ void AccountLoginMenu(int ALMSelected) {
         InputEmail[strlen(InputEmail) - 1] = '\0';
         LE = true;
         strcpy(ALMInputs[GlobalRegisteredAccounts].Email, InputEmail);
+        InputEmail[0] = 0;
         AccountLoginMenu(ALMSelected);
     }
 
@@ -2728,6 +2744,10 @@ void AccountLoginMenu(int ALMSelected) {
             else                               { strncat(TempDigitsNumberTemp, &TempDigitsNumber[i - 1], 1); }
         } strcat(TempFinalPhoneNumber, TempDigitsNumberTemp);
         strcpy(ALMInputs[GlobalRegisteredAccounts].PhoneNumber, TempFinalPhoneNumber);
+        
+        TempDigitsNumber[0] = 0;
+        TempFinalPhoneNumber[0] = 0;
+        TempDigitsNumberTemp[0] = 0;
         AccountLoginMenu(ALMSelected);
     }
 
@@ -2767,6 +2787,7 @@ void AccountLoginMenu(int ALMSelected) {
         InputUsername[strlen(InputUsername) - 1] = '\0';
         LU = true;
         strcpy(ALMInputs[GlobalRegisteredAccounts].Username, InputUsername);
+        InputUsername[0] = 0;
         AccountLoginMenu(ALMSelected);
     }
 
@@ -2811,6 +2832,7 @@ void AccountLoginMenu(int ALMSelected) {
             else        { strcat(HiddenPassword, "*"); }
         } strcpy(ALMInputs[GlobalRegisteredAccounts].Password, InputPassword);
         strcpy(ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown, HiddenPassword);
+        InputPassword[0] = 0; HiddenPassword[0] = 0;
         AccountLoginMenu(ALMSelected);
     }
 }
