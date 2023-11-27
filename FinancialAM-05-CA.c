@@ -145,7 +145,7 @@ const char* DESTINATIONFILENULLERROR = "DestinationFileNotExists";
 
 const char* ApplicationPresent       = "SKYR Corp. Foundation Inc., PRESENTS:\n";
 const char* ApplicationTitle         = "SKYR Corp. :: Personal Financial Management System [CLI-Win32] Application\n";
-const char* ApplicationVersion       = "SKYR Corp. :: @PRE-RELEASE V1.0.39.3232 [ae32224][W: 43] (November 27, 2023)\n";
+const char* ApplicationVersion       = "SKYR Corp. :: @PRE-RELEASE V1.0.39.3252 [ae32224][W: 43] (November 27, 2023)\n";
 const char* AppGuideOnUsageUDRL      = "\n\t   " ANSI_COLOR_LIGHTGREEN"[^]\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN"[>]"ANSI_COLOR_RESET ANSI_COLOR_LIGHTGREEN"[v]"ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN"[<]\n\n\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN ANSI_STYLE_ITALIC"[^]: Go UP, [v]: Go DOWN, "ANSI_COLOR_RESET ANSI_COLOR_CYAN ANSI_STYLE_ITALIC"[>]: Go RIGHT, [<]: Go LEFT\n"ANSI_COLOR_RESET;
 const char* AppMainMenuUDRL          = "\n\t   " ANSI_COLOR_LIGHTGREEN"[^]\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN"[>]"ANSI_COLOR_RESET ANSI_COLOR_LIGHTGREEN"[v]"ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN"[<]\n\n\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN ANSI_STYLE_ITALIC"[^]: Go UP, [v]: Go DOWN, "ANSI_COLOR_RESET ANSI_COLOR_CYAN ANSI_STYLE_ITALIC"[>]: Go RIGHT " ANSI_STYLE_UNDERLINE"(Profile Manager)"ANSI_COLOR_RESET ANSI_COLOR_CYAN ANSI_STYLE_ITALIC", [<]: Go LEFT " ANSI_STYLE_UNDERLINE"(About Application)\n"ANSI_COLOR_RESET;
 const char* AppProfileManagerUDRL    = "\n\t   " ANSI_COLOR_LIGHTGREEN"[^]\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN"[>]"ANSI_COLOR_RESET ANSI_COLOR_LIGHTGREEN"[v]"ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN"[<]\n\n\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN ANSI_STYLE_ITALIC"[^]: Go UP, [v]: Go DOWN, "ANSI_COLOR_RESET ANSI_COLOR_CYAN ANSI_STYLE_ITALIC"[>]: Go RIGHT " ANSI_STYLE_UNDERLINE"(About Application)"ANSI_COLOR_RESET ANSI_COLOR_CYAN ANSI_STYLE_ITALIC", [<]: Go LEFT " ANSI_STYLE_UNDERLINE"(Home Menu)\n"ANSI_COLOR_RESET;
@@ -1448,7 +1448,7 @@ void AccountRegistrationMenu(int ARMSelected) {
                     printf("\tInfo: You have all the main required information listing above of all \n\t      nine (9) personal infos, and you may proceed to the final step, and \n\t      it's about giving optional information about your career profiling, \n\t      degree of experience, and such else.\n");
                     printf("\n\t" ANSI_COLOR_LIGHTBLUE"(Optional)"ANSI_COLOR_RESET " Here all are the given choices before you proceed... \n\t" ANSI_COLOR_LIGHTRED"> CONFIRM: "ANSI_COLOR_RESET ANSI_COLOR_RED"Stop Here"ANSI_COLOR_RESET " and " ANSI_COLOR_GREEN"Save All"ANSI_COLOR_RESET" the given informations, or \n\t" ANSI_COLOR_LIGHTGREEN"> CANCEL: "ANSI_COLOR_RESET ANSI_COLOR_GREEN"Keep All"ANSI_COLOR_RESET " the information and " ANSI_COLOR_CYAN"Continue to Fill In"ANSI_COLOR_RESET " the last section of \n\tyour personal profile infos?\n\n");
                     
-                    snprintf(MessageID02, BUFSIZE10, "\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRegisterUI);
+                    snprintf(MessageID02, BUFSIZE10, "\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRegisterUI);
                     MessagesShown_ArrowKeyChoiceDialog[2] = MessageID02;
                     MessagesShown_ArrowKeyChoiceDialog[3] = "\tInfo: You have all the main required information listing above of all \n\t      nine (9) personal infos, and you may proceed to the final step, and \n\t      it's about giving optional information about your career profiling, \n\t      degree of experience, and such else.";
                     MessagesShown_ArrowKeyChoiceDialog[4] = "\n\t" ANSI_COLOR_LIGHTBLUE"(Optional)"ANSI_COLOR_RESET " Here all are the given choices before you proceed... \n\t" ANSI_COLOR_LIGHTRED"> CONFIRM: "ANSI_COLOR_RESET ANSI_COLOR_RED"Stop Here"ANSI_COLOR_RESET " and " ANSI_COLOR_GREEN"Save All"ANSI_COLOR_RESET" the given informations, or \n\t" ANSI_COLOR_LIGHTGREEN"> CANCEL: "ANSI_COLOR_RESET ANSI_COLOR_GREEN"Keep All"ANSI_COLOR_RESET " the information and " ANSI_COLOR_CYAN"Continue to Fill In"ANSI_COLOR_RESET " the last section of \n\tyour personal profile infos?\n";
@@ -1476,6 +1476,16 @@ void AccountRegistrationMenu(int ARMSelected) {
                             fputs(RegAccInsider, TempARMInputs);
                             fputs("----------------------------------------------------------------------------------------------------\n", TempARMInputs);
                             fclose(TempARMInputs);
+                        
+                        } else if (access("RegisteredAccounts.txt", F_OK) == 0 && FlagARM) {
+                            FDestination     = fopen("RegisteredAccounts.txt", "r");
+                            FTempDestination = fopen("TempRegisteredAccounts.txt", "w");
+
+                            while (fgets(BUFFER, sizeof(BUFFER), FDestination) != 0) {
+                                BufLen = strlen(BUFFER);
+                                for (int i = 0; i < BufLen; i++) BUFFER[i] += EncryptionKey;
+                                fputs(BUFFER, FTempDestination);
+                            } fclose(FDestination); fclose(FTempDestination);
                         }
 
                         TempARMInputs = fopen("TempRegisteredAccounts.txt", "a+");
@@ -1504,7 +1514,7 @@ void AccountRegistrationMenu(int ARMSelected) {
                         fclose(TempARMInputs);
 
                         puts(ANSI_COLOR_LIGHTBLUE"\n\tInfo: Your account profile has been saved and ecrypted."ANSI_COLOR_RESET);
-                        puts(ANSI_COLOR_LIGHTYELLOW"\t      Now you may proceed to refresh the app before going to singing in by pressing the [ENTER] \n\t      button key on your keyboard in order to be able to update your listed profile accounts. \n\t      "ANSI_COLOR_RESET ANSI_COLOR_LIGHTGREEN"Proceed to re-open the app after this and you'll be prompted onto the login profile account \n\t      section, and all the features will be accessible by stay logged in within 30 days!"ANSI_COLOR_RESET);
+                        puts(ANSI_COLOR_LIGHTYELLOW"\n\t      Now you may proceed to refresh the app before going to singing in by pressing the [ENTER] \n\t      button key on your keyboard in order to be able to update your listed profile accounts. \n\t      "ANSI_COLOR_RESET ANSI_COLOR_LIGHTGREEN"Proceed to re-open the app after this and you'll be prompted onto the login profile account \n\t      section, and all the features will be accessible by stay logged in within 30 days!"ANSI_COLOR_RESET);
                         getchar(); sleep(RandInt(1, 3));
 
                         LE = false; LPN = false; LU = false; LP = false;
@@ -1612,7 +1622,7 @@ void AccountRegistrationMenu(int ARMSelected) {
                     printf("\tInfo: You have all the main required information listing above of all \n\t      nine (9) personal infos, and you may proceed to the final step, and \n\t      it's about giving optional information about your career profiling, \n\t      degree of experience, and such else.\n");
                     printf("\n\t" ANSI_COLOR_LIGHTBLUE"(Optional)"ANSI_COLOR_RESET " Here all are the given choices before you proceed... \n\t" ANSI_COLOR_LIGHTRED"> CONFIRM: "ANSI_COLOR_RESET ANSI_COLOR_RED"Stop Here"ANSI_COLOR_RESET " and " ANSI_COLOR_GREEN"Save All"ANSI_COLOR_RESET" the given informations, or \n\t" ANSI_COLOR_LIGHTGREEN"> CANCEL: "ANSI_COLOR_RESET ANSI_COLOR_GREEN"Keep All"ANSI_COLOR_RESET " the information and " ANSI_COLOR_CYAN"Continue to Fill In"ANSI_COLOR_RESET " the last section of \n\tyour personal profile infos?\n\n");
                     
-                    snprintf(MessageID02, BUFSIZE10, "\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRegisterUI);
+                    snprintf(MessageID02, BUFSIZE10, "\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRegisterUI);
                     MessagesShown_ArrowKeyChoiceDialog[2] = MessageID02;
                     MessagesShown_ArrowKeyChoiceDialog[3] = "\tInfo: You have all the main required information listing above of all \n\t      nine (9) personal infos, and you may proceed to the final step, and \n\t      it's about giving optional information about your career profiling, \n\t      degree of experience, and such else.";
                     MessagesShown_ArrowKeyChoiceDialog[4] = "\n\t" ANSI_COLOR_LIGHTBLUE"(Optional)"ANSI_COLOR_RESET " Here all are the given choices before you proceed... \n\t" ANSI_COLOR_LIGHTRED"> CONFIRM: "ANSI_COLOR_RESET ANSI_COLOR_RED"Stop Here"ANSI_COLOR_RESET " and " ANSI_COLOR_GREEN"Save All"ANSI_COLOR_RESET" the given informations, or \n\t" ANSI_COLOR_LIGHTGREEN"> CANCEL: "ANSI_COLOR_RESET ANSI_COLOR_GREEN"Keep All"ANSI_COLOR_RESET " the information and " ANSI_COLOR_CYAN"Continue to Fill In"ANSI_COLOR_RESET " the last section of \n\tyour personal profile infos?\n";
@@ -1622,7 +1632,7 @@ void AccountRegistrationMenu(int ARMSelected) {
                         if (access("RegisteredAccounts.txt", F_OK) != 0 && !FlagARM) {
                             TempARMInputs = fopen("TempRegisteredAccounts.txt", "w");
 
-                            itoa((GlobalRegisteredAccounts + 1), GRA, 10);
+                            strcpy(GRA, "1");
                             snprintf(LocalTime, BUFSIZE07, "%d-%02d-%02d %02d:%02d:%02d", ManageTime.tm_year + 1900, ManageTime.tm_mon + 1, ManageTime.tm_mday, ManageTime.tm_hour, ManageTime.tm_min, ManageTime.tm_sec);
                             strcpy(RegAccInsider, "Registered Accounts: "); strcat(RegAccInsider, GRA); strcat(RegAccInsider, " account(s) in total.\n");
                             strcpy(UpdateLocalTime, "PersonalFMSA | Last Updated: ");
@@ -1640,6 +1650,16 @@ void AccountRegistrationMenu(int ARMSelected) {
                             fputs(RegAccInsider, TempARMInputs);
                             fputs("----------------------------------------------------------------------------------------------------\n", TempARMInputs);
                             fclose(TempARMInputs);
+                        
+                        } else if (access("RegisteredAccounts.txt", F_OK) == 0 && FlagARM) {
+                            FDestination     = fopen("RegisteredAccounts.txt", "r");
+                            FTempDestination = fopen("TempRegisteredAccounts.txt", "w");
+
+                            while (fgets(BUFFER, sizeof(BUFFER), FDestination) != 0) {
+                                BufLen = strlen(BUFFER);
+                                for (int i = 0; i < BufLen; i++) BUFFER[i] += EncryptionKey;
+                                fputs(BUFFER, FTempDestination);
+                            } fclose(FDestination); fclose(FTempDestination);
                         }
 
                         TempARMInputs = fopen("TempRegisteredAccounts.txt", "a+");
@@ -1668,7 +1688,7 @@ void AccountRegistrationMenu(int ARMSelected) {
                         fclose(TempARMInputs);
 
                         puts(ANSI_COLOR_LIGHTBLUE"\n\tInfo: Your account profile has been saved and ecrypted."ANSI_COLOR_RESET);
-                        puts(ANSI_COLOR_LIGHTYELLOW"\t      Now you may proceed to refresh the app before going to singing in by pressing the [ENTER] \n\t      button key on your keyboard in order to be able to update your listed profile accounts. \n\t      "ANSI_COLOR_RESET ANSI_COLOR_LIGHTGREEN"Proceed to re-open the app after this and you'll be prompted onto the login profile account \n\t      section, and all the features will be accessible by stay logged in within 30 days!"ANSI_COLOR_RESET);
+                        puts(ANSI_COLOR_LIGHTYELLOW"\n\t      Now you may proceed to refresh the app before going to singing in by pressing the [ENTER] \n\t      button key on your keyboard in order to be able to update your listed profile accounts. \n\t      "ANSI_COLOR_RESET ANSI_COLOR_LIGHTGREEN"Proceed to re-open the app after this and you'll be prompted onto the login profile account \n\t      section, and all the features will be accessible by stay logged in within 30 days!"ANSI_COLOR_RESET);
                         getchar(); sleep(RandInt(1, 3));
 
                         LE = false; LPN = false; LU = false; LP = false;
