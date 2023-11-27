@@ -73,7 +73,7 @@ Usage:  Creating a spesific colored font to highlight the
 */
 #define ANSI_COLOR_RESET           "\x1b[0;0m"
 #define ANSI_COLOR_DARKGRAY        "\x1b[0;30m"
-#define ANSI_COLOR_RED             "\x1b[0;38;5;196m"
+#define ANSI_COLOR_RED             "\x1b[0;38;5;197m"
 #define ANSI_COLOR_GREEN           "\x1b[0;38;5;82m"
 #define ANSI_COLOR_YELLOW          "\x1b[0;38;5;220m"
 #define ANSI_COLOR_BLUE            "\x1b[0;38;5;33m"
@@ -85,7 +85,7 @@ Usage:  Creating a spesific colored font to highlight the
 #define ANSI_COLOR_WHITE           "\x1b[0;37m"
 #define ANSI_COLOR_LIGHTRESET      "\x1b[1;0m"
 #define ANSI_COLOR_LIGHTGRAY       "\x1b[1;30m"
-#define ANSI_COLOR_LIGHTRED        "\x1b[1;38;5;196m"
+#define ANSI_COLOR_LIGHTRED        "\x1b[1;38;5;197m"
 #define ANSI_COLOR_LIGHTGREEN      "\x1b[1;38;5;82m"
 #define ANSI_COLOR_LIGHTYELLOW     "\x1b[1;38;5;220m"
 #define ANSI_COLOR_LIGHTBLUE       "\x1b[1;38;5;33m"
@@ -103,6 +103,25 @@ Usage:  Creating a spesific colored font to highlight the
 #define ANSI_STYLE_NEGATIVE        "\x1b[7m"
 #define ANSI_STYLE_CROSSED         "\x1b[9m"
 
+/* COLOR HIGHLIGHTING FOR MAIN MENU ONLY */
+#define BRIGHTGREEN154             "\x1b[0;38;5;154m"
+#define BRIGHTGREEN155             "\x1b[0;38;5;155m"
+#define BRIGHTGREEN156             "\x1b[0;38;5;156m"
+#define BRIGHTBLUE157              "\x1b[0;38;5;157m"
+#define BRIGHTBLUE158              "\x1b[0;38;5;158m"
+#define BRIGHTBLUE159              "\x1b[0;38;5;159m"
+
+#define BRIGHTRED217               "\x1b[0;38;5;217m"
+#define BRIGHTMAGENTA218           "\x1b[0;38;5;218m"
+#define BRIGHTPURPLE219            "\x1b[0;38;5;219m"
+
+#define BRIGHTRED202               "\x1b[0;38;5;202m"
+#define BRIGHTRED203               "\x1b[0;38;5;203m"
+#define BRIGHTMAGENTA204           "\x1b[0;38;5;204m"
+#define BRIGHTMAGENTA205           "\x1b[0;38;5;205m"
+#define BRIGHTPURPLE206            "\x1b[0;38;5;206m"
+#define BRIGHTPURPLE207            "\x1b[0;38;5;207m"
+
 // ClearScreen() method, works for both Windows and UNIX.
 void ClearScreen(void) {
 #ifdef _WIN32
@@ -118,17 +137,32 @@ void ClearScreen(void) {
 // Working with various errors, mostly defined here as global variables
 
 bool TruthConfirmation;
+bool SKYRApplicationRunning = false;
 size_t GlobalRegisteredAccounts = 0;
 const char* UserApplicationLanguage;
 const char* SOURCEFILENULLERROR = "SourceFileNotExists";
 const char* DESTINATIONFILENULLERROR = "DestinationFileNotExists";
 
-const char* ApplicationPresent   = "SKYR Corp. Foundation Inc., PRESENTS:\n";
-const char* ApplicationTitle     = "SKYR Corp. :: Personal Financial Management System [CLI-Win32] Application\n";
-const char* ApplicationVersion   = "SKYR Corp. :: @Pre-release V1.0.22.312a648 (November 19, 2023)\n";
-const char* AppGuideOnUsageUDRL  = "\n\t   " ANSI_COLOR_LIGHTGREEN"[^]\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN"[>]"ANSI_COLOR_RESET ANSI_COLOR_LIGHTGREEN"[v]"ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN"[<]\n\n\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN ANSI_STYLE_ITALIC"[^]: Go UP, [v]: Go DOWN, "ANSI_COLOR_RESET ANSI_COLOR_CYAN ANSI_STYLE_ITALIC"[>]: Go RIGHT, [<]: Go LEFT\n"ANSI_COLOR_RESET;
-const char* AppRegisterUI        = "Section: Profile Account Registration Menu\n";
-const char* AppLoginUI           = "Section: Profile Account Login Menu\n";
+const char* ApplicationPresent       = "SKYR Corp. Foundation Inc., PRESENTS:\n";
+const char* ApplicationTitle         = "SKYR Corp. :: Personal Financial Management System [CLI-Win32] Application\n";
+const char* ApplicationVersion       = "SKYR Corp. :: @PRE-RELEASE V1.0.39.3232 [91a4f88][W: 43] (November 27, 2023)\n";
+const char* AppGuideOnUsageUDRL      = "\n\t   " ANSI_COLOR_LIGHTGREEN"[^]\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN"[>]"ANSI_COLOR_RESET ANSI_COLOR_LIGHTGREEN"[v]"ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN"[<]\n\n\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN ANSI_STYLE_ITALIC"[^]: Go UP, [v]: Go DOWN, "ANSI_COLOR_RESET ANSI_COLOR_CYAN ANSI_STYLE_ITALIC"[>]: Go RIGHT, [<]: Go LEFT\n"ANSI_COLOR_RESET;
+const char* AppMainMenuUDRL          = "\n\t   " ANSI_COLOR_LIGHTGREEN"[^]\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN"[>]"ANSI_COLOR_RESET ANSI_COLOR_LIGHTGREEN"[v]"ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN"[<]\n\n\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN ANSI_STYLE_ITALIC"[^]: Go UP, [v]: Go DOWN, "ANSI_COLOR_RESET ANSI_COLOR_CYAN ANSI_STYLE_ITALIC"[>]: Go RIGHT " ANSI_STYLE_UNDERLINE"(Profile Manager)"ANSI_COLOR_RESET ANSI_COLOR_CYAN ANSI_STYLE_ITALIC", [<]: Go LEFT " ANSI_STYLE_UNDERLINE"(About Application)\n"ANSI_COLOR_RESET;
+const char* AppProfileManagerUDRL    = "\n\t   " ANSI_COLOR_LIGHTGREEN"[^]\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN"[>]"ANSI_COLOR_RESET ANSI_COLOR_LIGHTGREEN"[v]"ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN"[<]\n\n\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN ANSI_STYLE_ITALIC"[^]: Go UP, [v]: Go DOWN, "ANSI_COLOR_RESET ANSI_COLOR_CYAN ANSI_STYLE_ITALIC"[>]: Go RIGHT " ANSI_STYLE_UNDERLINE"(About Application)"ANSI_COLOR_RESET ANSI_COLOR_CYAN ANSI_STYLE_ITALIC", [<]: Go LEFT " ANSI_STYLE_UNDERLINE"(Home Menu)\n"ANSI_COLOR_RESET;
+const char* AppInformationsUDRL      = "\n\t   " ANSI_COLOR_LIGHTGREEN"[^]\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN"[>]"ANSI_COLOR_RESET ANSI_COLOR_LIGHTGREEN"[v]"ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN"[<]\n\n\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN ANSI_STYLE_ITALIC"[^]: Go UP, [v]: Go DOWN, "ANSI_COLOR_RESET ANSI_COLOR_CYAN ANSI_STYLE_ITALIC"[>]: Go RIGHT " ANSI_STYLE_UNDERLINE"(Home Menu)"ANSI_COLOR_RESET ANSI_COLOR_CYAN ANSI_STYLE_ITALIC", [<]: Go LEFT " ANSI_STYLE_UNDERLINE"(Profile Manager)\n"ANSI_COLOR_RESET;
+
+const char* AppRegisterUI            = "Section: Profile Account :: Registration Menu\n";
+const char* AppLoginUI               = "Section: Profile Account :: Login Menu\n";
+const char* AppRecoveryUI            = "Section: Profile Account :: Recovery Menu\n";
+const char* AppMainMenuUI            = "Section: Home (Dashbord) :: Main Menu of The Application Features\n";
+const char* AppProfileManagerUI      = "Section: Home (Accounts) :: Main Menu of The Profile Account(s) Manager\n";
+const char* AppInformationsUI        = "Section: Home (Abt. App) :: Main Menu of The Latest Informations and About Application\n";
+const char* AppFeature01             = "Section: App Feature 01. :: Financial Moneytory Transaction(s) Registration\n";
+const char* AppFeature02             = "Section: App Feature 02. :: Financial Moneytory Transaction(s) Grouping per Category\n";
+const char* AppFeature03             = "Section: App Feature 03. :: Financial Moneytoring and Budget(s) Creations\n";
+const char* AppFeature04             = "Section: App Feature 04. :: Financial Moneytory Filtering and Searched History\n";
+const char* AppFeature05             = "Section: App Feature 05. :: Financial Moneytoring for Reminders and Notifications\n";
+const char* AppFeature06             = "Section: App Feature 06. :: Financial Moneytoring with Data and 2D Graphical Visualizations\n";
 
 const char* ArrowKeyChoiceDialogModes[] = {
     "Trial Mode", "Truth Confirmation",
@@ -158,21 +192,41 @@ struct AccountRegistrationMenuInputs {
     char HiddenPasswordShown[BUFSIZE07];
 } ARMInputs[BUFSIZE10];
 bool FN = false, LN = false, E = false, U = false, P = false;
-bool B = false, A = false, PN = false, S = false, CP = false, PD = false;
+bool B = false, A = false, PN = false, S = false, CPR = false, PD = false;
 bool AC = false, CW = false, DI = false;
-int ARMSelected = 0;
+int ARMSelected = 0, FlagARM = false;
 
 struct AccountLoginMenuInputs {
     char Email[BUFSIZE07], PhoneNumber[BUFSIZE07], Username[BUFSIZE07], Password[BUFSIZE07];
     char HiddenPasswordShown[BUFSIZE07];
 } ALMInputs[BUFSIZE10];
 bool LE = false, LPN = false, LU = false, LP = false;
-int ALMSelected = 0;
+int ALMSelected = 0, FlagALM = false;
 
 struct AccountRecoveryMenuInputs {
-    char Email[BUFSIZE07], PhoneNumber[0], Username[BUFSIZE07], Password[BUFSIZE07];
+    char Email[BUFSIZE07], PhoneNumber[BUFSIZE07], Username[BUFSIZE07], Password[BUFSIZE07];
     char HiddenPasswordShown[BUFSIZE07];
 } ACMInputs[BUFSIZE10];
+bool CE = false, CPN = false, CU = false, CP = false;
+bool EmptyCE = false, EmptyCPN = false, EmptyCU = false, EmptyCP = false;
+bool FlagCE = false, FlagCPN = false, FlagCU = false, FlagCP = false;
+bool VisitedCE = false, VisitedCPN = false, VisitedCU = false, VisitedCP = false;
+int ACMSelected = 0, AllEmpty = 0;
+
+struct MainMenuApplicationFeaturesInputs {
+
+} MMAFInputs[BUFSIZE10];
+int MMAFSelected = 0;
+
+struct MainMenuProfileManagerInputs {
+
+} MMPMInputs[BUFSIZE10];
+int MMPMSelected = 0;
+
+struct HelpMenuInputs {
+
+} HMInputs[BUFSIZE10];
+int HMSelected = 0;
 
 struct MoneytoryTransactionsRegister {
     char *BankCharge[BUFSIZE10], *BillPayment[BUFSIZE10];
@@ -323,11 +377,14 @@ void LanguageMenu(void);
 void AccountRegistrationMenu(int);
 void AccountLoginMenu(int);
 void AccountRecoveryMenu(int);
-void MainMenu(int);
+void MainMenuApplicationFeatures(int);
+void MainMenuProfileManager(int);
+void MainMenuApplicationInformations(int);
 void HelpMenu(int);
 
 void EncryptTxtFile(const char*, const char*, int, bool);
 void DecryptTxtFile(const char*, bool, int, char ReadDecryptedKeyString[BUFSIZE16]);
+void OverWriteStringAtLine(const char*, const char*, const int, signed int);
 int  ArrowKeyChoiceDialog(const char*, char* MessagesShown[], size_t, size_t);
 int  RandInt(int, int);
 int  FindOccurences(const char*, char);
@@ -344,12 +401,13 @@ int WarningMessageBox_CANCELTRYCONTINUE(const char*, const char*);
 int ErrorMessageBox_OKCANCEL(const char*, const char*);
 
 // Available main application features: 6
-void F1_MoneytoryTransactionsRegister(void);    // Easy     (PRIORITY)
-void F2_MoneytoryGroupingPerCategory(void);     // Medium   (LATER)
-void F3_BudgetCreationAndMonitoring(void);      // Easy     (PRIORITY)
-void F4_FilterSearchingData(void);              // Medium   (LATER)
-void F5_ReminderAndSetNotifications(void);      // Hard     (LAST BUT NOT LEAST)
-void F6_DataVisualization(void);                // Harder   (LAST BUT NOT LEAST)
+
+void F1_MoneytoryTransactionsRegister(int);    // Easy     (PRIORITY)
+void F2_MoneytoryGroupingPerCategory(int);     // Medium   (LATER)
+void F3_BudgetCreationAndMonitoring(int);      // Easy     (PRIORITY)
+void F4_FilterSearchingData(int);              // Medium   (LATER)
+void F5_ReminderAndSetNotifications(int);      // Hard     (LAST BUT NOT LEAST)
+void F6_DataVisualization(int);                // Harder   (LAST BUT NOT LEAST)
 
 /* STARTING THE DECLARATIONS: REMINDER AND NOTIFICATIONS */
 /* Initialize functions and classes (if needed) */
@@ -424,6 +482,7 @@ char *ReadAndPrintLine(const char* SourceTextFile, intmax_t Line) {
     FILE *FSource = fopen(SourceTextFile, "r");
     char Buffer[BUFSIZE10], *ReturnBuffer = malloc(BUFSIZE10);
     intmax_t Lines = 0;
+    
     do {
         if (++Lines == Line) {
             fgets(Buffer, BUFSIZE10, FSource);
@@ -432,6 +491,47 @@ char *ReadAndPrintLine(const char* SourceTextFile, intmax_t Line) {
     } while((fscanf(FSource, "%*[^\n]"), fscanf(FSource, "%*c")) != EOF);
     if (Lines == Line) { strcpy(ReturnBuffer, Buffer); fclose(FSource); return ReturnBuffer; }
     fclose(FSource);
+}
+
+void OverWriteStringAtLine(const char* FSourceTxtFile, const char* NewOverWriteString, const int EncryptionKey, signed int AtSpesificLine) {
+	FILE *FSource, *FDestination, *FCopyAndDecrypting, *FTempDestination;
+	int AtLine = AtSpesificLine, LineControl = 0, BufLen = 0;
+	char BUFFER[BUFSIZE16], NewlyString[BUFSIZE16], FileName[BUFSIZE16];      
+	char OverWriteStringLine[BUFSIZE16], FTempDestinationTxtFile[BUFSIZE16] = "TempDestination.txt", DeleteTempDestinationTxtFile[BUFSIZE16];
+	
+	FCopyAndDecrypting = fopen(FSourceTxtFile, "r");
+	FTempDestination   = fopen("FTempDestination.txt", "w");
+	while (fgets(BUFFER, sizeof(BUFFER), FCopyAndDecrypting) != 0) {
+		BufLen = strlen(BUFFER);
+		for (int i = 0; i < BufLen; i++) BUFFER[i] += EncryptionKey;
+		fputs(BUFFER, FTempDestination);
+	} fclose(FCopyAndDecrypting); fclose(FTempDestination);
+
+	strncpy(FileName, FSourceTxtFile, BUFSIZE16);
+	FSource      = fopen("FTempDestination.txt", "r");
+	FDestination = fopen(FTempDestinationTxtFile, "w");
+	if (!FSource)      { }
+	if (!FDestination) { }
+
+	strncpy(OverWriteStringLine, NewOverWriteString, BUFSIZE16);
+	strcat(OverWriteStringLine, "\n");
+
+	while (!feof(FSource)) {
+		strcpy(NewlyString, "\0");
+		fgets(NewlyString, BUFSIZE16, FSource);
+
+		if (!feof(FSource))  {
+			LineControl++;
+			if (LineControl != AtLine) { fputs(NewlyString, FDestination); }
+			else { fputs(OverWriteStringLine, FDestination); }
+		}
+	} fclose(FSource);
+	fclose(FDestination);
+	remove(FileName); rename(FTempDestinationTxtFile, FileName);
+
+    strcpy(DeleteTempDestinationTxtFile, "del ");
+    strcat(DeleteTempDestinationTxtFile, "FTempDestination.txt");
+    system(DeleteTempDestinationTxtFile);
 }
 
 char *StringUppercase(char* SourceString) {
@@ -784,16 +884,7 @@ Requirements:
 //           Few warnings on incompatibilities for pointers.    ???
 
 const int EncryptionKey = 776853;
-void MainMenu(int MMSelected) {
-    ClearScreen();
-    puts("\n\n\n\n\tThis will be the main menu of the program.");
-    printf("\t%d\n", GlobalRegisteredAccounts);
-    getchar(); exit(0);
-}
-
-void HelpMenu(int HMSelected) {
-    // TODO: Build a help menu interface.
-}
+char FullName[BUFSIZE10], UserName[BUFSIZE07];
 
 int main(int argc, char **argv) {
     /* List of notifications, 4 on present */
@@ -807,12 +898,374 @@ int main(int argc, char **argv) {
     
     if (access("RegisteredAccounts.txt", F_OK) != 0) { fflush(stdout); LanguageMenu(); }
     else { fflush(stdout); AccountLoginMenu(0); }
+    // AccountRecoveryMenu(0);
     
     // Just adding a newline padding to the console while pre-testing encryption data file here.
     // puts("");
     // EncryptTxtFile("TemporaryDecProfile.txt", "TemporaryEncProfile.txt", EncryptionKey, false);
     // DecryptTxtFile("RegisteredAccounts.txt", true, EncryptionKey, "None");
     return 0;
+}
+
+void MainMenuApplicationFeatures(int MMAFSelected) {
+    ClearScreen();
+
+    int AvailableOptions = 6, SubmitOrContinue;
+    bool Selecting = true, Updated = false, FirstRun = true;
+    bool ConfirmOrBackMMAF = false;
+    char *TempEA, AKDC;
+
+    while (Selecting) {
+        if (!FirstRun) {
+            printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN"(STATUS) Profile Account Linked to: "ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN ANSI_STYLE_ITALIC ANSI_STYLE_UNDERLINE"%s.\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppMainMenuUI, UserName);
+
+            if ((MMAFSelected + 1) > 0 && (MMAFSelected + 1) <= 6 && (AvailableOptions == 6)) {
+                if ((MMAFSelected + 1) == 1) {
+                    printf("      " BRIGHTGREEN154 ANSI_STYLE_UNDERLINE"> Recording The Personal Financial Transactions.\n\t"ANSI_COLOR_RESET "Grouping Financial Transaction Types With Each Category.\n\tPersonal Budget Creation and Transaction Monitoring.\n\tFiltering and Searching Personal Financial Transaction Data.\n\tReminders and Notifications for Certain Important Transactions.\n\tVisualization of 2D Histogram Graphic Projections (CLI Based).\n\n");
+                } else if ((MMAFSelected + 1) == 2) {
+                    printf("\tRecording The Personal Financial Transactions.\n      " BRIGHTGREEN155 ANSI_STYLE_UNDERLINE"> Grouping Financial Transaction Types With Each Category.\n\t"ANSI_COLOR_RESET "Personal Budget Creation and Transaction Monitoring.\n\tFiltering and Searching Personal Financial Transaction Data.\n\tReminders and Notifications for Certain Important Transactions.\n\tVisualization of 2D Histogram Graphic Projections (CLI Based).\n\n");
+                } else if ((MMAFSelected + 1) == 3) {
+                    printf("\tRecording The Personal Financial Transactions.\n\tGrouping Financial Transaction Types With Each Category.\n      " BRIGHTGREEN156 ANSI_STYLE_UNDERLINE"> Personal Budget Creation and Transaction Monitoring.\n\t"ANSI_COLOR_RESET "Filtering and Searching Personal Financial Transaction Data.\n\tReminders and Notifications for Certain Important Transactions.\n\tVisualization of 2D Histogram Graphic Projections (CLI Based).\n\n");
+                } else if ((MMAFSelected + 1) == 4) {
+                    printf("\tRecording The Personal Financial Transactions.\n\tGrouping Financial Transaction Types With Each Category.\n\tPersonal Budget Creation and Transaction Monitoring.\n      " BRIGHTBLUE157 ANSI_STYLE_UNDERLINE"> Filtering and Searching Personal Financial Transaction Data.\n\t"ANSI_COLOR_RESET "Reminders and Notifications for Certain Important Transactions.\n\tVisualization of 2D Histogram Graphic Projections (CLI Based).\n\n");
+                } else if ((MMAFSelected + 1) == 5) {
+                    printf("\tRecording The Personal Financial Transactions.\n\tGrouping Financial Transaction Types With Each Category.\n\tPersonal Budget Creation and Transaction Monitoring.\n\tFiltering and Searching Personal Financial Transaction Data.\n      " BRIGHTBLUE158 ANSI_STYLE_UNDERLINE"> Reminders and Notifications for Certain Important Transactions.\n\t"ANSI_COLOR_RESET "Visualization of 2D Histogram Graphic Projections (CLI Based).\n\n");
+                } else if ((MMAFSelected + 1) == 6) {
+                    printf("\tRecording The Personal Financial Transactions.\n\tGrouping Financial Transaction Types With Each Category.\n\tPersonal Budget Creation and Transaction Monitoring.\n\tFiltering and Searching Personal Financial Transaction Data.\n\tReminders and Notifications for Certain Important Transactions.\n      " BRIGHTBLUE159 ANSI_STYLE_UNDERLINE"> Visualization of 2D Histogram Graphic Projections (CLI Based).\n\n"ANSI_COLOR_RESET);
+                }
+
+                printf("\n\n\n\n\n\n\t%s", AppMainMenuUDRL);
+            }
+        } else {
+            FirstRun = false;
+            printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN"(STATUS) Profile Account Linked to: "ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN ANSI_STYLE_ITALIC ANSI_STYLE_UNDERLINE"%s.\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppMainMenuUI, UserName);
+
+            if ((MMAFSelected + 1) > 0 && (MMAFSelected + 1) <= 6 && (AvailableOptions == 6)) {
+                if ((MMAFSelected + 1) == 1) {
+                    printf("      " BRIGHTGREEN154 ANSI_STYLE_UNDERLINE"> Recording The Personal Financial Transactions.\n\t"ANSI_COLOR_RESET "Grouping Financial Transaction Types With Each Category.\n\tPersonal Budget Creation and Transaction Monitoring.\n\tFiltering and Searching Personal Financial Transaction Data.\n\tReminders and Notifications for Certain Important Transactions.\n\tVisualization of 2D Histogram Graphic Projections (CLI Based).\n\n");
+                } else if ((MMAFSelected + 1) == 2) {
+                    printf("\tRecording The Personal Financial Transactions.\n      " BRIGHTGREEN155 ANSI_STYLE_UNDERLINE"> Grouping Financial Transaction Types With Each Category.\n\t"ANSI_COLOR_RESET "Personal Budget Creation and Transaction Monitoring.\n\tFiltering and Searching Personal Financial Transaction Data.\n\tReminders and Notifications for Certain Important Transactions.\n\tVisualization of 2D Histogram Graphic Projections (CLI Based).\n\n");
+                } else if ((MMAFSelected + 1) == 3) {
+                    printf("\tRecording The Personal Financial Transactions.\n\tGrouping Financial Transaction Types With Each Category.\n      " BRIGHTGREEN156 ANSI_STYLE_UNDERLINE"> Personal Budget Creation and Transaction Monitoring.\n\t"ANSI_COLOR_RESET "Filtering and Searching Personal Financial Transaction Data.\n\tReminders and Notifications for Certain Important Transactions.\n\tVisualization of 2D Histogram Graphic Projections (CLI Based).\n\n");
+                } else if ((MMAFSelected + 1) == 4) {
+                    printf("\tRecording The Personal Financial Transactions.\n\tGrouping Financial Transaction Types With Each Category.\n\tPersonal Budget Creation and Transaction Monitoring.\n      " BRIGHTBLUE157 ANSI_STYLE_UNDERLINE"> Filtering and Searching Personal Financial Transaction Data.\n\t"ANSI_COLOR_RESET "Reminders and Notifications for Certain Important Transactions.\n\tVisualization of 2D Histogram Graphic Projections (CLI Based).\n\n");
+                } else if ((MMAFSelected + 1) == 5) {
+                    printf("\tRecording The Personal Financial Transactions.\n\tGrouping Financial Transaction Types With Each Category.\n\tPersonal Budget Creation and Transaction Monitoring.\n\tFiltering and Searching Personal Financial Transaction Data.\n      " BRIGHTBLUE158 ANSI_STYLE_UNDERLINE"> Reminders and Notifications for Certain Important Transactions.\n\t"ANSI_COLOR_RESET "Visualization of 2D Histogram Graphic Projections (CLI Based).\n\n");
+                } else if ((MMAFSelected + 1) == 6) {
+                    printf("\tRecording The Personal Financial Transactions.\n\tGrouping Financial Transaction Types With Each Category.\n\tPersonal Budget Creation and Transaction Monitoring.\n\tFiltering and Searching Personal Financial Transaction Data.\n\tReminders and Notifications for Certain Important Transactions.\n      " BRIGHTBLUE159 ANSI_STYLE_UNDERLINE"> Visualization of 2D Histogram Graphic Projections (CLI Based).\n\n"ANSI_COLOR_RESET);
+                }
+
+                printf("\n\n\n\n\n\n\t%s", AppMainMenuUDRL);
+            }
+        }
+
+        switch (AKDC = _getch()) {
+            case KEY_UP:
+                if (MMAFSelected > 0 && MMAFSelected < AvailableOptions) {
+                    --MMAFSelected; Updated = true;
+                } else if (MMAFSelected <= 0) {
+                    MMAFSelected = (AvailableOptions - 1); Updated = true;
+                } break;
+            case KEY_DOWN:
+                if (MMAFSelected >= 0 && MMAFSelected < AvailableOptions - 1) {
+                    ++MMAFSelected; Updated = true;
+                } else if (MMAFSelected >= AvailableOptions - 1) {
+                    MMAFSelected = 0; Updated = true;
+                } break;
+            case KEY_RIGHT:
+                MainMenuProfileManager(0);
+            case KEY_LEFT:
+                MainMenuApplicationInformations(0);
+            case KEY_ENTER:
+                Selecting = false; Updated = true;
+                break;
+            default: break;
+        } (Selecting) ? ClearScreen() : NULL;
+        
+        fflush(stdin);
+        if (Updated) {
+            Updated = false;
+        } else {
+            NULL;
+        }
+    }
+
+    if (MMAFSelected == 0) {
+        F1_MoneytoryTransactionsRegister(MMAFSelected);
+        MainMenuApplicationFeatures(MMAFSelected);
+    } else if (MMAFSelected == 1) {
+        F2_MoneytoryGroupingPerCategory(MMAFSelected);
+        MainMenuApplicationFeatures(MMAFSelected);
+    } else if (MMAFSelected == 2) {
+        F3_BudgetCreationAndMonitoring(MMAFSelected);
+        MainMenuApplicationFeatures(MMAFSelected);
+    } else if (MMAFSelected == 3) {
+        F4_FilterSearchingData(MMAFSelected);
+        MainMenuApplicationFeatures(MMAFSelected);
+    } else if (MMAFSelected == 4) {
+        F5_ReminderAndSetNotifications(MMAFSelected);
+        MainMenuApplicationFeatures(MMAFSelected);
+    } else if (MMAFSelected == 5) {
+        F6_DataVisualization(MMAFSelected);
+        MainMenuApplicationFeatures(MMAFSelected);
+    }
+}
+
+void MainMenuProfileManager(int MMPMSelected) {
+    ClearScreen();
+
+    int AvailableOptions = 3, SubmitOrContinue;
+    bool Selecting = true, Updated = false, FirstRun = true;
+    bool ConfirmOrBackMMAF = false;
+    char *TempEA, AKDC;
+
+    while (Selecting) {
+        if (!FirstRun) {
+            printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN"(STATUS) Profile Account Linked to: "ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN ANSI_STYLE_ITALIC ANSI_STYLE_UNDERLINE"%s.\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppMainMenuUI, UserName);
+
+            if ((MMAFSelected + 1) > 0 && (MMAFSelected + 1) <= 3 && (AvailableOptions == 3)) {
+                if ((MMAFSelected + 1) == 1) {
+                    printf("      " BRIGHTRED217 ANSI_STYLE_UNDERLINE"> SKYR Persona: NEW+ Account Registration\n\t"ANSI_COLOR_RESET "SKYR Persona: NEW+ Account Signing In\n\tSKYR Persona: NEW+ Account Personal Recovery\n\n");
+                } else if ((MMAFSelected + 1) == 2) {
+                    printf("\tSKYR Persona: NEW+ Account Registration\n      " BRIGHTMAGENTA218 ANSI_STYLE_UNDERLINE"> SKYR Persona: NEW+ Account Signing In\n\t"ANSI_COLOR_RESET "SKYR Persona: NEW+ Account Personal Recovery\n\n");
+                } else if ((MMAFSelected + 1) == 3) {
+                    printf("\tSKYR Persona: NEW+ Account Registration\n\tSKYR Persona: NEW+ Account Signing In\n      " BRIGHTPURPLE219 ANSI_STYLE_UNDERLINE"> SKYR Persona: NEW+ Account Personal Recovery\n\n");
+                }
+
+                printf("\n\n\n\n\n\n\n\n\n\t%s", AppProfileManagerUDRL);
+            }
+        } else {
+            FirstRun = false;
+            printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN"(STATUS) Profile Account Linked to: "ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN ANSI_STYLE_ITALIC ANSI_STYLE_UNDERLINE"%s.\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppMainMenuUI, UserName);
+
+            if ((MMAFSelected + 1) > 0 && (MMAFSelected + 1) <= 3 && (AvailableOptions == 3)) {
+                if ((MMAFSelected + 1) == 1) {
+                    printf("      " BRIGHTRED217 ANSI_STYLE_UNDERLINE"> SKYR Persona: NEW+ Account Registration\n\t"ANSI_COLOR_RESET "SKYR Persona: NEW+ Account Signing In\n\tSKYR Persona: NEW+ Account Personal Recovery\n\n");
+                } else if ((MMAFSelected + 1) == 2) {
+                    printf("\tSKYR Persona: NEW+ Account Registration\n      " BRIGHTMAGENTA218 ANSI_STYLE_UNDERLINE"> SKYR Persona: NEW+ Account Signing In\n\t"ANSI_COLOR_RESET "SKYR Persona: NEW+ Account Personal Recovery\n\n");
+                } else if ((MMAFSelected + 1) == 3) {
+                    printf("\tSKYR Persona: NEW+ Account Registration\n\tSKYR Persona: NEW+ Account Signing In\n      " BRIGHTPURPLE219 ANSI_STYLE_UNDERLINE"> SKYR Persona: NEW+ Account Personal Recovery\n\n");
+                }
+
+                printf("\n\n\n\n\n\n\n\n\n\t%s", AppProfileManagerUDRL);
+            }
+        }
+
+        switch (AKDC = _getch()) {
+            case KEY_UP:
+                if (MMAFSelected > 0 && MMAFSelected < AvailableOptions) {
+                    --MMAFSelected; Updated = true;
+                } else if (MMAFSelected <= 0) {
+                    MMAFSelected = (AvailableOptions - 1); Updated = true;
+                } break;
+            case KEY_DOWN:
+                if (MMAFSelected >= 0 && MMAFSelected < AvailableOptions - 1) {
+                    ++MMAFSelected; Updated = true;
+                } else if (MMAFSelected >= AvailableOptions - 1) {
+                    MMAFSelected = 0; Updated = true;
+                } break;
+            case KEY_RIGHT:
+                MainMenuApplicationInformations(0);
+            case KEY_LEFT:
+                MainMenuApplicationFeatures(0);
+            case KEY_ENTER:
+                Selecting = false; Updated = true;
+                break;
+            default: break;
+        } (Selecting) ? ClearScreen() : NULL;
+        
+        fflush(stdin);
+        if (Updated) {
+            Updated = false;
+        } else {
+            NULL;
+        }
+    }
+
+    if (MMAFSelected == 0) {
+        AccountRegistrationMenu(0);
+        MainMenuApplicationFeatures(MMAFSelected);
+    } else if (MMAFSelected == 1) {
+        AccountLoginMenu(0);
+        MainMenuApplicationFeatures(MMAFSelected);
+    } else if (MMAFSelected == 2) {
+        MainMenuProfileManager(MMPMSelected);
+        // AccountRecoveryMenu(0);
+        // MainMenuApplicationFeatures(MMAFSelected);
+    } // else if (MMAFSelected == 3) {
+        // TODO: Create a function to manage the personal user profile account.
+    //     MainMenuApplicationFeatures(MMAFSelected);
+    // }
+}
+
+void MainMenuApplicationInformations(int MMAISelected) {
+    ClearScreen();
+
+    int AvailableOptions = 6, SubmitOrContinue;
+    bool Selecting = true, Updated = false, FirstRun = true;
+    bool ConfirmOrBackMMAF = false;
+    char *TempEA, AKDC;
+    
+    while (Selecting) {
+        if (!FirstRun) {
+            printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN"(STATUS) Profile Account Linked to: "ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN ANSI_STYLE_ITALIC ANSI_STYLE_UNDERLINE"%s.\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppMainMenuUI, UserName);
+
+            if ((MMAISelected + 1) > 0 && (MMAISelected + 1) <= 6 && (AvailableOptions == 6)) {
+                if ((MMAISelected + 1) == 1) {
+                    printf("      " BRIGHTRED202 ANSI_STYLE_UNDERLINE"> Financial Moneytory Transaction(s) Registration\n\t"ANSI_COLOR_RESET "Financial Moneytory Transaction(s) Grouping per Category\n\tFinancial Moneytoring and Budget(s) Creations\n\tFinancial Moneytory Filtering and Searched History\n\tFinancial Moneytoring for Reminders and Notifications\n\tFinancial Moneytoring with Data and 2D Graphical Visualizations\n\n");
+                } else if ((MMAISelected + 1) == 2) {
+                    printf("\tFinancial Moneytory Transaction(s) Registration\n      " BRIGHTRED203 ANSI_STYLE_UNDERLINE"> Financial Moneytory Transaction(s) Grouping per Category\n\t"ANSI_COLOR_RESET "Financial Moneytoring and Budget(s) Creations\n\tFinancial Moneytory Filtering and Searched History\n\tFinancial Moneytoring for Reminders and Notifications\n\tFinancial Moneytoring with Data and 2D Graphical Visualizations\n\n");
+                } else if ((MMAISelected + 1) == 3) {
+                    printf("\tFinancial Moneytory Transaction(s) Registration\n\tFinancial Moneytory Transaction(s) Grouping per Category\n      " BRIGHTMAGENTA204 ANSI_STYLE_UNDERLINE"> Financial Moneytoring and Budget(s) Creations\n\t"ANSI_COLOR_RESET "Financial Moneytory Filtering and Searched History\n\tFinancial Moneytoring for Reminders and Notifications\n\tFinancial Moneytoring with Data and 2D Graphical Visualizations\n\n");
+                } else if ((MMAISelected + 1) == 4) {
+                    printf("\tFinancial Moneytory Transaction(s) Registration\n\tFinancial Moneytory Transaction(s) Grouping per Category\n\tFinancial Moneytoring and Budget(s) Creations\n      " BRIGHTMAGENTA205 ANSI_STYLE_UNDERLINE"> Financial Moneytory Filtering and Searched History\n\t"ANSI_COLOR_RESET "Financial Moneytoring for Reminders and Notifications\n\tFinancial Moneytoring with Data and 2D Graphical Visualizations\n\n");
+                } else if ((MMAISelected + 1) == 5) {
+                    printf("\tFinancial Moneytory Transaction(s) Registration\n\tFinancial Moneytory Transaction(s) Grouping per Category\n\tFinancial Moneytoring and Budget(s) Creations\n\tFinancial Moneytory Filtering and Searched History\n      " BRIGHTPURPLE206 ANSI_STYLE_UNDERLINE"> Financial Moneytoring for Reminders and Notifications\n\t"ANSI_COLOR_RESET "Financial Moneytoring with Data and 2D Graphical Visualizations\n\n");
+                } else if ((MMAISelected + 1) == 6) {
+                    printf("\tFinancial Moneytory Transaction(s) Registration\n\tFinancial Moneytory Transaction(s) Grouping per Category\n\tFinancial Moneytoring and Budget(s) Creations\n\tFinancial Moneytory Filtering and Searched History\n\tFinancial Moneytoring for Reminders and Notifications\n      " BRIGHTPURPLE207 ANSI_STYLE_UNDERLINE"> Financial Moneytoring with Data and 2D Graphical Visualizations\n\n"ANSI_COLOR_RESET);
+                }
+
+                printf("\n\n\n\n\n\n\t%s", AppInformationsUDRL);
+            }
+        } else {
+            FirstRun = false;
+            printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN"(STATUS) Profile Account Linked to: "ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN ANSI_STYLE_ITALIC ANSI_STYLE_UNDERLINE"%s.\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppMainMenuUI, UserName);
+
+            if ((MMAISelected + 1) > 0 && (MMAISelected + 1) <= 6 && (AvailableOptions == 6)) {
+                if ((MMAISelected + 1) == 1) {
+                    printf("      " BRIGHTRED202 ANSI_STYLE_UNDERLINE"> Financial Moneytory Transaction(s) Registration\n\t"ANSI_COLOR_RESET "Financial Moneytory Transaction(s) Grouping per Category\n\tFinancial Moneytoring and Budget(s) Creations\n\tFinancial Moneytory Filtering and Searched History\n\tFinancial Moneytoring for Reminders and Notifications\n\tFinancial Moneytoring with Data and 2D Graphical Visualizations\n\n");
+                } else if ((MMAISelected + 1) == 2) {
+                    printf("\tFinancial Moneytory Transaction(s) Registration\n      " BRIGHTRED203 ANSI_STYLE_UNDERLINE"> Financial Moneytory Transaction(s) Grouping per Category\n\t"ANSI_COLOR_RESET "Financial Moneytoring and Budget(s) Creations\n\tFinancial Moneytory Filtering and Searched History\n\tFinancial Moneytoring for Reminders and Notifications\n\tFinancial Moneytoring with Data and 2D Graphical Visualizations\n\n");
+                } else if ((MMAISelected + 1) == 3) {
+                    printf("\tFinancial Moneytory Transaction(s) Registration\n\tFinancial Moneytory Transaction(s) Grouping per Category\n      " BRIGHTMAGENTA204 ANSI_STYLE_UNDERLINE"> Financial Moneytoring and Budget(s) Creations\n\t"ANSI_COLOR_RESET "Financial Moneytory Filtering and Searched History\n\tFinancial Moneytoring for Reminders and Notifications\n\tFinancial Moneytoring with Data and 2D Graphical Visualizations\n\n");
+                } else if ((MMAISelected + 1) == 4) {
+                    printf("\tFinancial Moneytory Transaction(s) Registration\n\tFinancial Moneytory Transaction(s) Grouping per Category\n\tFinancial Moneytoring and Budget(s) Creations\n      " BRIGHTMAGENTA205 ANSI_STYLE_UNDERLINE"> Financial Moneytory Filtering and Searched History\n\t"ANSI_COLOR_RESET "Financial Moneytoring for Reminders and Notifications\n\tFinancial Moneytoring with Data and 2D Graphical Visualizations\n\n");
+                } else if ((MMAISelected + 1) == 5) {
+                    printf("\tFinancial Moneytory Transaction(s) Registration\n\tFinancial Moneytory Transaction(s) Grouping per Category\n\tFinancial Moneytoring and Budget(s) Creations\n\tFinancial Moneytory Filtering and Searched History\n      " BRIGHTPURPLE207 ANSI_STYLE_UNDERLINE"> Financial Moneytoring for Reminders and Notifications\n\t"ANSI_COLOR_RESET "Financial Moneytoring with Data and 2D Graphical Visualizations\n\n");
+                } else if ((MMAISelected + 1) == 6) {
+                    printf("\tFinancial Moneytory Transaction(s) Registration\n\tFinancial Moneytory Transaction(s) Grouping per Category\n\tFinancial Moneytoring and Budget(s) Creations\n\tFinancial Moneytory Filtering and Searched History\n\tFinancial Moneytoring for Reminders and Notifications\n      " BRIGHTPURPLE207 ANSI_STYLE_UNDERLINE"> Financial Moneytoring with Data and 2D Graphical Visualizations\n\n"ANSI_COLOR_RESET);
+                }
+
+                printf("\n\n\n\n\n\n\t%s", AppInformationsUDRL);
+            }
+        }
+
+        switch (AKDC = _getch()) {
+            case KEY_UP:
+                if (MMAISelected > 0 && MMAISelected < AvailableOptions) {
+                    --MMAISelected; Updated = true;
+                } else if (MMAISelected <= 0) {
+                    MMAISelected = (AvailableOptions - 1); Updated = true;
+                } break;
+            case KEY_DOWN:
+                if (MMAISelected >= 0 && MMAISelected < AvailableOptions - 1) {
+                    ++MMAISelected; Updated = true;
+                } else if (MMAISelected >= AvailableOptions - 1) {
+                    MMAISelected = 0; Updated = true;
+                } break;
+            case KEY_RIGHT:
+                MainMenuApplicationFeatures(0);
+            case KEY_LEFT:
+                MainMenuProfileManager(0);
+            case KEY_ENTER:
+                Selecting = false; Updated = true;
+                break;
+            default: break;
+        } (Selecting) ? ClearScreen() : NULL;
+        
+        fflush(stdin);
+        if (Updated) {
+            Updated = false;
+        } else {
+            NULL;
+        }
+    }
+
+    // if (MMAISelected == 0) {
+    //     F1_MoneytoryTransactionsRegister(MMAISelected);
+    //     MainMenuApplicationFeatures(MMAISelected);
+    // } else if (MMAISelected == 1) {
+    //     F2_MoneytoryGroupingPerCategory(MMAISelected);
+    //     MainMenuApplicationFeatures(MMAISelected);
+    // } else if (MMAISelected == 2) {
+    //     F3_BudgetCreationAndMonitoring(MMAISelected);
+    //     MainMenuApplicationFeatures(MMAISelected);
+    // } else if (MMAISelected == 3) {
+    //     F4_FilterSearchingData(MMAISelected);
+    //     MainMenuApplicationFeatures(MMAISelected);
+    // } else if (MMAISelected == 4) {
+    //     F5_ReminderAndSetNotifications(MMAISelected);
+    //     MainMenuApplicationFeatures(MMAISelected);
+    // } else if (MMAISelected == 5) {
+    //     F6_DataVisualization(MMAISelected);
+    //     MainMenuApplicationFeatures(MMAISelected);
+    // }
+}
+
+void F1_MoneytoryTransactionsRegister(int MMAFSelected) {
+    ClearScreen();
+
+    printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN"(STATUS) Profile Account Linked to: "ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN ANSI_STYLE_ITALIC ANSI_STYLE_UNDERLINE"%s.\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppFeature01, UserName);
+    puts(ANSI_COLOR_LIGHTRED"\tComing Soon: This spesific main menu session is still on DEVELOPMENT, and will be updated in the \n\tfuture, soon enough before the 16th WEEK.");
+    puts(ANSI_COLOR_PINK"\tThank you for your attention, and pardon for the incoviniences... .");
+    puts(ANSI_COLOR_YELLOW"\n\tReason on Development (to be done soon): Require a in-depth more about the UI and showing the \n\ttextings further.");
+    getchar(); MainMenuApplicationFeatures(MMAFSelected);
+}
+
+void F2_MoneytoryGroupingPerCategory(int MMAFSelected) {
+    ClearScreen();
+    
+    printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN"(STATUS) Profile Account Linked to: "ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN ANSI_STYLE_ITALIC ANSI_STYLE_UNDERLINE"%s.\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppFeature02, UserName);
+    puts(ANSI_COLOR_LIGHTRED"\tComing Soon: This spesific main menu session is still on DEVELOPMENT, and will be updated in the \n\tfuture, soon enough before the 16th WEEK.");
+    puts(ANSI_COLOR_PINK"\tThank you for your attention, and pardon for the incoviniences... .");
+    puts(ANSI_COLOR_YELLOW"\n\tReason on Development (to be done soon): Require a in-depth more about the UI and showing the \n\ttextings further.");
+    getchar(); MainMenuApplicationFeatures(MMAFSelected);
+}
+
+void F3_BudgetCreationAndMonitoring(int MMAFSelected) {
+    ClearScreen();
+    
+    printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN"(STATUS) Profile Account Linked to: "ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN ANSI_STYLE_ITALIC ANSI_STYLE_UNDERLINE"%s.\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppFeature03, UserName);
+    puts(ANSI_COLOR_LIGHTRED"\tComing Soon: This spesific main menu session is still on DEVELOPMENT, and will be updated in the \n\tfuture, soon enough before the 16th WEEK.");
+    puts(ANSI_COLOR_PINK"\tThank you for your attention, and pardon for the incoviniences... .");
+    puts(ANSI_COLOR_YELLOW"\n\tReason on Development (to be done soon): Require a in-depth more about the UI and showing the \n\ttextings further.");
+    getchar(); MainMenuApplicationFeatures(MMAFSelected);
+}
+
+void F4_FilterSearchingData(int MMAFSelected) {
+    ClearScreen();
+
+    printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN"(STATUS) Profile Account Linked to: "ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN ANSI_STYLE_ITALIC ANSI_STYLE_UNDERLINE"%s.\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppFeature05, UserName);
+    puts(ANSI_COLOR_LIGHTRED"\t(DEMO MODE) Updating Soon: This spesific main menu session is still on DEVELOPMENT, and will be \n\tupdated in the future, soon enough before the 16th WEEK.");
+    puts(ANSI_COLOR_PINK"\tThank you for your attention, and pardon for the incoviniences... .");
+    puts(ANSI_COLOR_YELLOW"\n\tReason on Development (to be done soon): Releasing an updated version of the current UI's \n\tsession, whilst already in DEMO FEATURE MODE.");
+    puts(ANSI_COLOR_ORANGE"\n\tIn order to try to use this feature, try to use the program manually from the 'int main()' section. \n\tRight there, comment the condition to try to register and log in, and un-comment the line that has a \n\tfunction called: 'DecryptTxtFile'.");
+    puts(ANSI_COLOR_LIGHTORANGE"\n\tBefore using the function, make sure you have a file to read, and an encryption key [integers] to \n\tdecrypt (if your text file is encrypted). Next, make sure you're able to tokenize or subbed-search \n\ta string inside the text file, and it can be a word, some kind of a finder, etc.");
+    puts(ANSI_COLOR_LIGHTGREEN"\n\tSee how to use the function by looking at the documentation of mine there, or as an example to use \n\tthe function by just replacing some keys to search/filter and the text file name.\n\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN ANSI_STYLE_ITALIC"See more at my GitHub project here: https://github.com/EintsWaveX/ALPRO-FinalAssessments-EL4705_03");
+    getchar(); MainMenuApplicationFeatures(MMAFSelected);
+}
+
+void F5_ReminderAndSetNotifications(int MMAFSelected) {
+    ClearScreen();
+
+    printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN"(STATUS) Profile Account Linked to: "ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN ANSI_STYLE_ITALIC ANSI_STYLE_UNDERLINE"%s.\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppFeature05, UserName);
+    puts(ANSI_COLOR_LIGHTRED"\t(DEMO MODE) Updating Soon: This spesific main menu session is still on DEVELOPMENT, and will be \n\tupdated in the future, soon enough before the 16th WEEK.");
+    puts(ANSI_COLOR_PINK"\tThank you for your attention, and pardon for the incoviniences... .");
+    puts(ANSI_COLOR_YELLOW"\n\tReason on Development (to be done soon): Releasing an updated version of the current UI's \n\tsession, whilst already in DEMO FEATURE MODE.");
+    puts(ANSI_COLOR_ORANGE"\n\tIn order to try to use this feature, try to use the program manually from the 'int main()' section. \n\tRight there, comment the condition to try to register and log in, and un-comment the lines that have \n\tseveral naming functions starting with 'INFO', 'QUESTION', 'WARNING', and 'ERROR'.");
+    puts(ANSI_COLOR_LIGHTORANGE"\n\tExperimental demonstrations: Un-comment those 4 lines as stated above, and enjoy some Windows' old \n\tpop-up notifications, and make some changes for the titles and the messages for each notifications \n\tin order to experience the changes accordingly.");
+    puts(ANSI_COLOR_GREEN ANSI_STYLE_ITALIC"\n\tSee more at my GitHub project here: https://github.com/EintsWaveX/ALPRO-FinalAssessments-EL4705_03");
+    getchar(); MainMenuApplicationFeatures(MMAFSelected);
+}
+
+void F6_DataVisualization(int MMAFSelected) {
+    ClearScreen();
+    
+    printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN"(STATUS) Profile Account Linked to: "ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN ANSI_STYLE_ITALIC ANSI_STYLE_UNDERLINE"%s.\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppFeature06, UserName);
+    puts(ANSI_COLOR_LIGHTRED"\tComing Soon: This spesific main menu session is still on DEVELOPMENT, and will be updated in the \n\tfuture, soon enough before the 16th WEEK.");
+    puts(ANSI_COLOR_PINK"\tThank you for your attention, and pardon for the incoviniences... .");
+    puts(ANSI_COLOR_YELLOW"\n\tReason on Development (to be done soon): Require a in-depth more about the UI and showing the \n\ttextings further, and still need to figure out on how to graph calculation in C.");
+    getchar(); MainMenuApplicationFeatures(MMAFSelected);
 }
 
 void LanguageMenu(void) {
@@ -831,14 +1284,22 @@ void AccountRegistrationMenu(int ARMSelected) {
     char *SourceTextFileName, *SourceKeyStringValue, *SelectedKeyString;
     char *SourceKeyStringValues[BUFSIZE07], FTDestination[1][BUFSIZE07];
 
+    FILE *TempARMInputs;
+    char RegAccInsider[BUFSIZE07], GRA[BUFSIZE07];
+    char FirstName[BUFSIZE07], LastName[BUFSIZE07], Email[BUFSIZE07], Username[BUFSIZE07], Password[BUFSIZE07];
+    char DateOfBirth[BUFSIZE07], AgeOnPresent[BUFSIZE07], PhoneNumber[BUFSIZE07], Sex[BUFSIZE07];
+    char UpdateLocalTime[BUFSIZE07], LocalTime[BUFSIZE07], AccountMadeTime[BUFSIZE07], MadeTime[BUFSIZE07];
+
     int AvailableOptions = 5, SubmitOrContinue, ExistingAccounts;
     bool Selecting = true, Updated = false, FirstRun = true;
     bool FirstARMUpgrade = false, SecondARMUpgrade = false;
     bool ConfirmOrBackARM = false;
-    char *TempEA, AKDC;
+    char MessageID02[BUFSIZE10], MessageID03[BUFSIZE10], MessageID04[BUFSIZE10];
+    char TempCountRegisteredAccounts[BUFSIZE10];
+    char *CountRegisteredAccounts, AKDC;
 
-    if (access("RegisteredAccounts.txt", F_OK) != 0) { GlobalRegisteredAccounts = 0; }
-    else {
+    if (access("RegisteredAccounts.txt", F_OK) != 0 && !FlagARM) { GlobalRegisteredAccounts = 0; }
+    else if (access("RegisteredAccounts.txt", F_OK) == 0 && !FlagARM) {
         FDestination     = fopen("RegisteredAccounts.txt", "r");
         FTempDestination = fopen("TempDestination.txt", "w");
 
@@ -860,42 +1321,22 @@ void AccountRegistrationMenu(int ARMSelected) {
             Ptr++; KeyTracker++;
         } SourceTextFileName = TrimWhiteSpaces(TxtFileName);
         
-        if (strcmp(SourceTextFileName, "RegisteredAccounts") == 0) {
-            if ((strchr(TxtFileName, ':') == NULL) && (strchr(SelectedKeyString, ':') == NULL)) {
-                int FTDIndex = 0, SKSVIndex = 0;
+        strcpy(TempCountRegisteredAccounts, ReadAndPrintLine("TempDestination.txt", 9));
 
-                FDestination = fopen("TempDestination.txt", "r");
-                for (C = getc(FDestination); C != EOF; C = getc(FDestination)) { if (C == '\n') LineTracker++; }
-                fclose(FDestination);
+        strcpy(DeleteTempDestinationTxtFile, "del ");
+        strcat(DeleteTempDestinationTxtFile, "TempDestination.txt");
+        system(DeleteTempDestinationTxtFile);
 
-                FDestination = fopen("TempDestination.txt", "r");
-                while(fgets(FTDestination[FTDPos], BUFSIZE10, FDestination) != NULL) {
-                    if (FTDPos < LineTracker)
-                        FTDestination[FTDPos][strlen(FTDestination[FTDPos]) - 1] = '\0';
-                    FTDPos++;
-                } fclose(FDestination);
-
-                while (FTDIndex <= LineTracker) {
-                    while (SKSVIndex <= KeyTracker - 2) {
-                        if (strstr(FTDestination[FTDIndex], SourceKeyStringValues[SKSVIndex]) != NULL) {
-                            TempEA = FTDestination[FTDIndex]; break;
-                        } else if (strstr(FTDestination[FTDIndex], SourceKeyStringValues[SKSVIndex]) == NULL)
-                            SKSVIndex++;
-                    } FTDIndex++; SKSVIndex = 0;
-                }
-                strcpy(DeleteTempDestinationTxtFile, "del ");
-                strcat(DeleteTempDestinationTxtFile, "TempDestination.txt");
-                system(DeleteTempDestinationTxtFile);
-            }
-        } else {
-            strcpy(DeleteTempDestinationTxtFile, "del ");
-            strcat(DeleteTempDestinationTxtFile, "TempDestination.txt");
-            system(DeleteTempDestinationTxtFile);
-        }
+        TempCountRegisteredAccounts[strlen(TempCountRegisteredAccounts) - 1] = '\0';
+        strtok_r(TempCountRegisteredAccounts, ":", &CountRegisteredAccounts);
         
-        TempEA = TrimWhiteSpaces(TempEA);
-        ExistingAccounts = atoi(TempEA);
-        GlobalRegisteredAccounts += ExistingAccounts;
+        CountRegisteredAccounts = TrimWhiteSpaces(CountRegisteredAccounts);
+        CountRegisteredAccounts = strtok(CountRegisteredAccounts, " ");
+        ExistingAccounts = atoi(CountRegisteredAccounts);
+        
+        if (!SKYRApplicationRunning) { GlobalRegisteredAccounts += ExistingAccounts; }
+        else { GlobalRegisteredAccounts++; }
+        FlagARM = true;
     }
     
     if ((FN && LN && E && U && P) && !FirstARMUpgrade) { AvailableOptions += 4; FirstARMUpgrade = true; }
@@ -914,7 +1355,7 @@ void AccountRegistrationMenu(int ARMSelected) {
                 FOUR (4) + FIVE (5) rows both parts.
             >   Date of Birth, Age on Present, Phone  Number, Sex/Gender
             */
-            printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t--------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t--------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRegisterUI);
+            printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRegisterUI);
 
             if ((ARMSelected + 1) > 0 && (ARMSelected + 1) <= 5 && (AvailableOptions == 5)) {
                 if ((ARMSelected + 1) == 1) {
@@ -1002,62 +1443,75 @@ void AccountRegistrationMenu(int ARMSelected) {
                 
                 if ((ARMSelected + 1) > 9) {
                     ClearScreen();
-                    printf("\n\n\n\n\tInfo: You have all the main required information listing above of all \n\t      nine (9) personal infos, and you may proceed to the final step, and \n\t      it's about giving optional information about your career profiling, \n\t      degree of experience, and such else.\n");
+                    printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRegisterUI);
+
+                    printf("\tInfo: You have all the main required information listing above of all \n\t      nine (9) personal infos, and you may proceed to the final step, and \n\t      it's about giving optional information about your career profiling, \n\t      degree of experience, and such else.\n");
                     printf("\n\t" ANSI_COLOR_LIGHTBLUE"(Optional)"ANSI_COLOR_RESET " Here all are the given choices before you proceed... \n\t" ANSI_COLOR_LIGHTRED"> CONFIRM: "ANSI_COLOR_RESET ANSI_COLOR_RED"Stop Here"ANSI_COLOR_RESET " and " ANSI_COLOR_GREEN"Save All"ANSI_COLOR_RESET" the given informations, or \n\t" ANSI_COLOR_LIGHTGREEN"> CANCEL: "ANSI_COLOR_RESET ANSI_COLOR_GREEN"Keep All"ANSI_COLOR_RESET " the information and " ANSI_COLOR_CYAN"Continue to Fill In"ANSI_COLOR_RESET " the last section of \n\tyour personal profile infos?\n\n");
-                    MessagesShown_ArrowKeyChoiceDialog[2] = "\n\n\n\n\tInfo: You have all the main required information listing above of all \n\t      nine (9) personal infos, and you may proceed to the final step, and \n\t      it's about giving optional information about your career profiling, \n\t      degree of experience, and such else.";
-                    MessagesShown_ArrowKeyChoiceDialog[3] = "\n\t" ANSI_COLOR_LIGHTBLUE"(Optional)"ANSI_COLOR_RESET " Here all are the given choices before you proceed... \n\t" ANSI_COLOR_LIGHTRED"> CONFIRM: "ANSI_COLOR_RESET ANSI_COLOR_RED"Stop Here"ANSI_COLOR_RESET " and " ANSI_COLOR_GREEN"Save All"ANSI_COLOR_RESET" the given informations, or \n\t" ANSI_COLOR_LIGHTGREEN"> CANCEL: "ANSI_COLOR_RESET ANSI_COLOR_GREEN"Keep All"ANSI_COLOR_RESET " the information and " ANSI_COLOR_CYAN"Continue to Fill In"ANSI_COLOR_RESET " the last section of \n\tyour personal profile infos?\n";
-                    SubmitOrContinue = ArrowKeyChoiceDialog("Truth Confirmation", MessagesShown_ArrowKeyChoiceDialog, 2, 4);
+                    
+                    snprintf(MessageID02, BUFSIZE10, "\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRegisterUI);
+                    MessagesShown_ArrowKeyChoiceDialog[2] = MessageID02;
+                    MessagesShown_ArrowKeyChoiceDialog[3] = "\tInfo: You have all the main required information listing above of all \n\t      nine (9) personal infos, and you may proceed to the final step, and \n\t      it's about giving optional information about your career profiling, \n\t      degree of experience, and such else.";
+                    MessagesShown_ArrowKeyChoiceDialog[4] = "\n\t" ANSI_COLOR_LIGHTBLUE"(Optional)"ANSI_COLOR_RESET " Here all are the given choices before you proceed... \n\t" ANSI_COLOR_LIGHTRED"> CONFIRM: "ANSI_COLOR_RESET ANSI_COLOR_RED"Stop Here"ANSI_COLOR_RESET " and " ANSI_COLOR_GREEN"Save All"ANSI_COLOR_RESET" the given informations, or \n\t" ANSI_COLOR_LIGHTGREEN"> CANCEL: "ANSI_COLOR_RESET ANSI_COLOR_GREEN"Keep All"ANSI_COLOR_RESET " the information and " ANSI_COLOR_CYAN"Continue to Fill In"ANSI_COLOR_RESET " the last section of \n\tyour personal profile infos?\n";
+                    SubmitOrContinue = ArrowKeyChoiceDialog("Truth Confirmation", MessagesShown_ArrowKeyChoiceDialog, 2, 5);
 
                     if (SubmitOrContinue) {
-                        FILE *TempARMInputs;
-                        char RegAccInsider[BUFSIZE07], GRA[BUFSIZE07];
-                        char FirstName[BUFSIZE07], LastName[BUFSIZE07], Email[BUFSIZE07], Username[BUFSIZE07], Password[BUFSIZE07];
-                        char DateOfBirth[BUFSIZE07], AgeOnPresent[BUFSIZE07], PhoneNumber[BUFSIZE07], Sex[BUFSIZE07];
-                        char UpdateLocalTime[BUFSIZE07], LocalTime[BUFSIZE07], AccountMadeTime[BUFSIZE07], MadeTime[BUFSIZE07];
+                        if (access("RegisteredAccounts.txt", F_OK) != 0 && !FlagARM) {
+                            TempARMInputs = fopen("TempRegisteredAccounts.txt", "w");
 
-                        TempARMInputs = fopen("TempRegisteredAccount.txt", "w");
-                        itoa((GlobalRegisteredAccounts + 1), GRA, 10);
-                        snprintf(LocalTime, BUFSIZE07, "%d-%02d-%02d %02d:%02d:%02d", ManageTime.tm_year + 1900, ManageTime.tm_mon + 1, ManageTime.tm_mday, ManageTime.tm_hour, ManageTime.tm_min, ManageTime.tm_sec);
-                        snprintf(MadeTime, BUFSIZE07, "%d-%02d-%02d %02d:%02d:%02d", ManageTime.tm_year + 1900, ManageTime.tm_mon + 1, ManageTime.tm_mday, ManageTime.tm_hour, ManageTime.tm_min, ManageTime.tm_sec);
+                            strcpy(GRA, "1");
+                            snprintf(LocalTime, BUFSIZE07, "%d-%02d-%02d %02d:%02d:%02d", ManageTime.tm_year + 1900, ManageTime.tm_mon + 1, ManageTime.tm_mday, ManageTime.tm_hour, ManageTime.tm_min, ManageTime.tm_sec);
+                            strcpy(RegAccInsider, "Registered Accounts: "); strcat(RegAccInsider, GRA); strcat(RegAccInsider, " account(s) in total.\n");
+                            strcpy(UpdateLocalTime, "PersonalFMSA | Last Updated: ");
+                            strcat(UpdateLocalTime, LocalTime); strcat(UpdateLocalTime, "\n");
+                            strcpy(AccountMadeTime, "Profile Account :: No. 1"); strcat(AccountMadeTime, "\n");
+                            strcat(AccountMadeTime, "Created on: "); strcat(AccountMadeTime, MadeTime); strcat(AccountMadeTime, "\n");
+
+                            fputs("----------------------------------------------------------------------------------------------------\n", TempARMInputs);
+                            fputs(ApplicationPresent, TempARMInputs);
+                            fputs(ApplicationTitle, TempARMInputs);
+                            fputs(ApplicationVersion, TempARMInputs); fputs("\n", TempARMInputs);
+                            fputs(UpdateLocalTime, TempARMInputs);
+                            fputs("Built-in Console Application [CLI-Win32], fundamentally C (100%)\n", TempARMInputs);
+                            fputs("----------------------------------------------------------------------------------------------------\n", TempARMInputs);
+                            fputs(RegAccInsider, TempARMInputs);
+                            fputs("----------------------------------------------------------------------------------------------------\n", TempARMInputs);
+                            fclose(TempARMInputs);
+                        }
+
+                        TempARMInputs = fopen("TempRegisteredAccounts.txt", "a+");
+
+                        if (!FlagARM) { strcpy(GRA, "1"); }
+                        else if (FlagARM && GlobalRegisteredAccounts > 1) { itoa(GlobalRegisteredAccounts, GRA, 10); }
                         
-                        strcpy(RegAccInsider, "Registered Accounts: "); strcat(RegAccInsider, GRA); strcat(RegAccInsider, " account(s) in total.\n");
-                        strcpy(UpdateLocalTime, "PersonalFMSA | Last Updated: ");
-                        strcat(UpdateLocalTime, LocalTime); strcat(UpdateLocalTime, "\n");
+                        snprintf(MadeTime, BUFSIZE07, "%d-%02d-%02d %02d:%02d:%02d", ManageTime.tm_year + 1900, ManageTime.tm_mon + 1, ManageTime.tm_mday, ManageTime.tm_hour, ManageTime.tm_min, ManageTime.tm_sec);
                         strcpy(AccountMadeTime, "Profile Account :: No. "); strcat(AccountMadeTime, GRA); strcat(AccountMadeTime, "\n");
                         strcat(AccountMadeTime, "Created on: "); strcat(AccountMadeTime, MadeTime); strcat(AccountMadeTime, "\n");
 
-                        fputs("----------------------------------------------------------------------------------------------------\n", TempARMInputs);
-                        fputs(ApplicationPresent, TempARMInputs);
-                        fputs(ApplicationTitle, TempARMInputs);
-                        fputs(ApplicationVersion, TempARMInputs); fputs("\n", TempARMInputs);
-                        fputs(UpdateLocalTime, TempARMInputs);
-                        fputs("Built-in Console Application [CLI-Win32], fundamentally C (100%)\n", TempARMInputs);
-                        fputs("----------------------------------------------------------------------------------------------------\n", TempARMInputs);
-                        fputs(RegAccInsider, TempARMInputs);
-                        fputs("----------------------------------------------------------------------------------------------------\n", TempARMInputs);
+                        strcpy(FirstName, "First Name:\t\t");        strcat(FirstName, ARMInputs[GlobalRegisteredAccounts].FirstName);       strcat(FirstName, "\n");
+                        strcpy(LastName, "Lase Name:\t\t");          strcat(LastName, ARMInputs[GlobalRegisteredAccounts].LastName);         strcat(LastName, "\n");
+                        strcpy(Email, "Personal E-mail:\t");         strcat(Email, ARMInputs[GlobalRegisteredAccounts].Email);               strcat(Email, "\n");
+                        strcpy(Username, "SKYR Username:\t\t");      strcat(Username, ARMInputs[GlobalRegisteredAccounts].Username);         strcat(Username, "\n");
+                        strcpy(Password, "SKYR Password:\t\t");      strcat(Password, ARMInputs[GlobalRegisteredAccounts].Password);         strcat(Password, "\n");
+                        strcpy(DateOfBirth, "\nDate of Birth:\t\t"); strcat(DateOfBirth, ARMInputs[GlobalRegisteredAccounts].DateOfBirth);   strcat(DateOfBirth, "\n");
+                        strcpy(AgeOnPresent, "Age on Present:\t\t"); strcat(AgeOnPresent, ARMInputs[GlobalRegisteredAccounts].AgeOnPresent); strcat(AgeOnPresent, "\n");
+                        strcpy(PhoneNumber, "Phone Number:\t\t");    strcat(PhoneNumber, ARMInputs[GlobalRegisteredAccounts].PhoneNumber);   strcat(PhoneNumber, "\n");
+                        strcpy(Sex, "Sex/Gender:\t\t");              strcat(Sex, ARMInputs[GlobalRegisteredAccounts].Sex);                   strcat(Sex, "\n");
+
                         fputs(AccountMadeTime, TempARMInputs); fputs("\n", TempARMInputs);
+                        fputs(FirstName, TempARMInputs); fputs(LastName, TempARMInputs); fputs(Email, TempARMInputs); fputs(Username, TempARMInputs); fputs(Password, TempARMInputs);
+                        fputs(DateOfBirth, TempARMInputs); fputs(AgeOnPresent, TempARMInputs); fputs(PhoneNumber, TempARMInputs); fputs(Sex, TempARMInputs);
+                        fputs("----------------------------------------------------------------------------------------------------\n", TempARMInputs);
+                        fclose(TempARMInputs);
 
-                        for (int i = 0; i < (GlobalRegisteredAccounts + 1); i++) {
-                            strcpy(FirstName, "First Name:\t\t");        strcat(FirstName, ARMInputs[GlobalRegisteredAccounts].FirstName);         strcat(FirstName, "\n");
-                            strcpy(LastName, "Lase Name:\t\t");          strcat(LastName, ARMInputs[GlobalRegisteredAccounts].LastName);           strcat(LastName, "\n");
-                            strcpy(Email, "Personal E-mail:\t");         strcat(Email, ARMInputs[GlobalRegisteredAccounts].Email);               strcat(Email, "\n");
-                            strcpy(Username, "SKYR Username:\t\t");      strcat(Username, ARMInputs[GlobalRegisteredAccounts].Username);         strcat(Username, "\n");
-                            strcpy(Password, "SKYR Password:\t\t");      strcat(Password, ARMInputs[GlobalRegisteredAccounts].Password);         strcat(Password, "\n");
-                            strcpy(DateOfBirth, "\nDate of Birth:\t\t"); strcat(DateOfBirth, ARMInputs[GlobalRegisteredAccounts].DateOfBirth);   strcat(DateOfBirth, "\n");
-                            strcpy(AgeOnPresent, "Age on Present:\t\t"); strcat(AgeOnPresent, ARMInputs[GlobalRegisteredAccounts].AgeOnPresent); strcat(AgeOnPresent, "\n");
-                            strcpy(PhoneNumber, "Phone Number:\t\t");    strcat(PhoneNumber, ARMInputs[GlobalRegisteredAccounts].PhoneNumber);   strcat(PhoneNumber, "\n");
-                            strcpy(Sex, "Sex/Gender:\t\t");              strcat(Sex, ARMInputs[GlobalRegisteredAccounts].Sex);                     strcat(Sex, "\n");
-
-                            fputs(FirstName, TempARMInputs); fputs(LastName, TempARMInputs); fputs(Email, TempARMInputs); fputs(Username, TempARMInputs); fputs(Password, TempARMInputs);
-                            fputs(DateOfBirth, TempARMInputs); fputs(AgeOnPresent, TempARMInputs); fputs(PhoneNumber, TempARMInputs); fputs(Sex, TempARMInputs);
-                            fputs("----------------------------------------------------------------------------------------------------\n", TempARMInputs);
-                        } fclose(TempARMInputs);
-
-                        EncryptTxtFile("TempRegisteredAccount.txt", "RegisteredAccounts.txt", EncryptionKey, true);
                         puts(ANSI_COLOR_LIGHTBLUE"\n\tInfo: Your account profile has been saved and ecrypted."ANSI_COLOR_RESET);
-                        puts(ANSI_COLOR_LIGHTMAGENTA"\t      Now you may proceed to logged in from your existing account(s) right after you \n\t      press the [ENTER] button key."ANSI_COLOR_RESET);
-                        getchar();
-                        AccountLoginMenu(0); GlobalRegisteredAccounts++;
+                        puts(ANSI_COLOR_LIGHTYELLOW"\t      Now you may proceed to refresh the app before going to singing in by pressing the [ENTER] \n\t      button key on your keyboard in order to be able to update your listed profile accounts. \n\t      "ANSI_COLOR_RESET ANSI_COLOR_LIGHTGREEN"Proceed to re-open the app after this and you'll be prompted onto the login profile account \n\t      section, and all the features will be accessible by stay logged in within 30 days!"ANSI_COLOR_RESET);
+                        getchar(); sleep(RandInt(1, 3))
+
+                        LE = false; LPN = false; LU = false; LP = false;
+                        strcpy(RegAccInsider, "Registered Accounts: "); strcat(RegAccInsider, GRA); strcat(RegAccInsider, " account(s) in total.");
+                        OverWriteStringAtLine("TempRegisteredAccounts.txt", RegAccInsider, 0, 9);
+                        EncryptTxtFile("TempRegisteredAccounts.txt", "RegisteredAccounts.txt", EncryptionKey, true);
+                        exit(0);
 
                     } else { ARMSelected = 0; AccountRegistrationMenu(ARMSelected); }
                 }
@@ -1065,7 +1519,7 @@ void AccountRegistrationMenu(int ARMSelected) {
 
         } else {
             FirstRun = false;
-            printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t--------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t--------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRegisterUI);
+            printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRegisterUI);
 
             if ((ARMSelected + 1) > 0 && (ARMSelected + 1) <= 5 && (AvailableOptions == 5)) {
                 if ((ARMSelected + 1) == 1) {
@@ -1153,29 +1607,27 @@ void AccountRegistrationMenu(int ARMSelected) {
                 
                 if ((ARMSelected + 1) > 9) {
                     ClearScreen();
-                    printf("\n\n\n\n\tInfo: You have all the main required information listing above of all \n\t      nine (9) personal infos, and you may proceed to the final step, and \n\t      it's about giving optional information about your career profiling, \n\t      degree of experience, and such else.\n");
+                    printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRegisterUI);
+
+                    printf("\tInfo: You have all the main required information listing above of all \n\t      nine (9) personal infos, and you may proceed to the final step, and \n\t      it's about giving optional information about your career profiling, \n\t      degree of experience, and such else.\n");
                     printf("\n\t" ANSI_COLOR_LIGHTBLUE"(Optional)"ANSI_COLOR_RESET " Here all are the given choices before you proceed... \n\t" ANSI_COLOR_LIGHTRED"> CONFIRM: "ANSI_COLOR_RESET ANSI_COLOR_RED"Stop Here"ANSI_COLOR_RESET " and " ANSI_COLOR_GREEN"Save All"ANSI_COLOR_RESET" the given informations, or \n\t" ANSI_COLOR_LIGHTGREEN"> CANCEL: "ANSI_COLOR_RESET ANSI_COLOR_GREEN"Keep All"ANSI_COLOR_RESET " the information and " ANSI_COLOR_CYAN"Continue to Fill In"ANSI_COLOR_RESET " the last section of \n\tyour personal profile infos?\n\n");
-                    MessagesShown_ArrowKeyChoiceDialog[2] = "\n\n\n\n\tInfo: You have all the main required information listing above of all \n\t      nine (9) personal infos, and you may proceed to the final step, and \n\t      it's about giving optional information about your career profiling, \n\t      degree of experience, and such else.";
-                    MessagesShown_ArrowKeyChoiceDialog[3] = "\n\t" ANSI_COLOR_LIGHTBLUE"(Optional)"ANSI_COLOR_RESET " Here all are the given choices before you proceed... \n\t" ANSI_COLOR_LIGHTRED"> CONFIRM: "ANSI_COLOR_RESET ANSI_COLOR_RED"Stop Here"ANSI_COLOR_RESET " and " ANSI_COLOR_GREEN"Save All"ANSI_COLOR_RESET" the given informations, or \n\t" ANSI_COLOR_LIGHTGREEN"> CANCEL: "ANSI_COLOR_RESET ANSI_COLOR_GREEN"Keep All"ANSI_COLOR_RESET " the information and " ANSI_COLOR_CYAN"Continue to Fill In"ANSI_COLOR_RESET " the last section of \n\tyour personal profile infos?\n";
-                    SubmitOrContinue = ArrowKeyChoiceDialog("Truth Confirmation", MessagesShown_ArrowKeyChoiceDialog, 2, 4);
+                    
+                    snprintf(MessageID02, BUFSIZE10, "\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRegisterUI);
+                    MessagesShown_ArrowKeyChoiceDialog[2] = MessageID02;
+                    MessagesShown_ArrowKeyChoiceDialog[3] = "\tInfo: You have all the main required information listing above of all \n\t      nine (9) personal infos, and you may proceed to the final step, and \n\t      it's about giving optional information about your career profiling, \n\t      degree of experience, and such else.";
+                    MessagesShown_ArrowKeyChoiceDialog[4] = "\n\t" ANSI_COLOR_LIGHTBLUE"(Optional)"ANSI_COLOR_RESET " Here all are the given choices before you proceed... \n\t" ANSI_COLOR_LIGHTRED"> CONFIRM: "ANSI_COLOR_RESET ANSI_COLOR_RED"Stop Here"ANSI_COLOR_RESET " and " ANSI_COLOR_GREEN"Save All"ANSI_COLOR_RESET" the given informations, or \n\t" ANSI_COLOR_LIGHTGREEN"> CANCEL: "ANSI_COLOR_RESET ANSI_COLOR_GREEN"Keep All"ANSI_COLOR_RESET " the information and " ANSI_COLOR_CYAN"Continue to Fill In"ANSI_COLOR_RESET " the last section of \n\tyour personal profile infos?\n";
+                    SubmitOrContinue = ArrowKeyChoiceDialog("Truth Confirmation", MessagesShown_ArrowKeyChoiceDialog, 2, 5);
 
                     if (SubmitOrContinue) {
-                        FILE *TempARMInputs;
-                        char RegAccInsider[BUFSIZE07], GRA[BUFSIZE07];
-                        char FirstName[BUFSIZE07], LastName[BUFSIZE07], Email[BUFSIZE07], Username[BUFSIZE07], Password[BUFSIZE07];
-                        char DateOfBirth[BUFSIZE07], AgeOnPresent[BUFSIZE07], PhoneNumber[BUFSIZE07], Sex[BUFSIZE07];
-                        char UpdateLocalTime[BUFSIZE07], LocalTime[BUFSIZE07], AccountMadeTime[BUFSIZE07], MadeTime[BUFSIZE07];
+                        if (access("RegisteredAccounts.txt", F_OK) != 0 && !FlagARM) {
+                            TempARMInputs = fopen("TempRegisteredAccounts.txt", "w");
 
-                        for (int i = 0; i < (GlobalRegisteredAccounts + 1); i++) {
-                            TempARMInputs = fopen("TempRegisteredAccount.txt", "w");
                             itoa((GlobalRegisteredAccounts + 1), GRA, 10);
                             snprintf(LocalTime, BUFSIZE07, "%d-%02d-%02d %02d:%02d:%02d", ManageTime.tm_year + 1900, ManageTime.tm_mon + 1, ManageTime.tm_mday, ManageTime.tm_hour, ManageTime.tm_min, ManageTime.tm_sec);
-                            snprintf(MadeTime, BUFSIZE07, "%d-%02d-%02d %02d:%02d:%02d", ManageTime.tm_year + 1900, ManageTime.tm_mon + 1, ManageTime.tm_mday, ManageTime.tm_hour, ManageTime.tm_min, ManageTime.tm_sec);
-                            
                             strcpy(RegAccInsider, "Registered Accounts: "); strcat(RegAccInsider, GRA); strcat(RegAccInsider, " account(s) in total.\n");
                             strcpy(UpdateLocalTime, "PersonalFMSA | Last Updated: ");
                             strcat(UpdateLocalTime, LocalTime); strcat(UpdateLocalTime, "\n");
-                            strcpy(AccountMadeTime, "Profile Account :: No. "); strcat(AccountMadeTime, GRA); strcat(AccountMadeTime, "\n");
+                            strcpy(AccountMadeTime, "Profile Account :: No. 1"); strcat(AccountMadeTime, "\n");
                             strcat(AccountMadeTime, "Created on: "); strcat(AccountMadeTime, MadeTime); strcat(AccountMadeTime, "\n");
 
                             fputs("----------------------------------------------------------------------------------------------------\n", TempARMInputs);
@@ -1187,28 +1639,43 @@ void AccountRegistrationMenu(int ARMSelected) {
                             fputs("----------------------------------------------------------------------------------------------------\n", TempARMInputs);
                             fputs(RegAccInsider, TempARMInputs);
                             fputs("----------------------------------------------------------------------------------------------------\n", TempARMInputs);
-                            fputs(AccountMadeTime, TempARMInputs); fputs("\n", TempARMInputs);
+                            fclose(TempARMInputs);
+                        }
 
-                            strcpy(FirstName, "First Name:\t\t");        strcat(FirstName, ARMInputs[GlobalRegisteredAccounts].FirstName);       strcat(FirstName, "\n");
-                            strcpy(LastName, "Lase Name:\t\t");          strcat(LastName, ARMInputs[GlobalRegisteredAccounts].LastName);         strcat(LastName, "\n");
-                            strcpy(Email, "Personal E-mail:\t");         strcat(Email, ARMInputs[GlobalRegisteredAccounts].Email);               strcat(Email, "\n");
-                            strcpy(Username, "SKYR Username:\t\t");      strcat(Username, ARMInputs[GlobalRegisteredAccounts].Username);         strcat(Username, "\n");
-                            strcpy(Password, "SKYR Password:\t\t");      strcat(Password, ARMInputs[GlobalRegisteredAccounts].Password);         strcat(Password, "\n");
-                            strcpy(DateOfBirth, "\nDate of Birth:\t\t"); strcat(DateOfBirth, ARMInputs[GlobalRegisteredAccounts].DateOfBirth);   strcat(DateOfBirth, "\n");
-                            strcpy(AgeOnPresent, "Age on Present:\t\t"); strcat(AgeOnPresent, ARMInputs[GlobalRegisteredAccounts].AgeOnPresent); strcat(AgeOnPresent, "\n");
-                            strcpy(PhoneNumber, "Phone Number:\t\t");    strcat(PhoneNumber, ARMInputs[GlobalRegisteredAccounts].PhoneNumber);   strcat(PhoneNumber, "\n");
-                            strcpy(Sex, "Sex/Gender:\t\t");              strcat(Sex, ARMInputs[GlobalRegisteredAccounts].Sex);                   strcat(Sex, "\n");
+                        TempARMInputs = fopen("TempRegisteredAccounts.txt", "a+");
 
-                            fputs(FirstName, TempARMInputs); fputs(LastName, TempARMInputs); fputs(Email, TempARMInputs); fputs(Username, TempARMInputs); fputs(Password, TempARMInputs);
-                            fputs(DateOfBirth, TempARMInputs); fputs(AgeOnPresent, TempARMInputs); fputs(PhoneNumber, TempARMInputs); fputs(Sex, TempARMInputs);
-                            fputs("----------------------------------------------------------------------------------------------------\n", TempARMInputs);
-                        } fclose(TempARMInputs);
+                        if (!FlagARM) { strcpy(GRA, "1"); }
+                        else if (FlagARM && GlobalRegisteredAccounts > 1) { itoa(GlobalRegisteredAccounts, GRA, 10); }
+                        
+                        snprintf(MadeTime, BUFSIZE07, "%d-%02d-%02d %02d:%02d:%02d", ManageTime.tm_year + 1900, ManageTime.tm_mon + 1, ManageTime.tm_mday, ManageTime.tm_hour, ManageTime.tm_min, ManageTime.tm_sec);
+                        strcpy(AccountMadeTime, "Profile Account :: No. "); strcat(AccountMadeTime, GRA); strcat(AccountMadeTime, "\n");
+                        strcat(AccountMadeTime, "Created on: "); strcat(AccountMadeTime, MadeTime); strcat(AccountMadeTime, "\n");
 
-                        EncryptTxtFile("TempRegisteredAccount.txt", "RegisteredAccounts.txt", EncryptionKey, true);
+                        strcpy(FirstName, "First Name:\t\t");        strcat(FirstName, ARMInputs[GlobalRegisteredAccounts].FirstName);       strcat(FirstName, "\n");
+                        strcpy(LastName, "Lase Name:\t\t");          strcat(LastName, ARMInputs[GlobalRegisteredAccounts].LastName);         strcat(LastName, "\n");
+                        strcpy(Email, "Personal E-mail:\t");         strcat(Email, ARMInputs[GlobalRegisteredAccounts].Email);               strcat(Email, "\n");
+                        strcpy(Username, "SKYR Username:\t\t");      strcat(Username, ARMInputs[GlobalRegisteredAccounts].Username);         strcat(Username, "\n");
+                        strcpy(Password, "SKYR Password:\t\t");      strcat(Password, ARMInputs[GlobalRegisteredAccounts].Password);         strcat(Password, "\n");
+                        strcpy(DateOfBirth, "\nDate of Birth:\t\t"); strcat(DateOfBirth, ARMInputs[GlobalRegisteredAccounts].DateOfBirth);   strcat(DateOfBirth, "\n");
+                        strcpy(AgeOnPresent, "Age on Present:\t\t"); strcat(AgeOnPresent, ARMInputs[GlobalRegisteredAccounts].AgeOnPresent); strcat(AgeOnPresent, "\n");
+                        strcpy(PhoneNumber, "Phone Number:\t\t");    strcat(PhoneNumber, ARMInputs[GlobalRegisteredAccounts].PhoneNumber);   strcat(PhoneNumber, "\n");
+                        strcpy(Sex, "Sex/Gender:\t\t");              strcat(Sex, ARMInputs[GlobalRegisteredAccounts].Sex);                   strcat(Sex, "\n");
+
+                        fputs(AccountMadeTime, TempARMInputs); fputs("\n", TempARMInputs);
+                        fputs(FirstName, TempARMInputs); fputs(LastName, TempARMInputs); fputs(Email, TempARMInputs); fputs(Username, TempARMInputs); fputs(Password, TempARMInputs);
+                        fputs(DateOfBirth, TempARMInputs); fputs(AgeOnPresent, TempARMInputs); fputs(PhoneNumber, TempARMInputs); fputs(Sex, TempARMInputs);
+                        fputs("----------------------------------------------------------------------------------------------------\n", TempARMInputs);
+                        fclose(TempARMInputs);
+
                         puts(ANSI_COLOR_LIGHTBLUE"\n\tInfo: Your account profile has been saved and ecrypted."ANSI_COLOR_RESET);
-                        puts(ANSI_COLOR_LIGHTMAGENTA"\t      Now you may proceed to logged in from your existing account(s) right after you \n\t      press the [ENTER] button key."ANSI_COLOR_RESET);
-                        getchar();
-                        AccountLoginMenu(0); GlobalRegisteredAccounts++;
+                        puts(ANSI_COLOR_LIGHTYELLOW"\t      Now you may proceed to refresh the app before going to singing in by pressing the [ENTER] \n\t      button key on your keyboard in order to be able to update your listed profile accounts. \n\t      "ANSI_COLOR_RESET ANSI_COLOR_LIGHTGREEN"Proceed to re-open the app after this and you'll be prompted onto the login profile account \n\t      section, and all the features will be accessible by stay logged in within 30 days!"ANSI_COLOR_RESET);
+                        getchar(); sleep(RandInt(1, 3))
+
+                        LE = false; LPN = false; LU = false; LP = false;
+                        strcpy(RegAccInsider, "Registered Accounts: "); strcat(RegAccInsider, GRA); strcat(RegAccInsider, " account(s) in total.");
+                        OverWriteStringAtLine("TempRegisteredAccounts.txt", RegAccInsider, 0, 9);
+                        EncryptTxtFile("TempRegisteredAccounts.txt", "RegisteredAccounts.txt", EncryptionKey, true);
+                        exit(0);
 
                     } else { ARMSelected = 0; AccountRegistrationMenu(ARMSelected); }
                 }
@@ -1246,13 +1713,15 @@ void AccountRegistrationMenu(int ARMSelected) {
         ClearScreen();
         char InputFirstName[BUFSIZE07];
 
+        printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRegisterUI);
+
         if (FN) {
-            printf(ANSI_COLOR_GREEN"\n\n\n\n\tInfo: We'd checked that you earlier had already insert your first name as: %s.\n\t      But don't worry, if you want to make a change, then you may proceed to do so.\n\n"ANSI_COLOR_RESET, ARMInputs[GlobalRegisteredAccounts].FirstName);
+            printf(ANSI_COLOR_GREEN"\tInfo: We'd checked that you earlier had already insert your first name as: \n\t          >> %s.\n\n\t      But don't worry, if you want to make a change, then you may proceed to do so.\n\n"ANSI_COLOR_RESET, ARMInputs[GlobalRegisteredAccounts].FirstName);
             printf("      " ANSI_COLOR_LIGHTGREEN"> First Name:\t\t%s\n\t"ANSI_COLOR_RESET "Last Name:\t\t%s\n\tPersonal E-mail:\t%s\n\tSKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ARMInputs[GlobalRegisteredAccounts].FirstName, ARMInputs[GlobalRegisteredAccounts].LastName, ARMInputs[GlobalRegisteredAccounts].Email, ARMInputs[GlobalRegisteredAccounts].Username, ARMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
             puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTGREEN"First Name."ANSI_COLOR_RESET "\n\tPlease proceed to fill in the first name of your profile account.");
             puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The first name of yours can be more than one or two words."ANSI_COLOR_RESET);
         } else {
-            printf("\n\n\n\n      " ANSI_COLOR_LIGHTYELLOW"> First Name:\t\t%s\n\t"ANSI_COLOR_RESET "Last Name:\t\t%s\n\tPersonal E-mail:\t%s\n\tSKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ARMInputs[GlobalRegisteredAccounts].FirstName, ARMInputs[GlobalRegisteredAccounts].LastName, ARMInputs[GlobalRegisteredAccounts].Email, ARMInputs[GlobalRegisteredAccounts].Username, ARMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
+            printf("      " ANSI_COLOR_LIGHTYELLOW"> First Name:\t\t%s\n\t"ANSI_COLOR_RESET "Last Name:\t\t%s\n\tPersonal E-mail:\t%s\n\tSKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ARMInputs[GlobalRegisteredAccounts].FirstName, ARMInputs[GlobalRegisteredAccounts].LastName, ARMInputs[GlobalRegisteredAccounts].Email, ARMInputs[GlobalRegisteredAccounts].Username, ARMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
             puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTYELLOW"First Name."ANSI_COLOR_RESET "\n\tPlease proceed to fill in the first name of your profile account.");
             puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The first name of yours can be more than one or two words."ANSI_COLOR_RESET);
         }
@@ -1262,7 +1731,9 @@ void AccountRegistrationMenu(int ARMSelected) {
 
         while (strlen(InputFirstName) <= 3) {
             ClearScreen();
-            puts(ANSI_COLOR_LIGHTRED"\n\n\n\n\tWarning: You must have to insert your first name at least a single word (min. 3 characters)!\n"ANSI_COLOR_RESET);
+            printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRegisterUI);
+
+            puts(ANSI_COLOR_LIGHTRED"\tWarning: You must have to insert your first name at least a single word (min. 3 characters)!\n"ANSI_COLOR_RESET);
             printf("      " ANSI_COLOR_LIGHTYELLOW"> First Name:\t\t%s\n\t"ANSI_COLOR_RESET "Last Name:\t\t%s\n\tPersonal E-mail:\t%s\n\tSKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ARMInputs[GlobalRegisteredAccounts].FirstName, ARMInputs[GlobalRegisteredAccounts].LastName, ARMInputs[GlobalRegisteredAccounts].Email, ARMInputs[GlobalRegisteredAccounts].Username, ARMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
             puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTYELLOW"First Name."ANSI_COLOR_RESET "\n\tPlease proceed to fill in the first name of your profile account.");
             puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The first name of yours can be more than one or two words."ANSI_COLOR_RESET);
@@ -1281,13 +1752,15 @@ void AccountRegistrationMenu(int ARMSelected) {
         ClearScreen();
         char InputLastName[BUFSIZE07];
 
+        printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRegisterUI);
+
         if (LN) {
-            printf(ANSI_COLOR_GREEN"\n\n\n\n\tInfo: We'd checked that you earlier had already insert your last name as: %s.\n\t      But don't worry, if you want to make a change, then you may proceed to do so.\n\n"ANSI_COLOR_RESET, ARMInputs[GlobalRegisteredAccounts].LastName);
+            printf(ANSI_COLOR_GREEN"\tInfo: We'd checked that you earlier had already insert your last name as: \n\t          >> %s.\n\n\t      But don't worry, if you want to make a change, then you may proceed to do so.\n\n"ANSI_COLOR_RESET, ARMInputs[GlobalRegisteredAccounts].LastName);
             printf("\tFirst Name:\t\t%s\n      " ANSI_COLOR_LIGHTGREEN"> Last Name:\t\t%s\n\t"ANSI_COLOR_RESET "Personal E-mail:\t%s\n\tSKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ARMInputs[GlobalRegisteredAccounts].FirstName, ARMInputs[GlobalRegisteredAccounts].LastName, ARMInputs[GlobalRegisteredAccounts].Email, ARMInputs[GlobalRegisteredAccounts].Username, ARMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
             puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTGREEN"Last Name."ANSI_COLOR_RESET "\n\tPlease proceed to fill in the last name of your profile account.");
             puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The last name of yours can be more than one or two words."ANSI_COLOR_RESET);
         } else {
-            printf("\n\n\n\n\tFirst Name:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> Last Name:\t\t%s\n\t"ANSI_COLOR_RESET "Personal E-mail:\t%s\n\tSKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ARMInputs[GlobalRegisteredAccounts].FirstName, ARMInputs[GlobalRegisteredAccounts].LastName, ARMInputs[GlobalRegisteredAccounts].Email, ARMInputs[GlobalRegisteredAccounts].Username, ARMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
+            printf("\tFirst Name:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> Last Name:\t\t%s\n\t"ANSI_COLOR_RESET "Personal E-mail:\t%s\n\tSKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ARMInputs[GlobalRegisteredAccounts].FirstName, ARMInputs[GlobalRegisteredAccounts].LastName, ARMInputs[GlobalRegisteredAccounts].Email, ARMInputs[GlobalRegisteredAccounts].Username, ARMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
             puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTYELLOW"Last Name."ANSI_COLOR_RESET "\n\tPlease proceed to fill in the last name of your profile account.");
             puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The last name of yours can be more than one or two words."ANSI_COLOR_RESET);
         }
@@ -1297,7 +1770,9 @@ void AccountRegistrationMenu(int ARMSelected) {
 
         while (strlen(InputLastName) <= 3) {
             ClearScreen();
-            puts(ANSI_COLOR_LIGHTRED"\n\n\n\n\tWarning: You must have to insert your last name at least a single word (min. 3 characters)!\n"ANSI_COLOR_RESET);
+            printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRegisterUI);
+
+            puts(ANSI_COLOR_LIGHTRED"\tWarning: You must have to insert your last n ame at least a single word (min. 3 characters)!\n"ANSI_COLOR_RESET);
             printf("\tFirst Name:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> Last Name:\t\t%s\n\t"ANSI_COLOR_RESET "Personal E-mail:\t%s\n\tSKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ARMInputs[GlobalRegisteredAccounts].FirstName, ARMInputs[GlobalRegisteredAccounts].LastName, ARMInputs[GlobalRegisteredAccounts].Email, ARMInputs[GlobalRegisteredAccounts].Username, ARMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
             puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTYELLOW"Last Name."ANSI_COLOR_RESET "\n\tPlease proceed to fill in the first name of your profile account.");
             puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The last name of yours can be more than one or two words."ANSI_COLOR_RESET);
@@ -1316,15 +1791,17 @@ void AccountRegistrationMenu(int ARMSelected) {
         ClearScreen();
         char InputEmail[BUFSIZE07];
 
+        printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRegisterUI);
+
         if (E) {
-            printf(ANSI_COLOR_GREEN"\n\n\n\n\tInfo: We'd checked that you earlier had already insert your personal e-mail as: %s.\n\t      But don't worry, if you want to make a change, then you may proceed to do so.\n\n"ANSI_COLOR_RESET, ARMInputs[GlobalRegisteredAccounts].Email);
+            printf(ANSI_COLOR_GREEN"\tInfo: We'd checked that you earlier had already insert your personal e-mail as: \n\t          >> %s.\n\n\t      But don't worry, if you want to make a change, then you may proceed to do so.\n\n"ANSI_COLOR_RESET, ARMInputs[GlobalRegisteredAccounts].Email);
             printf("\tFirst Name:\t\t%s\n\tLast Name:\t\t%s\n      " ANSI_COLOR_LIGHTGREEN"> Personal E-mail:\t%s\n\t"ANSI_COLOR_RESET "SKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ARMInputs[GlobalRegisteredAccounts].FirstName, ARMInputs[GlobalRegisteredAccounts].LastName, ARMInputs[GlobalRegisteredAccounts].Email, ARMInputs[GlobalRegisteredAccounts].Username, ARMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
             puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTGREEN"Personal E-mail."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your personal e-mail into your profile account.");
-            puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The e-mail format must have a '@' symbol, and the domain you used while creating \n\t      your own e-mail."ANSI_COLOR_RESET);
+            puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The e-mail format must have a '@' symbol, and the domain you used while creating your own \n\t      e-mail."ANSI_COLOR_RESET);
         } else {
-            printf("\n\n\n\n\tFirst Name:\t\t%s\n\tLast Name:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> Personal E-mail:\t%s\n\t"ANSI_COLOR_RESET "SKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ARMInputs[GlobalRegisteredAccounts].FirstName, ARMInputs[GlobalRegisteredAccounts].LastName, ARMInputs[GlobalRegisteredAccounts].Email, ARMInputs[GlobalRegisteredAccounts].Username, ARMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
+            printf("\tFirst Name:\t\t%s\n\tLast Name:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> Personal E-mail:\t%s\n\t"ANSI_COLOR_RESET "SKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ARMInputs[GlobalRegisteredAccounts].FirstName, ARMInputs[GlobalRegisteredAccounts].LastName, ARMInputs[GlobalRegisteredAccounts].Email, ARMInputs[GlobalRegisteredAccounts].Username, ARMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
             puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTYELLOW"Personal E-mail."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your personal e-mail into your profile account.");
-            puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The e-mail format must have a '@' symbol, and the domain you used while creating \n\t      your own e-mail."ANSI_COLOR_RESET);
+            puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The e-mail format must have a '@' symbol, and the domain you used while creating your own \n\t      e-mail."ANSI_COLOR_RESET);
         }
 
         printf("\nPersonal E-mail: ");
@@ -1332,10 +1809,12 @@ void AccountRegistrationMenu(int ARMSelected) {
 
         while (strlen(InputEmail) <= 3 || strchr(InputEmail, '@') == NULL || strchr(InputEmail, '.') == NULL) {
             ClearScreen();
-            puts(ANSI_COLOR_LIGHTRED"\n\n\n\n\tWarning: You must have to insert your last name at least a single word (min. 3 characters)!\n\t         The valid E-mail format must have a '@' symbol, and the provider (authorized by) \n\t         with the domain itself.\n"ANSI_COLOR_RESET);
+            printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRegisterUI);
+
+            puts(ANSI_COLOR_LIGHTRED"\tWarning: You must have to insert your last name at least a single word (min. 3 characters)!\n\t         The valid E-mail format must have a '@' symbol, and the provider (authorized by) \n\t         with the domain itself.\n"ANSI_COLOR_RESET);
             printf("\tFirst Name:\t\t%s\n\tLast Name:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> Personal E-mail:\t%s\n\t"ANSI_COLOR_RESET "SKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ARMInputs[GlobalRegisteredAccounts].FirstName, ARMInputs[GlobalRegisteredAccounts].LastName, ARMInputs[GlobalRegisteredAccounts].Email, ARMInputs[GlobalRegisteredAccounts].Username, ARMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
             puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTYELLOW"Personal E-mail."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your personal e-mail into your profile account.");
-            puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The e-mail format must have a '@' symbol, and the domain you used while creating \n\t      your own e-mail."ANSI_COLOR_RESET);
+            puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The e-mail format must have a '@' symbol, and the domain you used while creating your own \n\t      e-mail."ANSI_COLOR_RESET);
 
             printf("\nPersonal E-mail: ");
             fgets(InputEmail, BUFSIZE07, stdin);
@@ -1351,15 +1830,17 @@ void AccountRegistrationMenu(int ARMSelected) {
         ClearScreen();
         char InputUsername[BUFSIZE07];
 
+        printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRegisterUI);
+
         if (U) {
-            printf(ANSI_COLOR_GREEN"\n\n\n\n\tInfo: We'd checked that you earlier had already insert your username as: %s.\n\t      But don't worry, if you want to make a change, then you may proceed to do so.\n\n"ANSI_COLOR_RESET, ARMInputs[GlobalRegisteredAccounts].Username);
+            printf(ANSI_COLOR_GREEN"\tInfo: We'd checked that you earlier had already insert your username as: \n\t          >> %s.\n\n\t      But don't worry, if you want to make a change, then you may proceed to do so.\n\n"ANSI_COLOR_RESET, ARMInputs[GlobalRegisteredAccounts].Username);
             printf("\tFirst Name:\t\t%s\n\tLast Name:\t\t%s\n\tPersonal E-mail:\t%s\n      " ANSI_COLOR_LIGHTGREEN"> SKYR Username:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Password:\t\t%s\n", ARMInputs[GlobalRegisteredAccounts].FirstName, ARMInputs[GlobalRegisteredAccounts].LastName, ARMInputs[GlobalRegisteredAccounts].Email, ARMInputs[GlobalRegisteredAccounts].Username, ARMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
             puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTGREEN"SKYR Username."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your username profile account.");
-            puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The username must starts with a character and shall not contains a single space, \n\t      so use underscores or dashes to represents the next characters."ANSI_COLOR_RESET);
+            puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The username must starts with a character and shall not contains a single space, so use \n\t      underscores or dashes to represents the next characters."ANSI_COLOR_RESET);
         } else {
-            printf("\n\n\n\n\tFirst Name:\t\t%s\n\tLast Name:\t\t%s\n\tPersonal E-mail:\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> SKYR Username:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Password:\t\t%s\n", ARMInputs[GlobalRegisteredAccounts].FirstName, ARMInputs[GlobalRegisteredAccounts].LastName, ARMInputs[GlobalRegisteredAccounts].Email, ARMInputs[GlobalRegisteredAccounts].Username, ARMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
+            printf("\tFirst Name:\t\t%s\n\tLast Name:\t\t%s\n\tPersonal E-mail:\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> SKYR Username:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Password:\t\t%s\n", ARMInputs[GlobalRegisteredAccounts].FirstName, ARMInputs[GlobalRegisteredAccounts].LastName, ARMInputs[GlobalRegisteredAccounts].Email, ARMInputs[GlobalRegisteredAccounts].Username, ARMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
             puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTYELLOW"SKYR Username."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your username profile account.");
-            puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The username must starts with a character and shall not contains a single space, \n\t      so use underscores or dashes to represents the next characters."ANSI_COLOR_RESET);
+            puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The username must starts with a character and shall not contains a single space, so use \n\t      underscores or dashes to represents the next characters."ANSI_COLOR_RESET);
         }
 
         printf("\nSKYR Username: ");
@@ -1367,10 +1848,12 @@ void AccountRegistrationMenu(int ARMSelected) {
 
         while (strlen(InputUsername) <= 3) {
             ClearScreen();
-            puts(ANSI_COLOR_LIGHTRED"\n\n\n\n\tWarning: You must have to insert your username at least a single word (min. 3 characters)!\n"ANSI_COLOR_RESET);
+            printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRegisterUI);
+
+            puts(ANSI_COLOR_LIGHTRED"\tWarning: You must have to insert your username at least a single word (min. 3 characters)!\n"ANSI_COLOR_RESET);
             printf("\tFirst Name:\t\t%s\n\tLast Name:\t\t%s\n\tPersonal E-mail:\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> SKYR Username:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Password:\t\t%s\n", ARMInputs[GlobalRegisteredAccounts].FirstName, ARMInputs[GlobalRegisteredAccounts].LastName, ARMInputs[GlobalRegisteredAccounts].Email, ARMInputs[GlobalRegisteredAccounts].Username, ARMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
             puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTYELLOW"SKYR Username."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your username profile account.");
-            puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The username must starts with a character and shall not contains a single space, \n\t      so use underscores or dashes to represents the next characters."ANSI_COLOR_RESET);
+            puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The username must starts with a character and shall not contains a single space, so use \n\t      underscores or dashes to represents the next characters."ANSI_COLOR_RESET);
 
             printf("\nSKYR Username: ");
             fgets(InputUsername, BUFSIZE07, stdin);
@@ -1386,15 +1869,17 @@ void AccountRegistrationMenu(int ARMSelected) {
         ClearScreen();
         char InputPassword[BUFSIZE07], HiddenPassword[BUFSIZE07];
 
+        printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRegisterUI);
+
         if (P) {
-            printf(ANSI_COLOR_GREEN"\n\n\n\n\tInfo: We'd checked that you earlier had already insert your password as: %s.\n\t      But don't worry, if you want to make a change, then you may proceed to do so.\n\n"ANSI_COLOR_RESET, ARMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
+            printf(ANSI_COLOR_GREEN"\tInfo: We'd checked that you earlier had already insert your password as: \n\t          >> %s.\n\n\t      But don't worry, if you want to make a change, then you may proceed to do so.\n\n"ANSI_COLOR_RESET, ARMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
             printf("\tFirst Name:\t\t%s\n\tLast Name:\t\t%s\n\tPersonal E-mail:\t%s\n\tSKYR Username:\t\t%s\n      " ANSI_COLOR_LIGHTGREEN"> SKYR Password:\t\t%s\n"ANSI_COLOR_RESET, ARMInputs[GlobalRegisteredAccounts].FirstName, ARMInputs[GlobalRegisteredAccounts].LastName, ARMInputs[GlobalRegisteredAccounts].Email, ARMInputs[GlobalRegisteredAccounts].Username, ARMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
             puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTGREEN"SKYR Password."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your password profile account.");
-            puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The password must contains at least 8 characters, with any kind of combinations \n\t      you'd like to insert with. The password insertion is censored, and you can peek \n\t      the password you've inserted with an optional right-side choice ONLY in here."ANSI_COLOR_RESET);
+            puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The password must contains at least 8 characters, with any kind of combinations you'd like to \n\t      insert with. The password insertion is censored, and you can peek the password you've \n\t      inserted with an optional right-side choice ONLY in here."ANSI_COLOR_RESET);
         } else {
-            printf("\n\n\n\n\tFirst Name:\t\t%s\n\tLast Name:\t\t%s\n\tPersonal E-mail:\t%s\n\tSKYR Username:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> SKYR Password:\t\t%s\n"ANSI_COLOR_RESET, ARMInputs[GlobalRegisteredAccounts].FirstName, ARMInputs[GlobalRegisteredAccounts].LastName, ARMInputs[GlobalRegisteredAccounts].Email, ARMInputs[GlobalRegisteredAccounts].Username, ARMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
+            printf("\tFirst Name:\t\t%s\n\tLast Name:\t\t%s\n\tPersonal E-mail:\t%s\n\tSKYR Username:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> SKYR Password:\t\t%s\n"ANSI_COLOR_RESET, ARMInputs[GlobalRegisteredAccounts].FirstName, ARMInputs[GlobalRegisteredAccounts].LastName, ARMInputs[GlobalRegisteredAccounts].Email, ARMInputs[GlobalRegisteredAccounts].Username, ARMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
             puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTYELLOW"SKYR Password."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your password profile account.");
-            puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The password must contains at least 8 characters, with any kind of combinations \n\t      you'd like to insert with. The password insertion is censored, and you can peek \n\t      the password you've inserted with an optional right-side choice ONLY in here."ANSI_COLOR_RESET);
+            puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The password must contains at least 8 characters, with any kind of combinations you'd like to \n\t      insert with. The password insertion is censored, and you can peek the password you've \n\t      inserted with an optional right-side choice ONLY in here."ANSI_COLOR_RESET);
         }
 
         printf("\nSKYR Password: ");
@@ -1402,10 +1887,12 @@ void AccountRegistrationMenu(int ARMSelected) {
 
         while (strlen(InputPassword) <= 8) {
             ClearScreen();
-            puts(ANSI_COLOR_LIGHTRED"\n\n\n\n\tWarning: You must have to insert your password in any unique way possible (min. 8 characters)!\n"ANSI_COLOR_RESET);
+            printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRegisterUI);
+            
+            puts(ANSI_COLOR_LIGHTRED"\tWarning: You must have to insert your password in any unique way possible (min. 8 characters)!\n"ANSI_COLOR_RESET);
             printf("\tFirst Name:\t\t%s\n\tLast Name:\t\t%s\n\tPersonal E-mail:\t%s\n\tSKYR Username:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> SKYR Password:\t\t%s\n"ANSI_COLOR_RESET, ARMInputs[GlobalRegisteredAccounts].FirstName, ARMInputs[GlobalRegisteredAccounts].LastName, ARMInputs[GlobalRegisteredAccounts].Email, ARMInputs[GlobalRegisteredAccounts].Username, ARMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
             puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTYELLOW"SKYR Password."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your password profile account.");
-            puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The password must contains at least 8 characters, with any kind of combinations \n\t      you'd like to insert with. The password insertion is censored, and you can peek \n\t      the password you've inserted with an optional right-side choice ONLY in here."ANSI_COLOR_RESET);
+            puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The password must contains at least 8 characters, with any kind of combinations you'd like to \n\t      insert with. The password insertion is censored, and you can peek the password you've \n\t      inserted with an optional right-side choice ONLY in here."ANSI_COLOR_RESET);
 
             printf("\nSKYR Password: ");
             fgets(InputPassword, BUFSIZE07, stdin);
@@ -1433,13 +1920,15 @@ void AccountRegistrationMenu(int ARMSelected) {
         bool   EmptyDOBInput = false;
         size_t TempDay, TempDate, TempMonth, TempYear, Day, Date, Month, Year;
 
+        printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRegisterUI);
+
         if (B) {
-            printf(ANSI_COLOR_GREEN"\n\n\n\n\tInfo: We'd checked that you earlier had already insert your date of birth as: %s.\n\t      But don't worry, if you want to make a change, then you may proceed to do so.\n\n"ANSI_COLOR_RESET, ARMInputs[GlobalRegisteredAccounts].DateOfBirth);
+            printf(ANSI_COLOR_GREEN"\tInfo: We'd checked that you earlier had already insert your date of birth as: \n\t          >> %s.\n\n\t      But don't worry, if you want to make a change, then you may proceed to do so.\n\n"ANSI_COLOR_RESET, ARMInputs[GlobalRegisteredAccounts].DateOfBirth);
             printf("      " ANSI_COLOR_LIGHTGREEN"> Date of Birth:\t\t%s\n\t"ANSI_COLOR_RESET "Age on Present:\t\t%s\n\tPhone Number:\t\t%s\n\tSex/Gender:\t\t%s\n", ARMInputs[GlobalRegisteredAccounts].DateOfBirth, ARMInputs[GlobalRegisteredAccounts].AgeOnPresent, ARMInputs[GlobalRegisteredAccounts].PhoneNumber, ARMInputs[GlobalRegisteredAccounts].Sex);
             puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTGREEN"Date of Birth."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your date of birth profile account.");
             puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The date of birth of yours must be a valid format as written down below: \n\t      <DATE>-<MONTH>-<YEAR> ... NO SPACES NEEDED! \n\t      The valid example of date of birth format's shown here: 1-1-2005 \n\n\t      <DATE>  must be a number from 1 to 31 (based of the total days in a spesific month). \n\t      <MONTH> must be a number from 1 to 12 (a number that represents the current month). \n\t      <YEAR>  must be a valid number up to the current (present time) year on a calender."ANSI_COLOR_RESET);
         } else {
-            printf("\n\n\n\n      " ANSI_COLOR_LIGHTYELLOW"> Date of Birth:\t\t%s\n\t"ANSI_COLOR_RESET "Age on Present:\t\t%s\n\tPhone Number:\t\t%s\n\tSex/Gender:\t\t%s\n", ARMInputs[GlobalRegisteredAccounts].DateOfBirth, ARMInputs[GlobalRegisteredAccounts].AgeOnPresent, ARMInputs[GlobalRegisteredAccounts].PhoneNumber, ARMInputs[GlobalRegisteredAccounts].Sex);
+            printf("      " ANSI_COLOR_LIGHTYELLOW"> Date of Birth:\t\t%s\n\t"ANSI_COLOR_RESET "Age on Present:\t\t%s\n\tPhone Number:\t\t%s\n\tSex/Gender:\t\t%s\n", ARMInputs[GlobalRegisteredAccounts].DateOfBirth, ARMInputs[GlobalRegisteredAccounts].AgeOnPresent, ARMInputs[GlobalRegisteredAccounts].PhoneNumber, ARMInputs[GlobalRegisteredAccounts].Sex);
             puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTYELLOW"Date of Birth."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your date of birth profile account.");
             puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The date of birth of yours must be a valid format as written down below: \n\t      <DATE>-<MONTH>-<YEAR> ... NO SPACES NEEDED! \n\t      The valid example of date of birth format's shown here: 1-1-2005 \n\n\t      <DATE>  must be a number from 1 to 31 (based of the total days in a spesific month). \n\t      <MONTH> must be a number from 1 to 12 (a number that represents the current month). \n\t      <YEAR>  must be a valid number up to the current (present time) year on a calender."ANSI_COLOR_RESET);
         }
@@ -1460,7 +1949,9 @@ void AccountRegistrationMenu(int ARMSelected) {
 
         while (EmptyDOBInput || DashesOccurences != 2 || (((TempYear % 4) == 0 && (TempMonth == 2)) && TempDate > 29) || (((TempYear % 4) != 0 && (TempMonth == 2)) && TempDate > 28) || (TempDate < 1 || TempDate > 31) || (TempMonth < 1 || TempMonth > 12) || (TempYear < 1)) {
             ClearScreen();
-            puts(ANSI_COLOR_LIGHTRED"\n\n\n\n\tWarning: You must have to insert your birth of date as what the pre-requisites requested for!\n"ANSI_COLOR_RESET);
+            printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRegisterUI);
+
+            puts(ANSI_COLOR_LIGHTRED"\tWarning: You must have to insert your birth of date as what the pre-requisites requested for!\n"ANSI_COLOR_RESET);
             printf("      " ANSI_COLOR_LIGHTYELLOW"> Date of Birth:\t\t%s\n\t"ANSI_COLOR_RESET "Age on Present:\t\t%s\n\tPhone Number:\t\t%s\n\tSex/Gender:\t\t%s\n", ARMInputs[GlobalRegisteredAccounts].DateOfBirth, ARMInputs[GlobalRegisteredAccounts].AgeOnPresent, ARMInputs[GlobalRegisteredAccounts].PhoneNumber, ARMInputs[GlobalRegisteredAccounts].Sex);
             puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTYELLOW"Date of Birth."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your date of birth profile account.");
             puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The date of birth of yours must be a valid format as written down below: \n\t      <DATE>-<MONTH>-<YEAR> ... NO SPACES NEEDED! \n\t      The valid example of date of birth format's shown here: 1-1-2005 \n\n\t      <DATE>  must be a number from 1 to 31 (based of the total days in a spesific month). \n\t      <MONTH> must be a number from 1 to 12 (a number that represents the current month). \n\t      <YEAR>  must be a valid number up to the current (present time) year on a calender."ANSI_COLOR_RESET);
@@ -1517,13 +2008,15 @@ void AccountRegistrationMenu(int ARMSelected) {
     else if (ARMSelected == 6) {
         if (!B) {
             ClearScreen();
-            printf(ANSI_COLOR_LIGHTRED"\n\n\n\n\tWarning: Before inserting your present age in here, make sure to fill in your \n\t\t date of birth, considering that there'll be a checking if your present \n\t\t age is a valid!\n\n"ANSI_COLOR_RESET);
+            printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRegisterUI);
+            
+            printf(ANSI_COLOR_LIGHTRED"\tWarning: Before inserting your present age in here, make sure to fill in your \n\t\t date of birth, considering that there'll be a checking if your present \n\t\t age is a valid!\n\n"ANSI_COLOR_RESET);
             printf(ANSI_COLOR_LIGHTYELLOW"\tDate of Birth:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> Age on Present:\t\t%s\n\t"ANSI_COLOR_RESET "Phone Number:\t\t%s\n\tSex/Gender:\t\t%s\n", ARMInputs[GlobalRegisteredAccounts].DateOfBirth, ARMInputs[GlobalRegisteredAccounts].AgeOnPresent, ARMInputs[GlobalRegisteredAccounts].PhoneNumber, ARMInputs[GlobalRegisteredAccounts].Sex);
             printf(ANSI_COLOR_LIGHTMAGENTA"\n\tPlease proceed back to the registration menu by pressing your [ENTER] button \n\tkey on the keyboard. "ANSI_COLOR_RESET); getchar();
             AccountRegistrationMenu(ARMSelected);
         } ClearScreen();
 
-        char   InputAgeOnPresent[BUFSIZE07], StatedBirthDate[BUFSIZE07];
+        char   InputAgeOnPresent[4], StatedBirthDate[BUFSIZE07];
         char   *TempStatedBirthYear;
         size_t InputAOP, StatedBirthYear;
         
@@ -1532,28 +2025,32 @@ void AccountRegistrationMenu(int ARMSelected) {
         TempStatedBirthYear = strtok(NULL, " "); TempStatedBirthYear = strtok(NULL, " ");
         TempStatedBirthYear = strtok(NULL, " "); TempStatedBirthYear = strtok(NULL, " ");
 
+        printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRegisterUI);
+
         if (A) {
-            printf(ANSI_COLOR_GREEN"\n\n\n\n\tInfo: We'd checked that you earlier had already insert your present age as: %s.\n\t      But don't worry, if you want to make a change, then you may proceed to do so.\n\n"ANSI_COLOR_RESET, ARMInputs[GlobalRegisteredAccounts].AgeOnPresent);
+            printf(ANSI_COLOR_GREEN"\tInfo: We'd checked that you earlier had already insert your present age as: \n\t          >> %s.\n\n\t      But don't worry, if you want to make a change, then you may proceed to do so.\n\n"ANSI_COLOR_RESET, ARMInputs[GlobalRegisteredAccounts].AgeOnPresent);
             printf("\tDate of Birth:\t\t%s\n      " ANSI_COLOR_LIGHTGREEN"> Age on Present:\t\t%s\n\t"ANSI_COLOR_RESET "Phone Number:\t\t%s\n\tSex/Gender:\t\t%s\n", ARMInputs[GlobalRegisteredAccounts].DateOfBirth, ARMInputs[GlobalRegisteredAccounts].AgeOnPresent, ARMInputs[GlobalRegisteredAccounts].PhoneNumber, ARMInputs[GlobalRegisteredAccounts].Sex);
             puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTGREEN"Age on Present."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your present age profile account.");
-            puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The present age must be a rightful age as the same in your personal date of birth, \n\t      and it will be checked whether if your current age make up to your birth year until \n\t      the current year in the calendar system."ANSI_COLOR_RESET);
+            puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The present age must be a rightful age as the same in your personal date of birth, and it will \n\t      be checked whether if your current age make up to your birth year until the current year \n\t      in the calendar system."ANSI_COLOR_RESET);
         } else {
-            printf("\n\n\n\n\tDate of Birth:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> Age on Present:\t\t%s\n\t"ANSI_COLOR_RESET "Phone Number:\t\t%s\n\tSex/Gender:\t\t%s\n", ARMInputs[GlobalRegisteredAccounts].DateOfBirth, ARMInputs[GlobalRegisteredAccounts].AgeOnPresent, ARMInputs[GlobalRegisteredAccounts].PhoneNumber, ARMInputs[GlobalRegisteredAccounts].Sex);
+            printf("\tDate of Birth:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> Age on Present:\t\t%s\n\t"ANSI_COLOR_RESET "Phone Number:\t\t%s\n\tSex/Gender:\t\t%s\n", ARMInputs[GlobalRegisteredAccounts].DateOfBirth, ARMInputs[GlobalRegisteredAccounts].AgeOnPresent, ARMInputs[GlobalRegisteredAccounts].PhoneNumber, ARMInputs[GlobalRegisteredAccounts].Sex);
             puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTYELLOW"Age on Present."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your present age profile account.");
-            puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The present age must be a rightful age as the same in your personal date of birth, \n\t      and it will be checked whether if your current age make up to your birth year until \n\t      the current year in the calendar system."ANSI_COLOR_RESET);
+            puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The present age must be a rightful age as the same in your personal date of birth, and it will \n\t      be checked whether if your current age make up to your birth year until the current year \n\t      in the calendar system."ANSI_COLOR_RESET);
         }
 
         printf("\nAge on Present: ");
-        fgets(InputAgeOnPresent, BUFSIZE07, stdin);
+        fgets(InputAgeOnPresent, 4, stdin);
         InputAOP        = atoi(InputAgeOnPresent);
         StatedBirthYear = atoi(TempStatedBirthYear);
 
-        while (strlen(InputAgeOnPresent) < 1 || InputAOP < 13 || (StatedBirthYear + InputAOP != 2023)) {
+        while (strlen(InputAgeOnPresent) < 1 || InputAOP < 13 || (StatedBirthYear + InputAOP != (ManageTime.tm_year + 1900))) {
             ClearScreen();
-            puts(ANSI_COLOR_LIGHTRED"\n\n\n\n\tWarning: You must have to insert your present age rightfully and honestly (min. 13 years old)!\n"ANSI_COLOR_RESET);
+            printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRegisterUI);
+
+            puts(ANSI_COLOR_LIGHTRED"\tWarning: You must have to insert your present age rightfully and honestly (min. 13 years old)!\n"ANSI_COLOR_RESET);
             printf("\tDate of Birth:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> Age on Present:\t\t%s\n\t"ANSI_COLOR_RESET "Phone Number:\t\t%s\n\tSex/Gender:\t\t%s\n", ARMInputs[GlobalRegisteredAccounts].DateOfBirth, ARMInputs[GlobalRegisteredAccounts].AgeOnPresent, ARMInputs[GlobalRegisteredAccounts].PhoneNumber, ARMInputs[GlobalRegisteredAccounts].Sex);
             puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTYELLOW"Age on Present."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your present age profile account.");
-            puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The present age must be a rightful age as the same in your personal date of birth, \n\t      and it will be checked whether if your current age make up to your birth year until \n\t      the current year in the calendar system."ANSI_COLOR_RESET);
+            puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The present age must be a rightful age as the same in your personal date of birth, and it will \n\t      be checked whether if your current age make up to your birth year until the current year \n\t      in the calendar system."ANSI_COLOR_RESET);
 
             printf("\nAge on Present: ");
             fgets(InputAgeOnPresent, BUFSIZE07, stdin);
@@ -1572,42 +2069,62 @@ void AccountRegistrationMenu(int ARMSelected) {
         char InputPhoneNumber[BUFSIZE07], TempCountryCode[BUFSIZE07], TempDigitsNumber[BUFSIZE07], TempDigitsNumberTemp[BUFSIZE07], TempFinalPhoneNumber[BUFSIZE07];
         char *CountryCode, *DigitsNumber, *FinalPhoneNumber;
 
-        if (PN) {
-            printf(ANSI_COLOR_GREEN"\n\n\n\n\tInfo: We'd checked that you earlier had already insert your phone number as: %s.\n\t      But don't worry, if you want to make a change, then you may proceed to do so.\n\n"ANSI_COLOR_RESET, ARMInputs[GlobalRegisteredAccounts].PhoneNumber);
+        printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRegisterUI);
+
+        if (A) {
+            printf(ANSI_COLOR_GREEN"\tInfo: We'd checked that you earlier had already insert your phone number as: \n\t          >> %s.\n\n\t      But don't worry, if you want to make a change, then you may proceed to do so.\n\n"ANSI_COLOR_RESET, ARMInputs[GlobalRegisteredAccounts].PhoneNumber);
             printf("\tDate of Birth:\t\t%s\n\tAge on Present:\t\t%s\n      " ANSI_COLOR_LIGHTGREEN"> Phone Number:\t\t%s\n\t"ANSI_COLOR_RESET "Sex/Gender:\t\t%s\n", ARMInputs[GlobalRegisteredAccounts].DateOfBirth, ARMInputs[GlobalRegisteredAccounts].AgeOnPresent, ARMInputs[GlobalRegisteredAccounts].PhoneNumber, ARMInputs[GlobalRegisteredAccounts].Sex);
-            puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTGREEN"Phone Number."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your phone number profile account.");
+            puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTGREEN"Phone Number."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your phone number into your profile account.");
             puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The phone number must be started with the country code '+XXX', and the next 4 to 13 \n\t      digits are for the phone number you owned. \n\t      Separate the country code and the digits by a single space, and for the digits you can \n\t      insert thoroughly (without spaces or so). \n\n\t      Phone number format insertion: +<COUNTRY_CODE> XXXXXXXXXXX \n\t      Example: +62 12345678901"ANSI_COLOR_RESET);
         } else {
-            printf("\n\n\n\n\tDate of Birth:\t\t%s\n\tAge on Present:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> Phone Number:\t\t%s\n\t"ANSI_COLOR_RESET "Sex/Gender:\t\t%s\n", ARMInputs[GlobalRegisteredAccounts].DateOfBirth, ARMInputs[GlobalRegisteredAccounts].AgeOnPresent, ARMInputs[GlobalRegisteredAccounts].PhoneNumber, ARMInputs[GlobalRegisteredAccounts].Sex);
-            puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTYELLOW"Phone Number."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your phone number profile account.");
+            printf("\tDate of Birth:\t\t%s\n\tAge on Present:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> Phone Number:\t\t%s\n\t"ANSI_COLOR_RESET "Sex/Gender:\t\t%s\n", ARMInputs[GlobalRegisteredAccounts].DateOfBirth, ARMInputs[GlobalRegisteredAccounts].AgeOnPresent, ARMInputs[GlobalRegisteredAccounts].PhoneNumber, ARMInputs[GlobalRegisteredAccounts].Sex);
+            puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTYELLOW"Phone Number."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your phone number into your profile account.");
             puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The phone number must be started with the country code '+XXX', and the next 4 to 13 \n\t      digits are for the phone number you owned. \n\t      Separate the country code and the digits by a single space, and for the digits you can \n\t      insert thoroughly (without spaces or so). \n\n\t      Phone number format insertion: +<COUNTRY_CODE> XXXXXXXXXXX \n\t      Example: +62 12345678901"ANSI_COLOR_RESET);
         }
 
         printf("\nPhone Number: ");
         fgets(InputPhoneNumber, BUFSIZE07, stdin);
+        InputPhoneNumber[strlen(InputPhoneNumber) - 1] = '\0';
 
-        strcpy(TempCountryCode, InputPhoneNumber);
-        TempCountryCode[strlen(TempCountryCode) - 1] = '\0';
-        if (strchr(TempCountryCode, ' ') != NULL) {
-            CountryCode = strtok(TempCountryCode, " "); DigitsNumber = strtok(NULL, " ");
-            CountryCode = TrimWhiteSpaces(CountryCode); DigitsNumber = TrimWhiteSpaces(DigitsNumber);
+        if (strlen(InputPhoneNumber) > 1 && strchr(InputPhoneNumber, '+') != NULL && strchr(InputPhoneNumber, ' ') != NULL && strlen(InputPhoneNumber) > 4) {
+            strcpy(TempCountryCode, InputPhoneNumber);
+            if (strchr(TempCountryCode, ' ') != NULL) {
+                CountryCode = strtok(TempCountryCode, " "); DigitsNumber = strtok(NULL, " ");
+                CountryCode = TrimWhiteSpaces(CountryCode); DigitsNumber = TrimWhiteSpaces(DigitsNumber);
+            }
+        } else {
+            strcpy(InputPhoneNumber, "+0 0"); strcpy(TempCountryCode, InputPhoneNumber);
+            if (strchr(TempCountryCode, ' ') != NULL) {
+                CountryCode = strtok(TempCountryCode, " "); DigitsNumber = strtok(NULL, " ");
+                CountryCode = TrimWhiteSpaces(CountryCode); DigitsNumber = TrimWhiteSpaces(DigitsNumber);
+            }
         }
 
         while ((strlen(DigitsNumber) <= 4 || strlen(DigitsNumber) > 13) || CountryCode[0] != '+' || strchr(InputPhoneNumber, ' ') == NULL) {
             ClearScreen();
-            puts(ANSI_COLOR_LIGHTRED"\n\n\n\n\tWarning: You must have to insert your with a starting phone country code and \n\t         for at least 4 to 13 digits (min. 4 digits)!\n"ANSI_COLOR_RESET);
+            printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppLoginUI);
+
+            puts(ANSI_COLOR_LIGHTRED"\tWarning: You must have to insert your with a starting phone country code and \n\t         for at least 4 to 13 digits (min. 4 digits)!\n"ANSI_COLOR_RESET);
             printf("\tDate of Birth:\t\t%s\n\tAge on Present:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> Phone Number:\t\t%s\n\t"ANSI_COLOR_RESET "Sex/Gender:\t\t%s\n", ARMInputs[GlobalRegisteredAccounts].DateOfBirth, ARMInputs[GlobalRegisteredAccounts].AgeOnPresent, ARMInputs[GlobalRegisteredAccounts].PhoneNumber, ARMInputs[GlobalRegisteredAccounts].Sex);
-            puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTYELLOW"Phone Number."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your phone number profile account.");
+            puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTYELLOW"Phone Number."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your phone number into your profile account.");
             puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The phone number must be started with the country code '+XXX', and the next 4 to 13 \n\t      digits are for the phone number you owned. \n\t      Separate the country code and the digits by a single space, and for the digits you can \n\t      insert thoroughly (without spaces or so). \n\n\t      Phone number format insertion: +<COUNTRY_CODE> XXXXXXXXXXX \n\t      Example: +62 12345678901"ANSI_COLOR_RESET);
 
             printf("\nPhone Number: ");
             fgets(InputPhoneNumber, BUFSIZE07, stdin);
+            InputPhoneNumber[strlen(InputPhoneNumber) - 1] = '\0';
 
-            strcpy(TempCountryCode, InputPhoneNumber);
-            TempCountryCode[strlen(TempCountryCode) - 1] = '\0';
-            if (strchr(TempCountryCode, ' ') != NULL) {
-                CountryCode = strtok(TempCountryCode, " "); DigitsNumber = strtok(NULL, " ");
-                CountryCode = TrimWhiteSpaces(CountryCode); DigitsNumber = TrimWhiteSpaces(DigitsNumber);
+            if (strlen(InputPhoneNumber) > 1 && strchr(InputPhoneNumber, '+') != NULL && strchr(InputPhoneNumber, ' ') != NULL && strlen(InputPhoneNumber) > 4) {
+                strcpy(TempCountryCode, InputPhoneNumber);
+                if (strchr(TempCountryCode, ' ') != NULL) {
+                    CountryCode = strtok(TempCountryCode, " "); DigitsNumber = strtok(NULL, " ");
+                    CountryCode = TrimWhiteSpaces(CountryCode); DigitsNumber = TrimWhiteSpaces(DigitsNumber);
+                }
+            } else {
+                strcpy(InputPhoneNumber, "+0 0"); strcpy(TempCountryCode, InputPhoneNumber);
+                if (strchr(TempCountryCode, ' ') != NULL) {
+                    CountryCode = strtok(TempCountryCode, " "); DigitsNumber = strtok(NULL, " ");
+                    CountryCode = TrimWhiteSpaces(CountryCode); DigitsNumber = TrimWhiteSpaces(DigitsNumber);
+                }
             }
         }
         
@@ -1630,13 +2147,15 @@ void AccountRegistrationMenu(int ARMSelected) {
         ClearScreen();
         char InputSex[BUFSIZE07];
 
+        printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRegisterUI);
+
         if (S) {
-            printf(ANSI_COLOR_GREEN"\n\n\n\n\tInfo: We'd checked that you earlier had already asserted your sex as: %s.\n\t      But don't worry, if you want to make a change, then please don't be stupid enough to be confused.\n\n"ANSI_COLOR_RESET, ARMInputs[GlobalRegisteredAccounts].Sex);
+            printf(ANSI_COLOR_GREEN"\tInfo: We'd checked that you earlier had already asserted your sex as: \n\t          >> %s.\n\n\t      But don't worry, if you want to make a change, then please don't be stupid enough to be confused.\n\n"ANSI_COLOR_RESET, ARMInputs[GlobalRegisteredAccounts].Sex);
             printf("\tDate of Birth:\t\t%s\n\tAge on Present:\t\t%s\n\tPhone Number:\t\t%s\n      " ANSI_COLOR_LIGHTGREEN"> Sex/Gender:\t\t%s\n"ANSI_COLOR_RESET, ARMInputs[GlobalRegisteredAccounts].DateOfBirth, ARMInputs[GlobalRegisteredAccounts].AgeOnPresent, ARMInputs[GlobalRegisteredAccounts].PhoneNumber, ARMInputs[GlobalRegisteredAccounts].Sex);
             puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTGREEN"Sex/Gender."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your biological sex (or not), into the profile account.");
             puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: ONLY two (2) sexes that defines the human biology, and that is whether a \n\t      'Male' or a 'Female'. But nothing to worry, if you prefer not to say about it, \n\t      so just leave the input on blank."ANSI_COLOR_RESET);
         } else {
-            printf("\n\n\n\n\tDate of Birth:\t\t%s\n\tAge on Present:\t\t%s\n\tPhone Number:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> Sex/Gender:\t\t%s\n"ANSI_COLOR_RESET, ARMInputs[GlobalRegisteredAccounts].DateOfBirth, ARMInputs[GlobalRegisteredAccounts].AgeOnPresent, ARMInputs[GlobalRegisteredAccounts].PhoneNumber, ARMInputs[GlobalRegisteredAccounts].Sex);
+            printf("\tDate of Birth:\t\t%s\n\tAge on Present:\t\t%s\n\tPhone Number:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> Sex/Gender:\t\t%s\n"ANSI_COLOR_RESET, ARMInputs[GlobalRegisteredAccounts].DateOfBirth, ARMInputs[GlobalRegisteredAccounts].AgeOnPresent, ARMInputs[GlobalRegisteredAccounts].PhoneNumber, ARMInputs[GlobalRegisteredAccounts].Sex);
             puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTYELLOW"Sex/Gender."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your biological sex (or not), into the profile account.");
             puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: ONLY two (2) sexes that defines the human biology, and that is whether a \n\t      'Male' or a 'Female'. But nothing to worry, if you prefer not to say about it, \n\t      so just leave the input on blank."ANSI_COLOR_RESET);
         }
@@ -1652,7 +2171,9 @@ void AccountRegistrationMenu(int ARMSelected) {
 
         while (strcmp(InputSex, "MALE") != 0 && strcmp(InputSex, "FEMALE") != 0) {
             ClearScreen();
-            puts(ANSI_COLOR_LIGHTRED"\n\n\n\n\tWarning: You must assert your biological sex as either a 'Male' or 'Female' \n\t         (leave blank for prefering not to say)!\n"ANSI_COLOR_RESET);
+            printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRegisterUI);
+            
+            puts(ANSI_COLOR_LIGHTRED"\tWarning: You must assert your biological sex as either a 'Male' or 'Female' \n\t         (leave blank for prefering not to say)!\n"ANSI_COLOR_RESET);
             printf("\tDate of Birth:\t\t%s\n\tAge on Present:\t\t%s\n\tPhone Number:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> Sex/Gender:\t\t%s\n"ANSI_COLOR_RESET, ARMInputs[GlobalRegisteredAccounts].DateOfBirth, ARMInputs[GlobalRegisteredAccounts].AgeOnPresent, ARMInputs[GlobalRegisteredAccounts].PhoneNumber, ARMInputs[GlobalRegisteredAccounts].Sex);
             puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTYELLOW"Sex/Gender."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your biological sex (or not), into the profile account.");
             puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: ONLY two (2) sexes that defines the human biology, and that is whether a \n\t      'Male' or a 'Female'. But nothing to worry, if you prefer not to say about it, \n\t      so just leave the input on blank."ANSI_COLOR_RESET);
@@ -1678,19 +2199,66 @@ void AccountRegistrationMenu(int ARMSelected) {
 void AccountLoginMenu(int ALMSelected) {
     ClearScreen();
 
-    FILE *FDestination, *FTempDestination;
+    FILE *FDestination, *FTempDestination, *FTempSource, *TempMMAFInputs;
     int BufLen, Ptr = 0, KeyTracker = 0, LineTracker = 0, FTDPos = 0;
     char C, BUFFER[BUFSIZE16], DeleteTempDestinationTxtFile[128], TxtFileName[128] = "RegisteredAccounts.txt > First Name, Last Name, Personal E-mail, Phone Number, SKYR Username, SKYR Password";
     char *SourceTextFileName, *SourceKeyStringValue, *SelectedKeyString;
     char *SourceKeyStringValues[BUFSIZE07], FTDestination[6][BUFSIZE07];
+    char LoginAccInsider[BUFSIZE07], GRA[BUFSIZE07];
+    char UpdateLocalTime[BUFSIZE07], LocalTime[BUFSIZE07], AccountMadeTime[BUFSIZE07], MadeTime[BUFSIZE07];
 
     int AvailableOptions = 4, SubmitOrContinue;
+    int ExistingAccounts = 0;
     bool Selecting = true, Updated = false, FirstRun = true;
     bool ConfirmOrBackALM = false, ALMUpgrade = false;
-    char AKDC, MessageID5[BUFSIZE10];
-    char FirstName[BUFSIZE07], LastName[BUFSIZE07], Email[BUFSIZE07], PhoneNumber[BUFSIZE07], Username[BUFSIZE07], Password[BUFSIZE07];
-    char *ShowFirstName, *ShowLastName, *ShowEmail, *ShowPhoneNumber, *ShowUsername, *ShowPassword;
+    char AKDC;
+    char MessageID05[BUFSIZE10], MessageID06[BUFSIZE10], MessageID07[BUFSIZE10];
+    char TempCountRegisteredAccounts[BUFSIZE10], *CountRegisteredAccounts;
+    char FirstName[BUFSIZE07], LastName[BUFSIZE07], Email[BUFSIZE07], Username[BUFSIZE07], Password[BUFSIZE07], DateOfBirth[BUFSIZE07], AgeOnPresent[BUFSIZE07], PhoneNumber[BUFSIZE07], Sex[BUFSIZE07];
+    char *ShowFirstName, *ShowLastName, *ShowEmail, *ShowUsername, *ShowPassword, *ShowDateOfBirth, *ShowAgeOnPresent, *ShowPhoneNumber, *ShowSex;
 
+    if (access("RegisteredAccounts.txt", F_OK) != 0 && !FlagALM) { GlobalRegisteredAccounts = 0; }
+    else if (access("RegisteredAccounts.txt", F_OK) == 0 && !FlagALM) {
+        FDestination     = fopen("RegisteredAccounts.txt", "r");
+        FTempDestination = fopen("TempDestination.txt", "w");
+
+        while (fgets(BUFFER, sizeof(BUFFER), FDestination) != 0) {
+            BufLen = strlen(BUFFER);
+            for (int i = 0; i < BufLen; i++) BUFFER[i] += EncryptionKey;
+            fputs(BUFFER, FTempDestination);
+        } fclose(FDestination); fclose(FTempDestination);
+
+        strtok_r(TxtFileName, ">", &SelectedKeyString);
+        SelectedKeyString = TrimWhiteSpaces(SelectedKeyString);
+        SourceKeyStringValue = strtok(SelectedKeyString, ",");
+        KeyTracker++;
+
+        while (SourceKeyStringValue != NULL) {
+            SourceKeyStringValues[Ptr] = SourceKeyStringValue;
+            SourceKeyStringValues[Ptr] = TrimWhiteSpaces(SourceKeyStringValues[Ptr]);
+            SourceKeyStringValue = strtok(NULL, ",");
+            Ptr++; KeyTracker++;
+        } SourceTextFileName = TrimWhiteSpaces(TxtFileName);
+        
+        strcpy(TempCountRegisteredAccounts, ReadAndPrintLine("TempDestination.txt", 9));
+
+        strcpy(DeleteTempDestinationTxtFile, "del ");
+        strcat(DeleteTempDestinationTxtFile, "TempDestination.txt");
+        system(DeleteTempDestinationTxtFile);
+
+        TempCountRegisteredAccounts[strlen(TempCountRegisteredAccounts) - 1] = '\0';
+        strtok_r(TempCountRegisteredAccounts, ":", &CountRegisteredAccounts);
+        
+        CountRegisteredAccounts = TrimWhiteSpaces(CountRegisteredAccounts);
+        CountRegisteredAccounts = strtok(CountRegisteredAccounts, " ");
+        ExistingAccounts = atoi(CountRegisteredAccounts);
+
+        if (!SKYRApplicationRunning) { GlobalRegisteredAccounts += ExistingAccounts; }
+        else { GlobalRegisteredAccounts++; }; 
+        FlagALM = true;
+    }
+
+    SKYRApplicationRunning = true;
     if ((LE && LPN && LU && LP) && !ALMUpgrade) { AvailableOptions += 1; ALMUpgrade = true; }
 
     while (Selecting) {
@@ -1698,7 +2266,7 @@ void AccountLoginMenu(int ALMSelected) {
         /*  Separated by one line to another, handling ONLY THREE (3) rows each parts.
         >   Personal E-mail, SKYR Username, SKYR Password
         */
-        printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t--------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t--------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppLoginUI);
+        printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppLoginUI);
 
         if ((ALMSelected + 1) > 0 && (ALMSelected + 1) <= 4 && (AvailableOptions == 4)) {
             if ((ALMSelected + 1) == 1) {
@@ -1735,13 +2303,572 @@ void AccountLoginMenu(int ALMSelected) {
             
             if ((ALMSelected + 1) == 5) {
                 ClearScreen();
-                printf("\n\n\n\n\tInfo: You've completed inserting the required main data about your profile  \n\t      account, and now you're ready to login into your account.\n");
+                printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppLoginUI);
+
+                printf("\tInfo: You've completed inserting the required main data about your profile  \n\t      account, and now you're ready to login into your account.\n");
                 printf(ANSI_COLOR_BLUE"\n\tProceed to give a rightful checking on your inserted profile data \n\tright here and there before get logged in? \n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN"Account to be linked: %s\n\n"ANSI_COLOR_RESET, ALMInputs[GlobalRegisteredAccounts].Email);
-                snprintf(MessageID5, BUFSIZE10, ANSI_COLOR_BLUE"\n\tProceed to give a rightful checking on your inserted profile data \n\tright here and there before get logged in? \n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN"Account to be linked: %s\n"ANSI_COLOR_RESET, ALMInputs[GlobalRegisteredAccounts].Email);
                 
-                MessagesShown_ArrowKeyChoiceDialog[4] = "\n\n\n\n\tInfo: You've completed inserting the required main data about your profile  \n\t      account, and now you're ready to login into your account.";
-                MessagesShown_ArrowKeyChoiceDialog[5] = MessageID5;
-                SubmitOrContinue = ArrowKeyChoiceDialog("Truth Confirmation", MessagesShown_ArrowKeyChoiceDialog, 4, 6);
+                snprintf(MessageID05, BUFSIZE10, ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppLoginUI);
+                snprintf(MessageID06, BUFSIZE10, "\tInfo: You've completed inserting the required main data about your profile  \n\t      account, and now you're ready to login into your account.");
+                snprintf(MessageID07, BUFSIZE10, ANSI_COLOR_BLUE"\n\tProceed to give a rightful checking on your inserted profile data \n\tright here and there before get logged in? \n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN"Account to be linked: %s\n"ANSI_COLOR_RESET, ALMInputs[GlobalRegisteredAccounts].Email);
+                MessagesShown_ArrowKeyChoiceDialog[5] = MessageID05;
+                MessagesShown_ArrowKeyChoiceDialog[6] = MessageID06;
+                MessagesShown_ArrowKeyChoiceDialog[7] = MessageID07;
+                SubmitOrContinue = ArrowKeyChoiceDialog("Truth Confirmation", MessagesShown_ArrowKeyChoiceDialog, 5, 8);
+
+                if (SubmitOrContinue) {
+                    FDestination     = fopen("RegisteredAccounts.txt", "r");
+                    FTempDestination = fopen("TempDestination.txt", "w");
+
+                    while (fgets(BUFFER, sizeof(BUFFER), FDestination) != 0) {
+                        BufLen = strlen(BUFFER);
+                        for (int i = 0; i < BufLen; i++) BUFFER[i] += EncryptionKey;
+                        fputs(BUFFER, FTempDestination);
+                    } fclose(FDestination); fclose(FTempDestination);
+                    
+                    for (int GRA = 1; GRA <= GlobalRegisteredAccounts; GRA++) {
+                        strncpy(FirstName,    ReadAndPrintLine("TempDestination.txt", 0 + (14 * GRA)), BUFSIZE07);
+                        strncpy(LastName,     ReadAndPrintLine("TempDestination.txt", 1 + (14 * GRA)), BUFSIZE07);
+                        strncpy(Email,        ReadAndPrintLine("TempDestination.txt", 2 + (14 * GRA)), BUFSIZE07);
+                        strncpy(Username,     ReadAndPrintLine("TempDestination.txt", 3 + (14 * GRA)), BUFSIZE07);
+                        strncpy(Password,     ReadAndPrintLine("TempDestination.txt", 4 + (14 * GRA)), BUFSIZE07);
+                        strncpy(DateOfBirth,  ReadAndPrintLine("TempDestination.txt", 6 + (14 * GRA)), BUFSIZE07);
+                        strncpy(AgeOnPresent, ReadAndPrintLine("TempDestination.txt", 7 + (14 * GRA)), BUFSIZE07);
+                        strncpy(PhoneNumber,  ReadAndPrintLine("TempDestination.txt", 8 + (14 * GRA)), BUFSIZE07);
+                        strncpy(Sex,          ReadAndPrintLine("TempDestination.txt", 9 + (14 * GRA)), BUFSIZE07);
+
+                        FirstName[strlen(FirstName) - 1] = '\0'; LastName[strlen(LastName) - 1] = '\0';
+                        Email[strlen(Email) - 1] = '\0'; Username[strlen(Username) - 1] = '\0'; Password[strlen(Password) - 1] = '\0';
+                        DateOfBirth[strlen(DateOfBirth) - 1] = '\0'; AgeOnPresent[strlen(AgeOnPresent) - 1] = '\0';
+                        PhoneNumber[strlen(PhoneNumber) - 1] = '\0'; Sex[strlen(Sex) - 1] = '\0';
+                        strtok_r(FirstName, ":", &ShowFirstName);       ShowFirstName = TrimWhiteSpaces(ShowFirstName);
+                        strtok_r(LastName, ":", &ShowLastName);         ShowLastName = TrimWhiteSpaces(ShowLastName);
+                        strtok_r(Email, ":", &ShowEmail);               ShowEmail = TrimWhiteSpaces(ShowEmail);
+                        strtok_r(Username, ":", &ShowUsername);         ShowUsername = TrimWhiteSpaces(ShowUsername);
+                        strtok_r(Password, ":", &ShowPassword);         ShowPassword = TrimWhiteSpaces(ShowPassword);
+                        strtok_r(DateOfBirth, ":", &ShowDateOfBirth);   ShowPassword = TrimWhiteSpaces(ShowPassword);
+                        strtok_r(AgeOnPresent, ":", &ShowAgeOnPresent); ShowPassword = TrimWhiteSpaces(ShowPassword);
+                        strtok_r(PhoneNumber, ":", &ShowPhoneNumber);   ShowPhoneNumber = TrimWhiteSpaces(ShowPhoneNumber);
+                        strtok_r(Sex, ":", &ShowSex);                   ShowPhoneNumber = TrimWhiteSpaces(ShowPhoneNumber);
+
+                        if ((strcmp(ShowEmail, ALMInputs[GlobalRegisteredAccounts].Email)             == 0) && \
+                            (strcmp(ShowPhoneNumber, ALMInputs[GlobalRegisteredAccounts].PhoneNumber) == 0) && \
+                            (strcmp(ShowUsername, ALMInputs[GlobalRegisteredAccounts].Username)       == 0) && \
+                            (strcmp(ShowPassword, ALMInputs[GlobalRegisteredAccounts].Password)       == 0)) {   
+                                strcpy(DeleteTempDestinationTxtFile, "del ");
+                                strcat(DeleteTempDestinationTxtFile, "TempDestination.txt");
+                                system(DeleteTempDestinationTxtFile);
+
+                                ClearScreen();
+                                printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppLoginUI);
+
+                                puts(ANSI_COLOR_LIGHTBLUE"\tNote: You've successfully logged into your profile account!"ANSI_COLOR_RESET);
+                                puts(ANSI_COLOR_LIGHTBLUE"\tWelcome to: Personal Financial Management System [CLI-Win32] Application!"ANSI_COLOR_RESET);
+                                printf(ANSI_COLOR_LIGHTGREEN"\n\tLogged in as: \n\t          >>  %s %s.\n\t              "ANSI_COLOR_RESET ANSI_COLOR_GREEN"(Account No. %d)\n\n"ANSI_COLOR_RESET, ShowFirstName, ShowLastName, GRA);
+                                puts(ANSI_COLOR_LIGHTMAGENTA"\tNow you may proceed to the main menu by pressing the [ENTER] button key on \n\tyour keyboard right away."ANSI_COLOR_RESET);
+                                getchar();
+
+                                // TempMMAFInputs = fopen("TempLoggedInAccount.txt", "w");
+                                // itoa((GlobalRegisteredAccounts + 1), GRA, 10);
+                                // snprintf(LocalTime, BUFSIZE07, "%d-%02d-%02d %02d:%02d:%02d", ManageTime.tm_year + 1900, ManageTime.tm_mon + 1, ManageTime.tm_mday, ManageTime.tm_hour, ManageTime.tm_min, ManageTime.tm_sec);
+                                // snprintf(MadeTime, BUFSIZE07, "%d-%02d-%02d %02d:%02d:%02d", ManageTime.tm_year + 1900, ManageTime.tm_mon + 1, ManageTime.tm_mday, ManageTime.tm_hour, ManageTime.tm_min, ManageTime.tm_sec);
+                                
+                                // strcpy(LoginAccInsider, "Account Linked to: "); strcat(LoginAccInsider, FullName); strcat(LoginAccInsider, "\n");
+                                // strcpy(UpdateLocalTime, "PersonalFMSA | Last Updated: ");
+                                // strcat(UpdateLocalTime, LocalTime); strcat(UpdateLocalTime, "\n");
+
+                                // fputs("----------------------------------------------------------------------------------------------------\n", TempMMAFInputs);
+                                // fputs(ApplicationPresent, TempMMAFInputs);
+                                // fputs(ApplicationTitle, TempMMAFInputs);
+                                // fputs(ApplicationVersion, TempMMAFInputs); fputs("\n", TempMMAFInputs);
+                                // fputs(UpdateLocalTime, TempMMAFInputs);
+                                // fputs("Built-in Console Application [CLI-Win32], fundamentally C (100%)\n", TempMMAFInputs);
+                                // fputs("----------------------------------------------------------------------------------------------------\n", TempMMAFInputs);
+                                // fputs(LoginAccInsider, TempMMAFInputs);
+                                // fputs("----------------------------------------------------------------------------------------------------\n", TempMMAFInputs);
+                                // fputs(AccountMadeTime, TempMMAFInputs); fputs("\n", TempMMAFInputs);
+
+                                // fputs("Profile Account Data")
+
+                                strcpy(FullName, FirstName); strcat(FullName, LastName);
+                                strcpy(UserName, ALMInputs[GlobalRegisteredAccounts].Username);
+                                MainMenuApplicationFeatures(0);
+                            } else {
+                                FirstName[0] = 0; LastName[0] = 0, Email[0] = 0, Username[0] = 0, Password[0] = 0;
+                                DateOfBirth[0] = 0, AgeOnPresent[0] = 0; PhoneNumber[0] = 0, Sex[0] = 0;
+                            }
+                        }
+                        
+                        strcpy(DeleteTempDestinationTxtFile, "del ");
+                        strcat(DeleteTempDestinationTxtFile, "TempDestination.txt");
+                        system(DeleteTempDestinationTxtFile);
+
+                        ClearScreen();
+                        printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppLoginUI);
+                        
+                        puts(ANSI_COLOR_LIGHTRED"\tError: We checked that it seems like one or more inserted profile account(s) you \n\t       provide before isn't validating the same as the original registered \n\t       profile account(s) of yours that you're trying to logged in as by now.\n"ANSI_COLOR_RESET ANSI_COLOR_LIGHTYELLOW"\n\tConsider to re-check your logged in profile data and make sure that if you forget \n\tsomething, then you may to look for a recovery account by tapping [9] button \n\tkey on your keyboard, then proceed to fulfill-in important things afterwards.\n"ANSI_COLOR_RESET);
+                        getchar();
+                        ALMSelected = 0; AccountLoginMenu(ALMSelected);
+
+                    } else { ALMSelected = 0; AccountLoginMenu(ALMSelected); }
+                }
+            }
+
+        } else {
+            FirstRun = false;
+            printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppLoginUI);
+
+            if ((ALMSelected + 1) > 0 && (ALMSelected + 1) <= 4 && (AvailableOptions == 4)) {
+                if ((ALMSelected + 1) == 1) {
+                    if (!LE)  { printf("      " ANSI_COLOR_LIGHTYELLOW"> Personal E-mail:\t%s\n\t"ANSI_COLOR_RESET "Phone Number:\t\t%s\n\tSKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                    else      { printf("      " ANSI_COLOR_LIGHTGREEN"> Personal E-mail:\t%s\n\t"ANSI_COLOR_RESET "Phone Number:\t\t%s\n\tSKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                } else if ((ALMSelected + 1) == 2) {
+                    if (!LPN) { printf("\tPersonal E-mail:\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> Phone Number:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                    else      { printf("\tPersonal E-mail:\t%s\n      " ANSI_COLOR_LIGHTGREEN"> Phone Number:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                } else if ((ALMSelected + 1) == 3) {
+                    if (!LU)  { printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> SKYR Username:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Password:\t\t%s\n", ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                    else      { printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n      " ANSI_COLOR_LIGHTGREEN"> SKYR Username:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Password:\t\t%s\n", ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                } else if ((ALMSelected + 1) == 4) {
+                    if (!LP)  { printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n\tSKYR Username:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> SKYR Password:\t\t%s\n"ANSI_COLOR_RESET, ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                    else      { printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n\tSKYR Username:\t\t%s\n      " ANSI_COLOR_LIGHTGREEN"> SKYR Password:\t\t%s\n"ANSI_COLOR_RESET, ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                }
+
+                printf("\n\n\n\n\n\n\n\n\n\n\t%s", AppGuideOnUsageUDRL);
+            }
+            
+            else if ((ALMSelected + 1) > 0 && (ALMSelected + 1) <= 5 && (AvailableOptions == 5)) {
+                if ((ALMSelected + 1) == 1) {
+                    if (!LE)  { printf("      " ANSI_COLOR_LIGHTYELLOW"> Personal E-mail:\t%s\n\t"ANSI_COLOR_RESET "Phone Number:\t\t%s\n\tSKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                    else      { printf("      " ANSI_COLOR_LIGHTGREEN"> Personal E-mail:\t%s\n\t"ANSI_COLOR_RESET "Phone Number:\t\t%s\n\tSKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                } else if ((ALMSelected + 1) == 2) {
+                    if (!LPN) { printf("\tPersonal E-mail:\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> Phone Number:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                    else      { printf("\tPersonal E-mail:\t%s\n      " ANSI_COLOR_LIGHTGREEN"> Phone Number:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                } else if ((ALMSelected + 1) == 3) {
+                    if (!LU)  { printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> SKYR Username:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Password:\t\t%s\n", ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                    else      { printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n      " ANSI_COLOR_LIGHTGREEN"> SKYR Username:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Password:\t\t%s\n", ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                } else if ((ALMSelected + 1) == 4) {
+                    if (!LP)  { printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n\tSKYR Username:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> SKYR Password:\t\t%s\n"ANSI_COLOR_RESET, ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                    else      { printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n\tSKYR Username:\t\t%s\n      " ANSI_COLOR_LIGHTGREEN"> SKYR Password:\t\t%s\n"ANSI_COLOR_RESET, ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                } printf("\n\n\n\n\n\n\n\n\n\n\t%s", AppGuideOnUsageUDRL);
+                
+                if ((ALMSelected + 1) == 5) {
+                    ClearScreen();
+                    printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppLoginUI);
+
+                    printf("\tInfo: You've completed inserting the required main data about your profile  \n\t      account, and now you're ready to login into your account.\n");
+                    printf(ANSI_COLOR_BLUE"\n\tProceed to give a rightful checking on your inserted profile data \n\tright here and there before get logged in? \n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN"Account to be linked: %s\n\n"ANSI_COLOR_RESET, ALMInputs[GlobalRegisteredAccounts].Email);
+                    
+                    snprintf(MessageID05, BUFSIZE10, ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppLoginUI);
+                    snprintf(MessageID06, BUFSIZE10, "\tInfo: You've completed inserting the required main data about your profile  \n\t      account, and now you're ready to login into your account.");
+                    snprintf(MessageID07, BUFSIZE10, ANSI_COLOR_BLUE"\n\tProceed to give a rightful checking on your inserted profile data \n\tright here and there before get logged in? \n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN"Account to be linked: %s\n"ANSI_COLOR_RESET, ALMInputs[GlobalRegisteredAccounts].Email);
+                    MessagesShown_ArrowKeyChoiceDialog[5] = MessageID05;
+                    MessagesShown_ArrowKeyChoiceDialog[6] = MessageID06;
+                    MessagesShown_ArrowKeyChoiceDialog[7] = MessageID07;
+                    SubmitOrContinue = ArrowKeyChoiceDialog("Truth Confirmation", MessagesShown_ArrowKeyChoiceDialog, 5, 8);
+
+                    if (SubmitOrContinue) {
+                        FDestination     = fopen("RegisteredAccounts.txt", "r");
+                        FTempDestination = fopen("TempDestination.txt", "w");
+
+                        while (fgets(BUFFER, sizeof(BUFFER), FDestination) != 0) {
+                            BufLen = strlen(BUFFER);
+                            for (int i = 0; i < BufLen; i++) BUFFER[i] += EncryptionKey;
+                            fputs(BUFFER, FTempDestination);
+                        } fclose(FDestination); fclose(FTempDestination);
+                        
+                        for (int GRA = 1; GRA <= GlobalRegisteredAccounts; GRA++) {
+                            strncpy(FirstName,    ReadAndPrintLine("TempDestination.txt", 0 + (14 * GRA)), BUFSIZE07);
+                            strncpy(LastName,     ReadAndPrintLine("TempDestination.txt", 1 + (14 * GRA)), BUFSIZE07);
+                            strncpy(Email,        ReadAndPrintLine("TempDestination.txt", 2 + (14 * GRA)), BUFSIZE07);
+                            strncpy(Username,     ReadAndPrintLine("TempDestination.txt", 3 + (14 * GRA)), BUFSIZE07);
+                            strncpy(Password,     ReadAndPrintLine("TempDestination.txt", 4 + (14 * GRA)), BUFSIZE07);
+                            strncpy(DateOfBirth,  ReadAndPrintLine("TempDestination.txt", 6 + (14 * GRA)), BUFSIZE07);
+                            strncpy(AgeOnPresent, ReadAndPrintLine("TempDestination.txt", 7 + (14 * GRA)), BUFSIZE07);
+                            strncpy(PhoneNumber,  ReadAndPrintLine("TempDestination.txt", 8 + (14 * GRA)), BUFSIZE07);
+                            strncpy(Sex,          ReadAndPrintLine("TempDestination.txt", 9 + (14 * GRA)), BUFSIZE07);
+
+                            FirstName[strlen(FirstName) - 1] = '\0'; LastName[strlen(LastName) - 1] = '\0';
+                            Email[strlen(Email) - 1] = '\0'; Username[strlen(Username) - 1] = '\0'; Password[strlen(Password) - 1] = '\0';
+                            DateOfBirth[strlen(DateOfBirth) - 1] = '\0'; AgeOnPresent[strlen(AgeOnPresent) - 1] = '\0';
+                            PhoneNumber[strlen(PhoneNumber) - 1] = '\0'; Sex[strlen(Sex) - 1] = '\0';
+                            strtok_r(FirstName, ":", &ShowFirstName);       ShowFirstName = TrimWhiteSpaces(ShowFirstName);
+                            strtok_r(LastName, ":", &ShowLastName);         ShowLastName = TrimWhiteSpaces(ShowLastName);
+                            strtok_r(Email, ":", &ShowEmail);               ShowEmail = TrimWhiteSpaces(ShowEmail);
+                            strtok_r(Username, ":", &ShowUsername);         ShowUsername = TrimWhiteSpaces(ShowUsername);
+                            strtok_r(Password, ":", &ShowPassword);         ShowPassword = TrimWhiteSpaces(ShowPassword);
+                            strtok_r(DateOfBirth, ":", &ShowDateOfBirth);   ShowPassword = TrimWhiteSpaces(ShowPassword);
+                            strtok_r(AgeOnPresent, ":", &ShowAgeOnPresent); ShowPassword = TrimWhiteSpaces(ShowPassword);
+                            strtok_r(PhoneNumber, ":", &ShowPhoneNumber);   ShowPhoneNumber = TrimWhiteSpaces(ShowPhoneNumber);
+                            strtok_r(Sex, ":", &ShowSex);                   ShowPhoneNumber = TrimWhiteSpaces(ShowPhoneNumber);
+
+                            if ((strcmp(ShowEmail, ALMInputs[GlobalRegisteredAccounts].Email)             == 0) && \
+                                (strcmp(ShowPhoneNumber, ALMInputs[GlobalRegisteredAccounts].PhoneNumber) == 0) && \
+                                (strcmp(ShowUsername, ALMInputs[GlobalRegisteredAccounts].Username)       == 0) && \
+                                (strcmp(ShowPassword, ALMInputs[GlobalRegisteredAccounts].Password)       == 0)) {   
+                                    strcpy(DeleteTempDestinationTxtFile, "del ");
+                                    strcat(DeleteTempDestinationTxtFile, "TempDestination.txt");
+                                    system(DeleteTempDestinationTxtFile);
+
+                                    ClearScreen();
+                                    printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppLoginUI);
+
+                                    puts(ANSI_COLOR_LIGHTBLUE"\tNote: You've successfully logged into your profile account!"ANSI_COLOR_RESET);
+                                    puts(ANSI_COLOR_LIGHTBLUE"\tWelcome to: Personal Financial Management System [CLI-Win32] Application!"ANSI_COLOR_RESET);
+                                    printf(ANSI_COLOR_LIGHTGREEN"\n\tLogged in as: \n\t          >>  %s %s.\n\t              "ANSI_COLOR_RESET ANSI_COLOR_GREEN"(Account No. %d)\n\n"ANSI_COLOR_RESET, ShowFirstName, ShowLastName, GRA);
+                                    puts(ANSI_COLOR_LIGHTMAGENTA"\tNow you may proceed to the main menu by pressing the [ENTER] button key on \n\tyour keyboard right away."ANSI_COLOR_RESET);
+                                    getchar();
+
+                                    // TempMMAFInputs = fopen("TempLoggedInAccount.txt", "w");
+                                    // itoa((GlobalRegisteredAccounts + 1), GRA, 10);
+                                    // snprintf(LocalTime, BUFSIZE07, "%d-%02d-%02d %02d:%02d:%02d", ManageTime.tm_year + 1900, ManageTime.tm_mon + 1, ManageTime.tm_mday, ManageTime.tm_hour, ManageTime.tm_min, ManageTime.tm_sec);
+                                    // snprintf(MadeTime, BUFSIZE07, "%d-%02d-%02d %02d:%02d:%02d", ManageTime.tm_year + 1900, ManageTime.tm_mon + 1, ManageTime.tm_mday, ManageTime.tm_hour, ManageTime.tm_min, ManageTime.tm_sec);
+                                    
+                                    // strcpy(LoginAccInsider, "Account Linked to: "); strcat(LoginAccInsider, FullName); strcat(LoginAccInsider, "\n");
+                                    // strcpy(UpdateLocalTime, "PersonalFMSA | Last Updated: ");
+                                    // strcat(UpdateLocalTime, LocalTime); strcat(UpdateLocalTime, "\n");
+
+                                    // fputs("----------------------------------------------------------------------------------------------------\n", TempMMAFInputs);
+                                    // fputs(ApplicationPresent, TempMMAFInputs);
+                                    // fputs(ApplicationTitle, TempMMAFInputs);
+                                    // fputs(ApplicationVersion, TempMMAFInputs); fputs("\n", TempMMAFInputs);
+                                    // fputs(UpdateLocalTime, TempMMAFInputs);
+                                    // fputs("Built-in Console Application [CLI-Win32], fundamentally C (100%)\n", TempMMAFInputs);
+                                    // fputs("----------------------------------------------------------------------------------------------------\n", TempMMAFInputs);
+                                    // fputs(LoginAccInsider, TempMMAFInputs);
+                                    // fputs("----------------------------------------------------------------------------------------------------\n", TempMMAFInputs);
+                                    // fputs(AccountMadeTime, TempMMAFInputs); fputs("\n", TempMMAFInputs);
+
+                                    // fputs("Profile Account Data")
+
+                                    strcpy(FullName, FirstName); strcat(FullName, LastName);
+                                    strcpy(UserName, ALMInputs[GlobalRegisteredAccounts].Username);
+                                    MainMenuApplicationFeatures(0);
+                                } else {
+                                    FirstName[0] = 0; LastName[0] = 0, Email[0] = 0, Username[0] = 0, Password[0] = 0;
+                                    DateOfBirth[0] = 0, AgeOnPresent[0] = 0; PhoneNumber[0] = 0, Sex[0] = 0;
+                                }
+                            }
+                            
+                            strcpy(DeleteTempDestinationTxtFile, "del ");
+                            strcat(DeleteTempDestinationTxtFile, "TempDestination.txt");
+                            system(DeleteTempDestinationTxtFile);
+
+                            ClearScreen();
+                            printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppLoginUI);
+                            
+                            puts(ANSI_COLOR_LIGHTRED"\tError: We checked that it seems like one or more inserted profile account(s) you \n\t       provide before isn't validating the same as the original registered \n\t       profile account(s) of yours that you're trying to logged in as by now.\n"ANSI_COLOR_RESET ANSI_COLOR_LIGHTYELLOW"\n\tConsider to re-check your logged in profile data and make sure that if you forget \n\tsomething, then you may to look for a recovery account by tapping [9] button \n\tkey on your keyboard, then proceed to fulfill-in important things afterwards.\n"ANSI_COLOR_RESET);
+                            getchar();
+                            ALMSelected = 0; AccountLoginMenu(ALMSelected);
+
+                        } else { ALMSelected = 0; AccountLoginMenu(ALMSelected);
+                    }
+                }
+            }
+        }
+
+        switch (AKDC = _getch()) {
+            case KEY_UP:
+                if (ALMSelected > 0 && ALMSelected < AvailableOptions) {
+                    --ALMSelected; Updated = true;
+                } else if (ALMSelected <= 0) {
+                    ALMSelected = (AvailableOptions - 1); Updated = true;
+                } break;
+            case KEY_DOWN:
+                if (ALMSelected >= 0 && ALMSelected < AvailableOptions - 1) {
+                    ++ALMSelected; Updated = true;
+                } else if (ALMSelected >= AvailableOptions - 1) {
+                    ALMSelected = 0; Updated = true;
+                } break;
+            case KEY_ENTER:
+                Selecting = false; Updated = true;
+                break;
+            default: break;
+        } (Selecting) ? ClearScreen() : NULL;
+        
+        fflush(stdin);
+        if (Updated) {
+            Updated = false;
+        } else {
+            NULL;
+        }
+    }
+
+    if (ALMSelected == 0) {
+        ClearScreen();
+        char InputEmail[BUFSIZE07];
+
+        printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppLoginUI);
+
+        if (LE) {
+            printf(ANSI_COLOR_GREEN"\tInfo: We'd checked that you earlier had already insert your personal e-mail as: \n\t          >> %s.\n\n\t      But don't worry, if you want to make a change, then you may proceed to do so.\n\n"ANSI_COLOR_RESET, ALMInputs[GlobalRegisteredAccounts].Email);
+            printf("      " ANSI_COLOR_LIGHTGREEN"> Personal E-mail:\t%s\n\t"ANSI_COLOR_RESET "Phone Number:\t\t%s\n\tSKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
+            puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTGREEN"Personal E-mail."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your personal e-mail into your profile account.");
+            puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The e-mail format must have a '@' symbol, and the domain you used while creating \n\t      your own e-mail."ANSI_COLOR_RESET);
+        } else {
+            printf("      " ANSI_COLOR_LIGHTYELLOW"> Personal E-mail:\t%s\n\t"ANSI_COLOR_RESET "Phone Number:\t\t%s\n\tSKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
+            puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTYELLOW"Personal E-mail."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your personal e-mail into your profile account.");
+            puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The e-mail format must have a '@' symbol, and the domain you used while creating \n\t      your own e-mail."ANSI_COLOR_RESET);
+        }
+
+        printf("\nPersonal E-mail: ");
+        fgets(InputEmail, BUFSIZE07, stdin);
+
+        while (strlen(InputEmail) <= 3 || strchr(InputEmail, '@') == NULL || strchr(InputEmail, '.') == NULL) {
+            ClearScreen();
+            printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppLoginUI);
+
+            puts(ANSI_COLOR_LIGHTRED"\tWarning: You must have to insert your last name at least a single word (min. 3 characters)!\n\t         The valid E-mail format must have a '@' symbol, and the provider (authorized by) \n\t         with the domain itself.\n"ANSI_COLOR_RESET);
+            printf("      " ANSI_COLOR_LIGHTYELLOW"> Personal E-mail:\t%s\n\t"ANSI_COLOR_RESET "Phone Number:\t\t%s\n\tSKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
+            puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTYELLOW"Personal E-mail."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your personal e-mail into your profile account.");
+            puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The e-mail format must have a '@' symbol, and the domain you used while creating \n\t      your own e-mail."ANSI_COLOR_RESET);
+
+            printf("\nPersonal E-mail: ");
+            fgets(InputEmail, BUFSIZE07, stdin);
+        }
+        
+        InputEmail[strlen(InputEmail) - 1] = '\0';
+        LE = true;
+        strcpy(ALMInputs[GlobalRegisteredAccounts].Email, InputEmail);
+        AccountLoginMenu(ALMSelected);
+    }
+
+    else if (ALMSelected == 1) {
+        ClearScreen();
+        char InputPhoneNumber[BUFSIZE07], TempCountryCode[BUFSIZE07], TempDigitsNumber[BUFSIZE07], TempDigitsNumberTemp[BUFSIZE07], TempFinalPhoneNumber[BUFSIZE07];
+        char *CountryCode, *DigitsNumber, *FinalPhoneNumber;
+
+        printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppLoginUI);
+
+        if (LPN) {
+            printf(ANSI_COLOR_GREEN"\tInfo: We'd checked that you earlier had already insert your phone number as: \n\t          >> %s.\n\n\t      But don't worry, if you want to make a change, then you may proceed to do so.\n\n"ANSI_COLOR_RESET, ALMInputs[GlobalRegisteredAccounts].PhoneNumber);
+            printf("\tPersonal E-mail:\t%s\n      " ANSI_COLOR_LIGHTGREEN"> Phone Number:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
+            puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTGREEN"Phone Number."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your phone number profile account.");
+            puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The phone number must be started with the country code '+XXX', and the next 4 to 13 \n\t      digits are for the phone number you owned. \n\t      Separate the country code and the digits by a single space, and for the digits you can \n\t      insert thoroughly (without spaces or so). \n\n\t      Phone number format insertion: +<COUNTRY_CODE> XXXXXXXXXXX \n\t      Example: +62 12345678901"ANSI_COLOR_RESET);
+        } else {
+            printf("\tPersonal E-mail:\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> Phone Number:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
+            puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTYELLOW"Phone Number."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your phone number profile account.");
+            puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The phone number must be started with the country code '+XXX', and the next 4 to 13 \n\t      digits are for the phone number you owned. \n\t      Separate the country code and the digits by a single space, and for the digits you can \n\t      insert thoroughly (without spaces or so). \n\n\t      Phone number format insertion: +<COUNTRY_CODE> XXXXXXXXXXX \n\t      Example: +62 12345678901"ANSI_COLOR_RESET);
+        }
+
+        printf("\nPhone Number: ");
+        fgets(InputPhoneNumber, BUFSIZE07, stdin);
+        InputPhoneNumber[strlen(InputPhoneNumber) - 1] = '\0';
+
+        if (strlen(InputPhoneNumber) > 1 && strchr(InputPhoneNumber, '+') != NULL && strchr(InputPhoneNumber, ' ') != NULL && strlen(InputPhoneNumber) > 4) {
+            strcpy(TempCountryCode, InputPhoneNumber);
+            if (strchr(TempCountryCode, ' ') != NULL) {
+                CountryCode = strtok(TempCountryCode, " "); DigitsNumber = strtok(NULL, " ");
+                CountryCode = TrimWhiteSpaces(CountryCode); DigitsNumber = TrimWhiteSpaces(DigitsNumber);
+            }
+        } else {
+            strcpy(InputPhoneNumber, "+0 0"); strcpy(TempCountryCode, InputPhoneNumber);
+            if (strchr(TempCountryCode, ' ') != NULL) {
+                CountryCode = strtok(TempCountryCode, " "); DigitsNumber = strtok(NULL, " ");
+                CountryCode = TrimWhiteSpaces(CountryCode); DigitsNumber = TrimWhiteSpaces(DigitsNumber);
+            }
+        }
+
+        while ((strlen(DigitsNumber) <= 4 || strlen(DigitsNumber) > 13) || CountryCode[0] != '+' || strchr(InputPhoneNumber, ' ') == NULL) {
+            ClearScreen();
+            printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppLoginUI);
+
+            puts(ANSI_COLOR_LIGHTRED"\tWarning: You must have to insert your with a starting phone country code and \n\t         for at least 4 to 13 digits (min. 4 digits)!\n"ANSI_COLOR_RESET);
+            printf("\tPersonal E-mail:\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> Phone Number:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
+            puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTYELLOW"Phone Number."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your phone number profile account.");
+            puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The phone number must be started with the country code '+XXX', and the next 4 to 13 \n\t      digits are for the phone number you owned. \n\t      Separate the country code and the digits by a single space, and for the digits you can \n\t      insert thoroughly (without spaces or so). \n\n\t      Phone number format insertion: +<COUNTRY_CODE> XXXXXXXXXXX \n\t      Example: +62 12345678901"ANSI_COLOR_RESET);
+
+            printf("\nPhone Number: ");
+            fgets(InputPhoneNumber, BUFSIZE07, stdin);
+            InputPhoneNumber[strlen(InputPhoneNumber) - 1] = '\0';
+
+            if (strlen(InputPhoneNumber) > 1 && strchr(InputPhoneNumber, '+') != NULL && strchr(InputPhoneNumber, ' ') != NULL && strlen(InputPhoneNumber) > 4) {
+                strcpy(TempCountryCode, InputPhoneNumber);
+                if (strchr(TempCountryCode, ' ') != NULL) {
+                    CountryCode = strtok(TempCountryCode, " "); DigitsNumber = strtok(NULL, " ");
+                    CountryCode = TrimWhiteSpaces(CountryCode); DigitsNumber = TrimWhiteSpaces(DigitsNumber);
+                }
+            } else {
+                strcpy(InputPhoneNumber, "+0 0"); strcpy(TempCountryCode, InputPhoneNumber);
+                if (strchr(TempCountryCode, ' ') != NULL) {
+                    CountryCode = strtok(TempCountryCode, " "); DigitsNumber = strtok(NULL, " ");
+                    CountryCode = TrimWhiteSpaces(CountryCode); DigitsNumber = TrimWhiteSpaces(DigitsNumber);
+                }
+            }
+        }
+        
+        InputPhoneNumber[strlen(InputPhoneNumber) - 1] = '\0';
+        LPN = true;
+
+        strcpy(TempDigitsNumber, DigitsNumber);
+        strcpy(TempFinalPhoneNumber, CountryCode);
+        strcpy(TempDigitsNumberTemp, " ");
+        for (int i = 1; i <= strlen(TempDigitsNumber); i++) {
+            if (i == 3)                        { strncat(TempDigitsNumberTemp, &TempDigitsNumber[i - 1], 1); strcat(TempDigitsNumberTemp, "-"); }
+            else if ((i % 4) == 0 && (i != 4)) { strcat(TempDigitsNumberTemp, "-"); strncat(TempDigitsNumberTemp, &TempDigitsNumber[i - 1], 1); }
+            else                               { strncat(TempDigitsNumberTemp, &TempDigitsNumber[i - 1], 1); }
+        } strcat(TempFinalPhoneNumber, TempDigitsNumberTemp);
+        strcpy(ALMInputs[GlobalRegisteredAccounts].PhoneNumber, TempFinalPhoneNumber);
+        AccountLoginMenu(ALMSelected);
+    }
+
+    else if (ALMSelected == 2) {
+        ClearScreen();
+        char InputUsername[BUFSIZE07];
+
+        printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppLoginUI);
+
+        if (LU) {
+            printf(ANSI_COLOR_GREEN"\tInfo: We'd checked that you earlier had already insert your username as: \n\t          >> %s.\n\n\t      But don't worry, if you want to make a change, then you may proceed to do so.\n\n"ANSI_COLOR_RESET, ALMInputs[GlobalRegisteredAccounts].Username);
+            printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n      " ANSI_COLOR_LIGHTGREEN"> SKYR Username:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Password:\t\t%s\n", ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
+            puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTGREEN"SKYR Username."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your username profile account.");
+            puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The username must starts with a character and shall not contains a single space, \n\t      so use underscores or dashes to represents the next characters."ANSI_COLOR_RESET);
+        } else {
+            printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> SKYR Username:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Password:\t\t%s\n", ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
+            puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTYELLOW"SKYR Username."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your username profile account.");
+            puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The username must starts with a character and shall not contains a single space, \n\t      so use underscores or dashes to represents the next characters."ANSI_COLOR_RESET);
+        }
+
+        printf("\nSKYR Username: ");
+        fgets(InputUsername, BUFSIZE07, stdin);
+
+        while (strlen(InputUsername) <= 3) {
+            ClearScreen();
+            printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppLoginUI);
+
+            puts(ANSI_COLOR_LIGHTRED"\tWarning: You must have to insert your username at least a single word (min. 3 characters)!\n"ANSI_COLOR_RESET);
+            printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> SKYR Username:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Password:\t\t%s\n", ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
+            puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTYELLOW"SKYR Username."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your username profile account.");
+            puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The username must starts with a character and shall not contains a single space, \n\t      so use underscores or dashes to represents the next characters."ANSI_COLOR_RESET);
+
+            printf("\nSKYR Username: ");
+            fgets(InputUsername, BUFSIZE07, stdin);
+        }
+        
+        InputUsername[strlen(InputUsername) - 1] = '\0';
+        LU = true;
+        strcpy(ALMInputs[GlobalRegisteredAccounts].Username, InputUsername);
+        AccountLoginMenu(ALMSelected);
+    }
+
+    else if (ALMSelected == 3) {
+        ClearScreen();
+        char InputPassword[BUFSIZE07], HiddenPassword[BUFSIZE07];
+
+        printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppLoginUI);
+
+        if (LP) {
+            printf(ANSI_COLOR_GREEN"\tInfo: We'd checked that you earlier had already insert your password as: \n\t          >> %s.\n\n\t      But don't worry, if you want to make a change, then you may proceed to do so.\n\n"ANSI_COLOR_RESET, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
+            printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n\tSKYR Username:\t\t%s\n      " ANSI_COLOR_LIGHTGREEN"> SKYR Password:\t\t%s\n"ANSI_COLOR_RESET, ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
+            puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTGREEN"SKYR Password."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your password profile account.");
+            puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The password must contains at least 8 characters, with any kind of combinations \n\t      you'd like to insert with. The password insertion is censored, and you can peek \n\t      the password you've inserted with an optional right-side choice ONLY in here."ANSI_COLOR_RESET);
+        } else {
+            printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n\tSKYR Username:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> SKYR Password:\t\t%s\n"ANSI_COLOR_RESET, ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
+            puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTYELLOW"SKYR Password."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your password profile account.");
+            puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The password must contains at least 8 characters, with any kind of combinations \n\t      you'd like to insert with. The password insertion is censored, and you can peek \n\t      the password you've inserted with an optional right-side choice ONLY in here."ANSI_COLOR_RESET);
+        }
+
+        printf("\nSKYR Password: ");
+        fgets(InputPassword, BUFSIZE07, stdin);
+
+        while (strlen(InputPassword) <= 8) {
+            ClearScreen();
+            printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppLoginUI);
+
+            puts(ANSI_COLOR_LIGHTRED"\tWarning: You must have to insert your password in any unique way possible (min. 8 characters)!\n"ANSI_COLOR_RESET);
+            printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n\tSKYR Username:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> SKYR Password:\t\t%s\n"ANSI_COLOR_RESET, ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
+            puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTYELLOW"SKYR Password."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your password profile account.");
+            puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The password must contains at least 8 characters, with any kind of combinations \n\t      you'd like to insert with. The password insertion is censored, and you can peek \n\t      the password you've inserted with an optional right-side choice ONLY in here."ANSI_COLOR_RESET);
+
+            printf("\nSKYR Password: ");
+            fgets(InputPassword, BUFSIZE07, stdin);
+        }
+        
+        InputPassword[strlen(InputPassword) - 1] = '\0';
+        LP = true;
+
+        for (int i = 0; i < strlen(InputPassword); i++) {
+            if (i == 0) { strcpy(HiddenPassword, "*"); }
+            else        { strcat(HiddenPassword, "*"); }
+        } strcpy(ALMInputs[GlobalRegisteredAccounts].Password, InputPassword);
+        strcpy(ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown, HiddenPassword);
+        AccountLoginMenu(ALMSelected);
+    }
+}
+
+void AccountRecoveryMenu(int ACMSelected) {
+    // TODO: Build a recovery menu interface.
+    ClearScreen();
+
+    FILE *FDestination, *FTempDestination;
+    int BufLen, Ptr = 0, KeyTracker = 0, LineTracker = 0, FTDPos = 0;
+    char C, BUFFER[BUFSIZE16], DeleteTempDestinationTxtFile[128], TxtFileName[128] = "RegisteredAccounts.txt > First Name, Last Name, Personal E-mail, Phone Number, SKYR Username, SKYR Password";
+    char *SourceTextFileName, *SourceKeyStringValue, *SelectedKeyString;
+    char *SourceKeyStringValues[BUFSIZE07], FTDestination[6][BUFSIZE07];
+
+    int AvailableOptions = 4, SubmitOrContinue;
+    bool Selecting = true, Updated = false, FirstRun = true;
+    bool ConfirmOrBackACM = false, ACMUpgrade = false;
+    char AKDC, MessageID7[BUFSIZE10];
+    char FirstName[BUFSIZE07], LastName[BUFSIZE07], Email[BUFSIZE07], PhoneNumber[BUFSIZE07], Username[BUFSIZE07], Password[BUFSIZE07];
+    char *ShowFirstName, *ShowLastName, *ShowEmail, *ShowPhoneNumber, *ShowUsername, *ShowPassword;
+
+    if ((CE && CPN && CU && CP) && !ACMUpgrade && AllEmpty != 4) { AvailableOptions += 1; ACMUpgrade = true; }
+
+    while (Selecting) {
+        if (!FirstRun) {
+        /*  Separated by one line to another, handling ONLY THREE (3) rows each parts.
+        >   Personal E-mail, SKYR Username, SKYR Password
+        */
+        printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRecoveryUI);
+        
+        if (AllEmpty == 4) {
+            printf(ANSI_COLOR_LIGHTRED"\tWarning: Recovery procedure can't be completed because you're not \n\t         providing at least ONE (1) information about your profile data!\n\n"ANSI_COLOR_RESET);
+        }
+
+        if ((ACMSelected + 1) > 0 && (ACMSelected + 1) <= 4 && (AvailableOptions == 4)) {
+            if ((ACMSelected + 1) == 1) {
+                if (!CE)  { printf("      " ANSI_COLOR_LIGHTYELLOW"> Personal E-mail:\t%s\n\t"ANSI_COLOR_RESET "Phone Number:\t\t%s\n\tSKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                else      { printf("      " ANSI_COLOR_LIGHTGREEN"> Personal E-mail:\t%s\n\t"ANSI_COLOR_RESET "Phone Number:\t\t%s\n\tSKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+            } else if ((ACMSelected + 1) == 2) {
+                if (!CPN) { printf("\tPersonal E-mail:\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> Phone Number:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                else      { printf("\tPersonal E-mail:\t%s\n      " ANSI_COLOR_LIGHTGREEN"> Phone Number:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+            } else if ((ACMSelected + 1) == 3) {
+                if (!CU)  { printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> SKYR Username:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                else      { printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n      " ANSI_COLOR_LIGHTGREEN"> SKYR Username:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+            } else if ((ACMSelected + 1) == 4) {
+                if (!CP)  { printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n\tSKYR Username:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> SKYR Password:\t\t%s\n"ANSI_COLOR_RESET, ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                else      { printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n\tSKYR Username:\t\t%s\n      " ANSI_COLOR_LIGHTGREEN"> SKYR Password:\t\t%s\n"ANSI_COLOR_RESET, ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+            }
+
+            if (AllEmpty != 4) { printf("\n\n\n\n\n\n\n\n\n\n\t%s", AppGuideOnUsageUDRL); }
+            else { printf("\n\n\n\n\n\n\n\t%s", AppGuideOnUsageUDRL); }
+        }
+        
+        else if ((ACMSelected + 1) > 0 && (ACMSelected + 1) <= 5 && (AvailableOptions == 5)) {
+            if ((ACMSelected + 1) == 1) {
+                if (!CE)  { printf("      " ANSI_COLOR_LIGHTYELLOW"> Personal E-mail:\t%s\n\t"ANSI_COLOR_RESET "Phone Number:\t\t%s\n\tSKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                else      { printf("      " ANSI_COLOR_LIGHTGREEN"> Personal E-mail:\t%s\n\t"ANSI_COLOR_RESET "Phone Number:\t\t%s\n\tSKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+            } else if ((ACMSelected + 1) == 2) {
+                if (!CPN) { printf("\tPersonal E-mail:\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> Phone Number:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                else      { printf("\tPersonal E-mail:\t%s\n      " ANSI_COLOR_LIGHTGREEN"> Phone Number:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+            } else if ((ACMSelected + 1) == 3) {
+                if (!CU)  { printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> SKYR Username:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                else      { printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n      " ANSI_COLOR_LIGHTGREEN"> SKYR Username:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+            } else if ((ACMSelected + 1) == 4) {
+                if (!CP)  { printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n\tSKYR Username:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> SKYR Password:\t\t%s\n"ANSI_COLOR_RESET, ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                else      { printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n\tSKYR Username:\t\t%s\n      " ANSI_COLOR_LIGHTGREEN"> SKYR Password:\t\t%s\n"ANSI_COLOR_RESET, ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+            } if (AllEmpty != 4) { printf("\n\n\n\n\n\n\n\n\n\n\t%s", AppGuideOnUsageUDRL); }
+            else { printf("\n\n\n\n\n\n\n\t%s", AppGuideOnUsageUDRL); }
+            
+            if ((ACMSelected + 1) == 5 && AllEmpty != 4) {
+                ClearScreen();
+                printf("\n\n\n\n\tInfo: You may have inserted a few remembrance of your profile account, and  \n\t      willing to do some recovery in order to get logged in back.\n");
+                printf(ANSI_COLOR_BLUE"\n\tProceed to do the recovery account process?\n\n"ANSI_COLOR_RESET);
+                snprintf(MessageID7, BUFSIZE10, ANSI_COLOR_BLUE"\n\tProceed to do the recovery account process?\n"ANSI_COLOR_RESET);
+                
+                MessagesShown_ArrowKeyChoiceDialog[6] = "\n\n\n\n\tInfo: You may have inserted a few remembrance of your profile account, and  \n\t      willing to do some recovery in order to get logged in back.";
+                MessagesShown_ArrowKeyChoiceDialog[7] = MessageID7;
+                SubmitOrContinue = ArrowKeyChoiceDialog("Truth Confirmation", MessagesShown_ArrowKeyChoiceDialog, 6, 8);
 
                 if (SubmitOrContinue) {
                     FDestination     = fopen("RegisteredAccounts.txt", "r");
@@ -1785,70 +2912,82 @@ void AccountLoginMenu(int ALMSelected) {
                     strtok_r(Username, ":", &ShowUsername); ShowUsername = TrimWhiteSpaces(ShowUsername);
                     strtok_r(Password, ":", &ShowPassword); ShowPassword = TrimWhiteSpaces(ShowPassword);
 
-                    if ((strcmp(ShowEmail, ALMInputs[GlobalRegisteredAccounts].Email)             == 0) && \
-                        (strcmp(ShowPhoneNumber, ALMInputs[GlobalRegisteredAccounts].PhoneNumber) == 0) && \
-                        (strcmp(ShowUsername, ALMInputs[GlobalRegisteredAccounts].Username)       == 0) && \
-                        (strcmp(ShowPassword, ALMInputs[GlobalRegisteredAccounts].Password)       == 0)) {
-                            puts(ANSI_COLOR_LIGHTBLUE"\n\tNote: You've successfully logged into your profile account!"ANSI_COLOR_RESET);
-                            puts(ANSI_COLOR_LIGHTBLUE"\tWelcome to: Personal Financial Management System [CLI-Win32] Application!"ANSI_COLOR_RESET);
-                            printf(ANSI_COLOR_LIGHTGREEN"\n\tLogged in as: %s %s.\n\t              "ANSI_COLOR_RESET ANSI_COLOR_GREEN"(Account No. %d)\n\n"ANSI_COLOR_RESET, ShowFirstName, ShowLastName, (GlobalRegisteredAccounts + 1));
-                            puts(ANSI_COLOR_LIGHTMAGENTA"\tNow you may proceed to the main menu by pressing the [ENTER] button key on \n\tyour keyboard right away."ANSI_COLOR_RESET);
-                            getchar();
-                            MainMenu(0);
-                        } else {
-                            puts(ANSI_COLOR_LIGHTRED"\n\tError: We checked that it seems like one or more inserted profile account(s) you \n\t       provide before isn't validating the same as the original registered \n\t       profile account(s) of yours that you're trying to logged in as by now.\n"ANSI_COLOR_RESET ANSI_COLOR_LIGHTYELLOW"\n\tConsider to re-check your logged in profile data and make sure that if you forget \n\tsomething, then you may to look for a recovery account by tapping [9] button \n\tkey on your keyboard, then proceed to fulfill-in important things afterwards.\n"ANSI_COLOR_RESET);
-                            getchar();
-                            ALMSelected = 0; AccountLoginMenu(ALMSelected);
-                        }
-                    } else { ALMSelected = 0; AccountLoginMenu(ALMSelected); }
-                }
+                    ClearScreen();
+                    printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRecoveryUI);
+                    printf(ANSI_COLOR_GREEN"\tInfo: We've founded a valid profile account data from the list of \n\t      your provided recovery account requirements here, as of:\n\n"ANSI_COLOR_RESET);
+                    
+                    for (int i = 1; i <= AllEmpty; i++) {
+                        if (!EmptyCE && !FlagCE)        { printf(ANSI_COLOR_BLUE"\t      %d. Provided Personal E-mail:\t%s\n"ANSI_COLOR_RESET, i, ACMInputs[GlobalRegisteredAccounts].Email); FlagCE = true; }
+                        else if (!EmptyCPN && !FlagCPN) { printf(ANSI_COLOR_BLUE"\t      %d. Provided Phone Number:\t%s\n"ANSI_COLOR_RESET, i, ACMInputs[GlobalRegisteredAccounts].PhoneNumber); FlagCPN = true; }
+                        else if (!EmptyCU && !FlagCU)   { printf(ANSI_COLOR_BLUE"\t      %d. Provided Username:\t\t%s\n"ANSI_COLOR_RESET, i, ACMInputs[GlobalRegisteredAccounts].Username); FlagCU = true; }
+                        else if (!EmptyCP && !FlagCP)   { printf(ANSI_COLOR_BLUE"\t      %d. Provided Password:\t\t%s\n"ANSI_COLOR_RESET, i, ACMInputs[GlobalRegisteredAccounts].Password); FlagCP = true; }
+                    } FlagCE = false; FlagCPN = false; FlagCU = false; FlagCP = false;
+                    
+                    printf(ANSI_COLOR_ORANGE"\n\tNote: What you want to recover is all listed down here:\n\n"ANSI_COLOR_RESET);
+                    for (int i = 1; i <= AllEmpty; i++) {
+                        if (EmptyCE && !FlagCE)         { printf(ANSI_COLOR_YELLOW"\t      %d. Recover Personal E-mail:\t%s\n"ANSI_COLOR_RESET, i, ACMInputs[GlobalRegisteredAccounts].Email); FlagCE = true; }
+                        else if (EmptyCPN && !FlagCPN)  { printf(ANSI_COLOR_YELLOW"\t      %d. Recover Phone Number:\t\t%s\n"ANSI_COLOR_RESET, i, ACMInputs[GlobalRegisteredAccounts].PhoneNumber); FlagCPN = true; }
+                        else if (EmptyCU && !FlagCU)    { printf(ANSI_COLOR_YELLOW"\t      %d. Recover Username:\t\t%s\n"ANSI_COLOR_RESET, i, ACMInputs[GlobalRegisteredAccounts].Username); FlagCU = true; }
+                        else if (EmptyCP && !FlagCP)    { printf(ANSI_COLOR_YELLOW"\t      %d. Recover Password:\t\t%s\n"ANSI_COLOR_RESET, i, ACMInputs[GlobalRegisteredAccounts].Password); FlagCP = true; }
+                    }
+
+                    if (strstr(ShowEmail, ACMInputs[GlobalRegisteredAccounts].Email) != NULL) {
+
+                    } FlagCE = false; FlagCPN = false; FlagCU = false; FlagCP = false;
+                } else { ACMSelected = 0; AccountRecoveryMenu(ACMSelected); } }
             }
 
         } else {
             FirstRun = false;
-            printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t--------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t--------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppLoginUI);
+            printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t----------------------------------------------------------------------------------------------------\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t----------------------------------------------------------------------------------------------------\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRecoveryUI);
 
-            if ((ALMSelected + 1) > 0 && (ALMSelected + 1) <= 4 && (AvailableOptions == 4)) {
-                if ((ALMSelected + 1) == 1) {
-                    if (!LE)  { printf("      " ANSI_COLOR_LIGHTYELLOW"> Personal E-mail:\t%s\n\t"ANSI_COLOR_RESET "Phone Number:\t\t%s\n\tSKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
-                    else      { printf("      " ANSI_COLOR_LIGHTGREEN"> Personal E-mail:\t%s\n\t"ANSI_COLOR_RESET "Phone Number:\t\t%s\n\tSKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
-                } else if ((ALMSelected + 1) == 2) {
-                    if (!LPN) { printf("\tPersonal E-mail:\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> Phone Number:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
-                    else      { printf("\tPersonal E-mail:\t%s\n      " ANSI_COLOR_LIGHTGREEN"> Phone Number:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
-                } else if ((ALMSelected + 1) == 3) {
-                    if (!LU)  { printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> SKYR Username:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Password:\t\t%s\n", ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
-                    else      { printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n      " ANSI_COLOR_LIGHTGREEN"> SKYR Username:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Password:\t\t%s\n", ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
-                } else if ((ALMSelected + 1) == 4) {
-                    if (!LP)  { printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n\tSKYR Username:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> SKYR Password:\t\t%s\n"ANSI_COLOR_RESET, ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
-                    else      { printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n\tSKYR Username:\t\t%s\n      " ANSI_COLOR_LIGHTGREEN"> SKYR Password:\t\t%s\n"ANSI_COLOR_RESET, ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+            if (AllEmpty == 4) {
+                printf(ANSI_COLOR_LIGHTRED"\tWarning: Recovery procedure can't be completed because you're not \n\t         providing at least ONE (1) information about your profile data!\n\n"ANSI_COLOR_RESET);
+            }
+
+            if ((ACMSelected + 1) > 0 && (ACMSelected + 1) <= 4 && (AvailableOptions == 4)) {
+                if ((ACMSelected + 1) == 1) {
+                    if (!CE)  { printf("      " ANSI_COLOR_LIGHTYELLOW"> Personal E-mail:\t%s\n\t"ANSI_COLOR_RESET "Phone Number:\t\t%s\n\tSKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                    else      { printf("      " ANSI_COLOR_LIGHTGREEN"> Personal E-mail:\t%s\n\t"ANSI_COLOR_RESET "Phone Number:\t\t%s\n\tSKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                } else if ((ACMSelected + 1) == 2) {
+                    if (!CPN) { printf("\tPersonal E-mail:\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> Phone Number:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                    else      { printf("\tPersonal E-mail:\t%s\n      " ANSI_COLOR_LIGHTGREEN"> Phone Number:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                } else if ((ACMSelected + 1) == 3) {
+                    if (!CU)  { printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> SKYR Username:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                    else      { printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n      " ANSI_COLOR_LIGHTGREEN"> SKYR Username:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                } else if ((ACMSelected + 1) == 4) {
+                    if (!CP)  { printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n\tSKYR Username:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> SKYR Password:\t\t%s\n"ANSI_COLOR_RESET, ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                    else      { printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n\tSKYR Username:\t\t%s\n      " ANSI_COLOR_LIGHTGREEN"> SKYR Password:\t\t%s\n"ANSI_COLOR_RESET, ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
                 }
 
-                printf("\n\n\n\n\n\n\n\n\n\n\t%s", AppGuideOnUsageUDRL);
+                if (AllEmpty != 4) { printf("\n\n\n\n\n\n\n\n\n\n\t%s", AppGuideOnUsageUDRL); }
+                else { printf("\n\n\n\n\n\n\n\t%s", AppGuideOnUsageUDRL); }
             }
             
-            else if ((ALMSelected + 1) > 0 && (ALMSelected + 1) <= 5 && (AvailableOptions == 5)) {
-                if ((ALMSelected + 1) == 1) {
-                    if (!LE)  { printf("      " ANSI_COLOR_LIGHTYELLOW"> Personal E-mail:\t%s\n\t"ANSI_COLOR_RESET "Phone Number:\t\t%s\n\tSKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
-                    else      { printf("      " ANSI_COLOR_LIGHTGREEN"> Personal E-mail:\t%s\n\t"ANSI_COLOR_RESET "Phone Number:\t\t%s\n\tSKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
-                } else if ((ALMSelected + 1) == 2) {
-                    if (!LPN) { printf("\tPersonal E-mail:\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> Phone Number:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
-                    else      { printf("\tPersonal E-mail:\t%s\n      " ANSI_COLOR_LIGHTGREEN"> Phone Number:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
-                } else if ((ALMSelected + 1) == 3) {
-                    if (!LU)  { printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> SKYR Username:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Password:\t\t%s\n", ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
-                    else      { printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n      " ANSI_COLOR_LIGHTGREEN"> SKYR Username:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Password:\t\t%s\n", ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
-                } else if ((ALMSelected + 1) == 4) {
-                    if (!LP)  { printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n\tSKYR Username:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> SKYR Password:\t\t%s\n"ANSI_COLOR_RESET, ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
-                    else      { printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n\tSKYR Username:\t\t%s\n      " ANSI_COLOR_LIGHTGREEN"> SKYR Password:\t\t%s\n"ANSI_COLOR_RESET, ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
-                } printf("\n\n\n\n\n\n\n\n\n\n\t%s", AppGuideOnUsageUDRL);
+            else if ((ACMSelected + 1) > 0 && (ACMSelected + 1) <= 5 && (AvailableOptions == 5)) {
+                if ((ACMSelected + 1) == 1) {
+                    if (!CE)  { printf("      " ANSI_COLOR_LIGHTYELLOW"> Personal E-mail:\t%s\n\t"ANSI_COLOR_RESET "Phone Number:\t\t%s\n\tSKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                    else      { printf("      " ANSI_COLOR_LIGHTGREEN"> Personal E-mail:\t%s\n\t"ANSI_COLOR_RESET "Phone Number:\t\t%s\n\tSKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                } else if ((ACMSelected + 1) == 2) {
+                    if (!CPN) { printf("\tPersonal E-mail:\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> Phone Number:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                    else      { printf("\tPersonal E-mail:\t%s\n      " ANSI_COLOR_LIGHTGREEN"> Phone Number:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                } else if ((ACMSelected + 1) == 3) {
+                    if (!CU)  { printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> SKYR Username:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                    else      { printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n      " ANSI_COLOR_LIGHTGREEN"> SKYR Username:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                } else if ((ACMSelected + 1) == 4) {
+                    if (!CP)  { printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n\tSKYR Username:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> SKYR Password:\t\t%s\n"ANSI_COLOR_RESET, ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                    else      { printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n\tSKYR Username:\t\t%s\n      " ANSI_COLOR_LIGHTGREEN"> SKYR Password:\t\t%s\n"ANSI_COLOR_RESET, ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                } if (AllEmpty != 4) { printf("\n\n\n\n\n\n\n\n\n\n\t%s", AppGuideOnUsageUDRL); }
+                else { printf("\n\n\n\n\n\n\n\t%s", AppGuideOnUsageUDRL); }
                 
-                if ((ALMSelected + 1) == 5) {
+                if ((ACMSelected + 1) == 5 && AllEmpty != 4) {
                     ClearScreen();
                     printf("\n\n\n\n\tInfo: You've completed inserting the required main data about your profile  \n\t      account, and now you're ready to login into your account.\n");
-                    printf(ANSI_COLOR_BLUE"\n\tProceed to give a rightful checking on your inserted profile data \n\tright here and there before get logged in? \n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN"Account to be linked: %s\n\n"ANSI_COLOR_RESET, ALMInputs[GlobalRegisteredAccounts].Email);
-                    snprintf(MessageID5, BUFSIZE10, ANSI_COLOR_BLUE"\n\tProceed to give a rightful checking on your inserted profile data \n\tright here and there before get logged in? \n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN"Account to be linked: %s\n"ANSI_COLOR_RESET, ALMInputs[GlobalRegisteredAccounts].Email);
+                    printf(ANSI_COLOR_BLUE"\n\tProceed to give a rightful checking on your inserted profile data \n\tright here and there before get logged in? \n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN"Account to be linked: %s\n\n"ANSI_COLOR_RESET, ACMInputs[GlobalRegisteredAccounts].Email);
+                    snprintf(MessageID7, BUFSIZE10, ANSI_COLOR_BLUE"\n\tProceed to give a rightful checking on your inserted profile data \n\tright here and there before get logged in? \n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN"Account to be linked: %s\n"ANSI_COLOR_RESET, ACMInputs[GlobalRegisteredAccounts].Email);
                     
                     MessagesShown_ArrowKeyChoiceDialog[4] = "\n\n\n\n\tInfo: You've completed inserting the required main data about your profile  \n\t      account, and now you're ready to login into your account.";
-                    MessagesShown_ArrowKeyChoiceDialog[5] = MessageID5;
+                    MessagesShown_ArrowKeyChoiceDialog[5] = MessageID7;
                     SubmitOrContinue = ArrowKeyChoiceDialog("Truth Confirmation", MessagesShown_ArrowKeyChoiceDialog, 4, 6);
 
                     if (SubmitOrContinue) {
@@ -1893,38 +3032,38 @@ void AccountLoginMenu(int ALMSelected) {
                         strtok_r(Username, ":", &ShowUsername); ShowUsername = TrimWhiteSpaces(ShowUsername);
                         strtok_r(Password, ":", &ShowPassword); ShowPassword = TrimWhiteSpaces(ShowPassword);
 
-                        if ((strcmp(ShowEmail, ALMInputs[GlobalRegisteredAccounts].Email)             == 0) && \
-                            (strcmp(ShowPhoneNumber, ALMInputs[GlobalRegisteredAccounts].PhoneNumber) == 0) && \
-                            (strcmp(ShowUsername, ALMInputs[GlobalRegisteredAccounts].Username)       == 0) && \
-                            (strcmp(ShowPassword, ALMInputs[GlobalRegisteredAccounts].Password)       == 0)) {
+                        if ((strcmp(ShowEmail, ACMInputs[GlobalRegisteredAccounts].Email)             == 0) && \
+                            (strcmp(ShowPhoneNumber, ACMInputs[GlobalRegisteredAccounts].PhoneNumber) == 0) && \
+                            (strcmp(ShowUsername, ACMInputs[GlobalRegisteredAccounts].Username)       == 0) && \
+                            (strcmp(ShowPassword, ACMInputs[GlobalRegisteredAccounts].Password)       == 0)) {
                                 puts(ANSI_COLOR_LIGHTBLUE"\n\tNote: You've successfully logged into your profile account!"ANSI_COLOR_RESET);
                                 puts(ANSI_COLOR_LIGHTBLUE"\tWelcome to: Personal Financial Management System [CLI-Win32] Application!"ANSI_COLOR_RESET);
-                                printf(ANSI_COLOR_LIGHTGREEN"\n\tLogged in as: %s %s.\n\t              "ANSI_COLOR_RESET ANSI_COLOR_GREEN"(Account No. %d)\n\n"ANSI_COLOR_RESET, ShowFirstName, ShowLastName, (GlobalRegisteredAccounts + 1));
+                                printf(ANSI_COLOR_LIGHTGREEN"\n\tLogged in as: \n\t          >> %s %s.\n\t              "ANSI_COLOR_RESET ANSI_COLOR_GREEN"(Account No. %d)\n\n"ANSI_COLOR_RESET, ShowFirstName, ShowLastName, (GlobalRegisteredAccounts + 1));
                                 puts(ANSI_COLOR_LIGHTMAGENTA"\tNow you may proceed to the main menu by pressing the [ENTER] button key on \n\tyour keyboard right away."ANSI_COLOR_RESET);
                                 getchar();
-                                MainMenu(0);
-                            } else {
-                                puts(ANSI_COLOR_LIGHTRED"\n\tError: We checked that it seems like one or more inserted profile account(s) you \n\t       provide before isn't validating the same as the original registered \n\t       profile account(s) of yours that you're trying to logged in as by now.\n"ANSI_COLOR_RESET ANSI_COLOR_LIGHTYELLOW"\n\tConsider to re-check your logged in profile data and make sure that if you forget \n\tsomething, then you may to look for a recovery account by tapping [9] button \n\tkey on your keyboard, then proceed to fulfill-in important things afterwards.\n"ANSI_COLOR_RESET);
-                                getchar();
-                                ALMSelected = 0; AccountLoginMenu(ALMSelected);
-                            }
-                    } else { ALMSelected = 0; AccountLoginMenu(ALMSelected); }
+                                MainMenuApplicationFeatures(0);
+                        } else {
+                            puts(ANSI_COLOR_LIGHTRED"\n\tError: We checked that it seems like one or more inserted profile account(s) you \n\t       provide before isn't validating the same as the original registered \n\t       profile account(s) of yours that you're trying to logged in as by now.\n"ANSI_COLOR_RESET ANSI_COLOR_LIGHTYELLOW"\n\tConsider to re-check your logged in profile data and make sure that if you forget \n\tsomething, then you may to look for a recovery account by tapping [9] button \n\tkey on your keyboard, then proceed to fulfill-in important things afterwards.\n"ANSI_COLOR_RESET);
+                            getchar();
+                            ACMSelected = 0; AccountRecoveryMenu(ACMSelected);
+                        }
+                    } else { ACMSelected = 0; AccountRecoveryMenu(ACMSelected); }
                 }
             }
         }
 
         switch (AKDC = _getch()) {
             case KEY_UP:
-                if (ALMSelected > 0 && ALMSelected < AvailableOptions) {
-                    --ALMSelected; Updated = true;
-                } else if (ALMSelected <= 0) {
-                    ALMSelected = (AvailableOptions - 1); Updated = true;
+                if (ACMSelected > 0 && ACMSelected < AvailableOptions) {
+                    --ACMSelected; Updated = true;
+                } else if (ACMSelected <= 0) {
+                    ACMSelected = (AvailableOptions - 1); Updated = true;
                 } break;
             case KEY_DOWN:
-                if (ALMSelected >= 0 && ALMSelected < AvailableOptions - 1) {
-                    ++ALMSelected; Updated = true;
-                } else if (ALMSelected >= AvailableOptions - 1) {
-                    ALMSelected = 0; Updated = true;
+                if (ACMSelected >= 0 && ACMSelected < AvailableOptions - 1) {
+                    ++ACMSelected; Updated = true;
+                } else if (ACMSelected >= AvailableOptions - 1) {
+                    ACMSelected = 0; Updated = true;
                 } break;
             case KEY_ENTER:
                 Selecting = false; Updated = true;
@@ -1940,17 +3079,17 @@ void AccountLoginMenu(int ALMSelected) {
         }
     }
 
-    if (ALMSelected == 0) {
+    if (ACMSelected == 0) {
         ClearScreen();
         char InputEmail[BUFSIZE07];
 
-        if (LE) {
-            printf(ANSI_COLOR_GREEN"\n\n\n\n\tInfo: We'd checked that you earlier had already insert your personal e-mail as: %s.\n\t      But don't worry, if you want to make a change, then you may proceed to do so.\n\n"ANSI_COLOR_RESET, ARMInputs[GlobalRegisteredAccounts].Email);
-            printf("      " ANSI_COLOR_LIGHTGREEN"> Personal E-mail:\t%s\n\t"ANSI_COLOR_RESET "Phone Number:\t\t%s\n\tSKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
+        if (CE) {
+            printf(ANSI_COLOR_GREEN"\n\n\n\n\tInfo: We'd checked that you earlier had already insert your personal e-mail as: \n\t          >> %s.\n\n\t      But don't worry, if you want to make a change, then you may proceed to do so.\n\n"ANSI_COLOR_RESET, ACMInputs[GlobalRegisteredAccounts].Email);
+            printf("      " ANSI_COLOR_LIGHTGREEN"> Personal E-mail:\t%s\n\t"ANSI_COLOR_RESET "Phone Number:\t\t%s\n\tSKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
             puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTGREEN"Personal E-mail."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your personal e-mail into your profile account.");
             puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The e-mail format must have a '@' symbol, and the domain you used while creating \n\t      your own e-mail."ANSI_COLOR_RESET);
         } else {
-            printf("\n\n\n\n      " ANSI_COLOR_LIGHTYELLOW"> Personal E-mail:\t%s\n\t"ANSI_COLOR_RESET "Phone Number:\t\t%s\n\tSKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
+            printf("\n\n\n\n      " ANSI_COLOR_LIGHTYELLOW"> Personal E-mail:\t%s\n\t"ANSI_COLOR_RESET "Phone Number:\t\t%s\n\tSKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
             puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTYELLOW"Personal E-mail."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your personal e-mail into your profile account.");
             puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The e-mail format must have a '@' symbol, and the domain you used while creating \n\t      your own e-mail."ANSI_COLOR_RESET);
         }
@@ -1959,34 +3098,31 @@ void AccountLoginMenu(int ALMSelected) {
         fgets(InputEmail, BUFSIZE07, stdin);
 
         while (strlen(InputEmail) <= 3 || strchr(InputEmail, '@') == NULL || strchr(InputEmail, '.') == NULL) {
-            ClearScreen();
-            puts(ANSI_COLOR_LIGHTRED"\n\n\n\n\tWarning: You must have to insert your last name at least a single word (min. 3 characters)!\n\t         The valid E-mail format must have a '@' symbol, and the provider (authorized by) \n\t         with the domain itself.\n"ANSI_COLOR_RESET);
-            printf("      " ANSI_COLOR_LIGHTYELLOW"> Personal E-mail:\t%s\n\t"ANSI_COLOR_RESET "Phone Number:\t\t%s\n\tSKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
-            puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTYELLOW"Personal E-mail."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your personal e-mail into your profile account.");
-            puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The e-mail format must have a '@' symbol, and the domain you used while creating \n\t      your own e-mail."ANSI_COLOR_RESET);
-
-            printf("\nPersonal E-mail: ");
-            fgets(InputEmail, BUFSIZE07, stdin);
+            CE = true;
+            if (AllEmpty >= 0 && AllEmpty <= 4 && !VisitedCE) { AllEmpty += 1; EmptyCE = true; VisitedCE = true; }
+            strcpy(ACMInputs[GlobalRegisteredAccounts].Email, "-");
+            AccountRecoveryMenu(ACMSelected);
         }
         
         InputEmail[strlen(InputEmail) - 1] = '\0';
-        LE = true;
-        strcpy(ALMInputs[GlobalRegisteredAccounts].Email, InputEmail);
-        AccountLoginMenu(ALMSelected);
+        CE = true;
+        if (AllEmpty >= 0 && AllEmpty <= 4 && VisitedCE) { AllEmpty -= 1; EmptyCE = false; VisitedCE = false; }
+        strcpy(ACMInputs[GlobalRegisteredAccounts].Email, InputEmail);
+        AccountRecoveryMenu(ACMSelected);
     }
 
-    else if (ALMSelected == 1) {
+    else if (ACMSelected == 1) {
         ClearScreen();
         char InputPhoneNumber[BUFSIZE07], TempCountryCode[BUFSIZE07], TempDigitsNumber[BUFSIZE07], TempDigitsNumberTemp[BUFSIZE07], TempFinalPhoneNumber[BUFSIZE07];
         char *CountryCode, *DigitsNumber, *FinalPhoneNumber;
 
-        if (LPN) {
-            printf(ANSI_COLOR_GREEN"\n\n\n\n\tInfo: We'd checked that you earlier had already insert your phone number as: %s.\n\t      But don't worry, if you want to make a change, then you may proceed to do so.\n\n"ANSI_COLOR_RESET, ARMInputs[GlobalRegisteredAccounts].PhoneNumber);
-            printf("\tPersonal E-mail:\t%s\n      " ANSI_COLOR_LIGHTGREEN"> Phone Number:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
+        if (CPN) {
+            printf(ANSI_COLOR_GREEN"\n\n\n\n\tInfo: We'd checked that you earlier had already insert your phone number as: \n\t          >> %s.\n\n\t      But don't worry, if you want to make a change, then you may proceed to do so.\n\n"ANSI_COLOR_RESET, ACMInputs[GlobalRegisteredAccounts].PhoneNumber);
+            printf("\tPersonal E-mail:\t%s\n      " ANSI_COLOR_LIGHTGREEN"> Phone Number:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
             puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTGREEN"Phone Number."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your phone number profile account.");
             puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The phone number must be started with the country code '+XXX', and the next 4 to 13 \n\t      digits are for the phone number you owned. \n\t      Separate the country code and the digits by a single space, and for the digits you can \n\t      insert thoroughly (without spaces or so). \n\n\t      Phone number format insertion: +<COUNTRY_CODE> XXXXXXXXXXX \n\t      Example: +62 12345678901"ANSI_COLOR_RESET);
         } else {
-            printf("\n\n\n\n\tPersonal E-mail:\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> Phone Number:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
+            printf("\n\n\n\n\tPersonal E-mail:\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> Phone Number:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
             puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTYELLOW"Phone Number."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your phone number profile account.");
             puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The phone number must be started with the country code '+XXX', and the next 4 to 13 \n\t      digits are for the phone number you owned. \n\t      Separate the country code and the digits by a single space, and for the digits you can \n\t      insert thoroughly (without spaces or so). \n\n\t      Phone number format insertion: +<COUNTRY_CODE> XXXXXXXXXXX \n\t      Example: +62 12345678901"ANSI_COLOR_RESET);
         }
@@ -2002,25 +3138,15 @@ void AccountLoginMenu(int ALMSelected) {
         }
 
         while ((strlen(DigitsNumber) <= 4 || strlen(DigitsNumber) > 13) || CountryCode[0] != '+' || strchr(InputPhoneNumber, ' ') == NULL) {
-            ClearScreen();
-            puts(ANSI_COLOR_LIGHTRED"\n\n\n\n\tWarning: You must have to insert your with a starting phone country code and \n\t         for at least 4 to 13 digits (min. 4 digits)!\n"ANSI_COLOR_RESET);
-            printf("\tPersonal E-mail:\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> Phone Number:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
-            puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTYELLOW"Phone Number."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your phone number profile account.");
-            puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The phone number must be started with the country code '+XXX', and the next 4 to 13 \n\t      digits are for the phone number you owned. \n\t      Separate the country code and the digits by a single space, and for the digits you can \n\t      insert thoroughly (without spaces or so). \n\n\t      Phone number format insertion: +<COUNTRY_CODE> XXXXXXXXXXX \n\t      Example: +62 12345678901"ANSI_COLOR_RESET);
-
-            printf("\nPhone Number: ");
-            fgets(InputPhoneNumber, BUFSIZE07, stdin);
-
-            strcpy(TempCountryCode, InputPhoneNumber);
-            TempCountryCode[strlen(TempCountryCode) - 1] = '\0';
-            if (strchr(TempCountryCode, ' ') != NULL) {
-                CountryCode = strtok(TempCountryCode, " "); DigitsNumber = strtok(NULL, " ");
-                CountryCode = TrimWhiteSpaces(CountryCode); DigitsNumber = TrimWhiteSpaces(DigitsNumber);
-            }
+            CPN = true;
+            if (AllEmpty >= 0 && AllEmpty <= 4 && !VisitedCPN) { AllEmpty += 1; EmptyCPN = true; VisitedCPN = true; }
+            strcpy(ACMInputs[GlobalRegisteredAccounts].PhoneNumber, "-");
+            AccountRecoveryMenu(ACMSelected);
         }
         
         InputPhoneNumber[strlen(InputPhoneNumber) - 1] = '\0';
-        LPN = true;
+        CPN = true;
+        if (AllEmpty >= 0 && AllEmpty <= 4 && VisitedCPN) { AllEmpty -= 1; EmptyCPN = false; VisitedCPN = false; }
 
         strcpy(TempDigitsNumber, DigitsNumber);
         strcpy(TempFinalPhoneNumber, CountryCode);
@@ -2030,21 +3156,21 @@ void AccountLoginMenu(int ALMSelected) {
             else if ((i % 4) == 0 && (i != 4)) { strcat(TempDigitsNumberTemp, "-"); strncat(TempDigitsNumberTemp, &TempDigitsNumber[i - 1], 1); }
             else                               { strncat(TempDigitsNumberTemp, &TempDigitsNumber[i - 1], 1); }
         } strcat(TempFinalPhoneNumber, TempDigitsNumberTemp);
-        strcpy(ALMInputs[GlobalRegisteredAccounts].PhoneNumber, TempFinalPhoneNumber);
-        AccountLoginMenu(ALMSelected);
+        strcpy(ACMInputs[GlobalRegisteredAccounts].PhoneNumber, TempFinalPhoneNumber);
+        AccountRecoveryMenu(ACMSelected);
     }
 
-    else if (ALMSelected == 2) {
+    else if (ACMSelected == 2) {
         ClearScreen();
         char InputUsername[BUFSIZE07];
 
-        if (LU) {
-            printf(ANSI_COLOR_GREEN"\n\n\n\n\tInfo: We'd checked that you earlier had already insert your username as: %s.\n\t      But don't worry, if you want to make a change, then you may proceed to do so.\n\n"ANSI_COLOR_RESET, ARMInputs[GlobalRegisteredAccounts].Username);
-            printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n      " ANSI_COLOR_LIGHTGREEN"> SKYR Username:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Password:\t\t%s\n", ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
+        if (CU) {
+            printf(ANSI_COLOR_GREEN"\n\n\n\n\tInfo: We'd checked that you earlier had already insert your username as: \n\t          >> %s.\n\n\t      But don't worry, if you want to make a change, then you may proceed to do so.\n\n"ANSI_COLOR_RESET, ACMInputs[GlobalRegisteredAccounts].Username);
+            printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n      " ANSI_COLOR_LIGHTGREEN"> SKYR Username:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
             puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTGREEN"SKYR Username."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your username profile account.");
             puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The username must starts with a character and shall not contains a single space, \n\t      so use underscores or dashes to represents the next characters."ANSI_COLOR_RESET);
         } else {
-            printf("\n\n\n\n\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> SKYR Username:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Password:\t\t%s\n", ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
+            printf("\n\n\n\n\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> SKYR Username:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
             puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTYELLOW"SKYR Username."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your username profile account.");
             puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The username must starts with a character and shall not contains a single space, \n\t      so use underscores or dashes to represents the next characters."ANSI_COLOR_RESET);
         }
@@ -2053,33 +3179,30 @@ void AccountLoginMenu(int ALMSelected) {
         fgets(InputUsername, BUFSIZE07, stdin);
 
         while (strlen(InputUsername) <= 3) {
-            ClearScreen();
-            puts(ANSI_COLOR_LIGHTRED"\n\n\n\n\tWarning: You must have to insert your username at least a single word (min. 3 characters)!\n"ANSI_COLOR_RESET);
-            printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> SKYR Username:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Password:\t\t%s\n", ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
-            puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTYELLOW"SKYR Username."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your username profile account.");
-            puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The username must starts with a character and shall not contains a single space, \n\t      so use underscores or dashes to represents the next characters."ANSI_COLOR_RESET);
-
-            printf("\nSKYR Username: ");
-            fgets(InputUsername, BUFSIZE07, stdin);
+            CU = true;
+            if (AllEmpty >= 0 && AllEmpty <= 4 && !VisitedCU) { AllEmpty += 1; EmptyCU = true; VisitedCU = true; }
+            strcpy(ACMInputs[GlobalRegisteredAccounts].Username, "-");
+            AccountRecoveryMenu(ACMSelected);
         }
         
         InputUsername[strlen(InputUsername) - 1] = '\0';
-        LU = true;
-        strcpy(ALMInputs[GlobalRegisteredAccounts].Username, InputUsername);
-        AccountLoginMenu(ALMSelected);
+        CU = true;
+        if (AllEmpty >= 0 && AllEmpty <= 4 && VisitedCU) { AllEmpty -= 1; EmptyCU = false; VisitedCU = false; }
+        strcpy(ACMInputs[GlobalRegisteredAccounts].Username, InputUsername);
+        AccountRecoveryMenu(ACMSelected);
     }
 
-    else if (ALMSelected == 3) {
+    else if (ACMSelected == 3) {
         ClearScreen();
         char InputPassword[BUFSIZE07], HiddenPassword[BUFSIZE07];
 
-        if (LP) {
-            printf(ANSI_COLOR_GREEN"\n\n\n\n\tInfo: We'd checked that you earlier had already insert your password as: %s.\n\t      But don't worry, if you want to make a change, then you may proceed to do so.\n\n"ANSI_COLOR_RESET, ARMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
-            printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n\tSKYR Username:\t\t%s\n      " ANSI_COLOR_LIGHTGREEN"> SKYR Password:\t\t%s\n"ANSI_COLOR_RESET, ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
+        if (CP) {
+            printf(ANSI_COLOR_GREEN"\n\n\n\n\tInfo: We'd checked that you earlier had already insert your password as: \n\t          >> %s.\n\n\t      But don't worry, if you want to make a change, then you may proceed to do so.\n\n"ANSI_COLOR_RESET, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
+            printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n\tSKYR Username:\t\t%s\n      " ANSI_COLOR_LIGHTGREEN"> SKYR Password:\t\t%s\n"ANSI_COLOR_RESET, ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
             puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTGREEN"SKYR Password."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your password profile account.");
             puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The password must contains at least 8 characters, with any kind of combinations \n\t      you'd like to insert with. The password insertion is censored, and you can peek \n\t      the password you've inserted with an optional right-side choice ONLY in here."ANSI_COLOR_RESET);
         } else {
-            printf("\n\n\n\n\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n\tSKYR Username:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> SKYR Password:\t\t%s\n"ANSI_COLOR_RESET, ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
+            printf("\n\n\n\n\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n\tSKYR Username:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> SKYR Password:\t\t%s\n"ANSI_COLOR_RESET, ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
             puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTYELLOW"SKYR Password."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your password profile account.");
             puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The password must contains at least 8 characters, with any kind of combinations \n\t      you'd like to insert with. The password insertion is censored, and you can peek \n\t      the password you've inserted with an optional right-side choice ONLY in here."ANSI_COLOR_RESET);
         }
@@ -2088,32 +3211,22 @@ void AccountLoginMenu(int ALMSelected) {
         fgets(InputPassword, BUFSIZE07, stdin);
 
         while (strlen(InputPassword) <= 8) {
-            ClearScreen();
-            puts(ANSI_COLOR_LIGHTRED"\n\n\n\n\tWarning: You must have to insert your password in any unique way possible (min. 8 characters)!\n"ANSI_COLOR_RESET);
-            printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n\tSKYR Username:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> SKYR Password:\t\t%s\n"ANSI_COLOR_RESET, ALMInputs[GlobalRegisteredAccounts].Email, ALMInputs[GlobalRegisteredAccounts].PhoneNumber, ALMInputs[GlobalRegisteredAccounts].Username, ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown);
-            puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTYELLOW"SKYR Password."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your password profile account.");
-            puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The password must contains at least 8 characters, with any kind of combinations \n\t      you'd like to insert with. The password insertion is censored, and you can peek \n\t      the password you've inserted with an optional right-side choice ONLY in here."ANSI_COLOR_RESET);
-
-            printf("\nSKYR Password: ");
-            fgets(InputPassword, BUFSIZE07, stdin);
+            CP = true;
+            if (AllEmpty >= 0 && AllEmpty <= 4 && !VisitedCP) { AllEmpty += 1; EmptyCP = true; VisitedCP = true; }
+            strcpy(ACMInputs[GlobalRegisteredAccounts].Password, "-");
+            strcpy(ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown, "-");
+            AccountRecoveryMenu(ACMSelected);
         }
         
         InputPassword[strlen(InputPassword) - 1] = '\0';
-        LP = true;
+        CP = true;
+        if (AllEmpty >= 0 && AllEmpty <= 4 && VisitedCP) { AllEmpty -= 1; EmptyCP = false; VisitedCP = false; }
 
         for (int i = 0; i < strlen(InputPassword); i++) {
             if (i == 0) { strcpy(HiddenPassword, "*"); }
             else        { strcat(HiddenPassword, "*"); }
-        } strcpy(ALMInputs[GlobalRegisteredAccounts].Password, InputPassword);
-        strcpy(ALMInputs[GlobalRegisteredAccounts].HiddenPasswordShown, HiddenPassword);
-        AccountLoginMenu(ALMSelected);
+        } strcpy(ACMInputs[GlobalRegisteredAccounts].Password, InputPassword);
+        strcpy(ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown, HiddenPassword);
+        AccountRecoveryMenu(ACMSelected);
     }
-}
-
-void AccountRecoveryMenu(int ACMSelected) {
-    // TODO: Build a recovery menu interface.
-}
-
-void F1_MoneytoryTransactionsRegister(void) {
-    // TODO: Build a transaction list interface.
 }
