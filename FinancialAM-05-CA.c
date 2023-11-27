@@ -145,7 +145,7 @@ const char* DESTINATIONFILENULLERROR = "DestinationFileNotExists";
 
 const char* ApplicationPresent       = "SKYR Corp. Foundation Inc., PRESENTS:\n";
 const char* ApplicationTitle         = "SKYR Corp. :: Personal Financial Management System [CLI-Win32] Application\n";
-const char* ApplicationVersion       = "SKYR Corp. :: @PRE-RELEASE V1.0.39.3232 [91a4f88][W: 43] (November 27, 2023)\n";
+const char* ApplicationVersion       = "SKYR Corp. :: @PRE-RELEASE V1.0.39.3232 [ae32224][W: 43] (November 27, 2023)\n";
 const char* AppGuideOnUsageUDRL      = "\n\t   " ANSI_COLOR_LIGHTGREEN"[^]\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN"[>]"ANSI_COLOR_RESET ANSI_COLOR_LIGHTGREEN"[v]"ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN"[<]\n\n\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN ANSI_STYLE_ITALIC"[^]: Go UP, [v]: Go DOWN, "ANSI_COLOR_RESET ANSI_COLOR_CYAN ANSI_STYLE_ITALIC"[>]: Go RIGHT, [<]: Go LEFT\n"ANSI_COLOR_RESET;
 const char* AppMainMenuUDRL          = "\n\t   " ANSI_COLOR_LIGHTGREEN"[^]\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN"[>]"ANSI_COLOR_RESET ANSI_COLOR_LIGHTGREEN"[v]"ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN"[<]\n\n\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN ANSI_STYLE_ITALIC"[^]: Go UP, [v]: Go DOWN, "ANSI_COLOR_RESET ANSI_COLOR_CYAN ANSI_STYLE_ITALIC"[>]: Go RIGHT " ANSI_STYLE_UNDERLINE"(Profile Manager)"ANSI_COLOR_RESET ANSI_COLOR_CYAN ANSI_STYLE_ITALIC", [<]: Go LEFT " ANSI_STYLE_UNDERLINE"(About Application)\n"ANSI_COLOR_RESET;
 const char* AppProfileManagerUDRL    = "\n\t   " ANSI_COLOR_LIGHTGREEN"[^]\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN"[>]"ANSI_COLOR_RESET ANSI_COLOR_LIGHTGREEN"[v]"ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN"[<]\n\n\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN ANSI_STYLE_ITALIC"[^]: Go UP, [v]: Go DOWN, "ANSI_COLOR_RESET ANSI_COLOR_CYAN ANSI_STYLE_ITALIC"[>]: Go RIGHT " ANSI_STYLE_UNDERLINE"(About Application)"ANSI_COLOR_RESET ANSI_COLOR_CYAN ANSI_STYLE_ITALIC", [<]: Go LEFT " ANSI_STYLE_UNDERLINE"(Home Menu)\n"ANSI_COLOR_RESET;
@@ -1505,7 +1505,7 @@ void AccountRegistrationMenu(int ARMSelected) {
 
                         puts(ANSI_COLOR_LIGHTBLUE"\n\tInfo: Your account profile has been saved and ecrypted."ANSI_COLOR_RESET);
                         puts(ANSI_COLOR_LIGHTYELLOW"\t      Now you may proceed to refresh the app before going to singing in by pressing the [ENTER] \n\t      button key on your keyboard in order to be able to update your listed profile accounts. \n\t      "ANSI_COLOR_RESET ANSI_COLOR_LIGHTGREEN"Proceed to re-open the app after this and you'll be prompted onto the login profile account \n\t      section, and all the features will be accessible by stay logged in within 30 days!"ANSI_COLOR_RESET);
-                        getchar(); sleep(RandInt(1, 3))
+                        getchar(); sleep(RandInt(1, 3));
 
                         LE = false; LPN = false; LU = false; LP = false;
                         strcpy(RegAccInsider, "Registered Accounts: "); strcat(RegAccInsider, GRA); strcat(RegAccInsider, " account(s) in total.");
@@ -1669,7 +1669,7 @@ void AccountRegistrationMenu(int ARMSelected) {
 
                         puts(ANSI_COLOR_LIGHTBLUE"\n\tInfo: Your account profile has been saved and ecrypted."ANSI_COLOR_RESET);
                         puts(ANSI_COLOR_LIGHTYELLOW"\t      Now you may proceed to refresh the app before going to singing in by pressing the [ENTER] \n\t      button key on your keyboard in order to be able to update your listed profile accounts. \n\t      "ANSI_COLOR_RESET ANSI_COLOR_LIGHTGREEN"Proceed to re-open the app after this and you'll be prompted onto the login profile account \n\t      section, and all the features will be accessible by stay logged in within 30 days!"ANSI_COLOR_RESET);
-                        getchar(); sleep(RandInt(1, 3))
+                        getchar(); sleep(RandInt(1, 3));
 
                         LE = false; LPN = false; LU = false; LP = false;
                         strcpy(RegAccInsider, "Registered Accounts: "); strcat(RegAccInsider, GRA); strcat(RegAccInsider, " account(s) in total.");
