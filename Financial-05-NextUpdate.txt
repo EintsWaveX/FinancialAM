@@ -1,25 +1,4 @@
 # FinancialAM-05 :: Console Line Interactive Application
 # Recent updates on the "main" branch:
-#   >>> Multiple registered accounts, fixing minor bugs.
+#   >>> Releasing the ALPHA PREVIEW of the application.
 #
-# Noticing on next future updates:
-#     > Implementing the logout profile account system,
-#       since it's not so convenient to having to stay
-#       logged on even after closing the app without the
-#       free will of the users.
-#     > Implementing the fourth and fifth features, since
-#       both of them already done in base implementations
-#       and just need a UI to make them more interactive
-#       with the users.
-#     > Implementing the recovery profile account menu
-#       section, and for the progress is still on work
-#       but soon will be done, just making sure that the
-#       file to make the user keep logged on within 30
-#       days already intact in the "ApplicationLoginMenu"
-#       function.
-#     > Implementing the trial version of horizontal
-#       histogram CLI mode, since working with libraries
-#       requires more time to come with an understanding
-#       on how the basis works, since we can't embed the
-#       C code here with Python codes using "matplotlib"
-#       and other computer science libraries in Python.

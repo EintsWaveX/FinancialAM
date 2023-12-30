@@ -1,0 +1,29 @@
+# ---------------------------------------------------------------------------------------------------
+# SKYR Corp. Foundation Inc., PRESENTS:
+# SKYR Corp. :: Personal Financial Management System [CLI-Win32] Application
+# SKYR Corp. :: @PRE-RELEASE V1.3.44.85.3627.1005657991015497 [c12f906] (December 16, 2023)
+#
+# PersonalFMSA | Last Updated: 2023-12-28 16:24:21
+# Built-in Console Application [CLI-Win32], fundamentally C (100%)
+# ---------------------------------------------------------------------------------------------------
+# START > CONFIGURATIONS FILE FOR SKYR-PERSONAL FINANCIAL MANAGEMENT SYSTEM APPLICATION
+# All Rights are Reserved, at SKYR Corp. Foundation Inc.
+# Distribution over WIN32 ONLY, other platforms may be coming soon.
+# ---------------------------------------------------------------------------------------------------
+# PLEASE AVOID ATTEMPTING TO OVERWRITE ANY OF THESE '#' SHAPED COMMENTS
+# IF YOU DON'T WANT TO MAKE THE PROGRAM CRASHED!
+# 
+# In order to make the changes for some values, make sure to follow what the requested value changing
+# is about! DO NOT ATTEMPT TO CHANGE THE VALUES IF IT'S NOT INTENDED WITH OTHER TYPE OF DATATYPES!
+# ---------------------------------------------------------------------------------------------------
+# 1. In feature: Displaying a Horizontal Histogram Graph
+# Requisites: Change the value of the 'PerExpense' into ANY NON NEGATIVE NUMBERS (can be floats or
+#             doubles), as it symbolizes the value of Rp. (rupiah or IDR.) in scale of thousands
+#             (usually the format is '...k' or '...K', but here just change the value without adding
+#             any letter, and max.: 3 decimal numbers behind the point if it's a float or double).
+# 
+>>> PerExpenses = 15.000
+#
+# ---------------------------------------------------------------------------------------------------
+# END > CONFIGURATIONS FILE FOR SKYR-PERSONAL FINANCIAL MANAGEMENT SYSTEM APPLICATION
+# ---------------------------------------------------------------------------------------------------

@@ -1,5 +1,5 @@
 # Set the plot configuration.
-Per Expenses:       10
+Per expenses:       80
 Days configuration: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday
 
 # Set the 'y' dataset variable with the frequencies of 'x' dataset.
@@ -9,4 +9,4 @@ Wednesday = 674
 Thursday  = 702
 Friday    = 445
 Saturday  = 801
-Sunday    = 1093
+Sunday    = 1005

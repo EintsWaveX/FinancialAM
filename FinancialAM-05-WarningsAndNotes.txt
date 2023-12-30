@@ -6,156 +6,70 @@ SKYR Corp. :: @PRE-RELEASE V1.0.39.3232 [ae32224][W: 43] (November 27, 2023)
 PersonalFMSA | Last Updated: 2023-11-27 14:01:46
 Built-in Console Application [CLI-Win32], fundamentally C (100%)
 ----------------------------------------------------------------------------------------------------
-Total Listed Warnings for this application's version: 43 WARNING(S) in total.
-Total Listed Notes for this application's version: 2 NOTE(S) in total.
+Total Listed Warnings for this application's version: 13 WARNING(S) in total.
+Total Listed Notes for this application's version: 5 NOTE(S) in total.
 ----------------------------------------------------------------------------------------------------
 
-FinancialAM-05-CA.c: In function 'MainMenuApplicationFeatures':
-FinancialAM-05-CA.c:916:11: warning: unused variable 'TempEA' [-Wunused-variable]
-  916 |     char *TempEA, AKDC;
-      |           ^~~~~~
-FinancialAM-05-CA.c:915:10: warning: unused variable 'ConfirmOrBackMMAF' [-Wunused-variable]
-  915 |     bool ConfirmOrBackMMAF = false;
-      |          ^~~~~~~~~~~~~~~~~
-FinancialAM-05-CA.c:913:31: warning: unused variable 'SubmitOrContinue' [-Wunused-variable]
-  913 |     int AvailableOptions = 6, SubmitOrContinue;
-      |                               ^~~~~~~~~~~~~~~~
-FinancialAM-05-CA.c: In function 'MainMenuProfileManager':
-FinancialAM-05-CA.c:1020:11: warning: unused variable 'TempEA' [-Wunused-variable]
- 1020 |     char *TempEA, AKDC;
-      |           ^~~~~~
-FinancialAM-05-CA.c:1019:10: warning: unused variable 'ConfirmOrBackMMAF' [-Wunused-variable]
- 1019 |     bool ConfirmOrBackMMAF = false;
-      |          ^~~~~~~~~~~~~~~~~
-FinancialAM-05-CA.c:1017:31: warning: unused variable 'SubmitOrContinue' [-Wunused-variable]
- 1017 |     int AvailableOptions = 3, SubmitOrContinue;
-      |                               ^~~~~~~~~~~~~~~~
-FinancialAM-05-CA.c: In function 'MainMenuApplicationInformations':
-FinancialAM-05-CA.c:1107:11: warning: unused variable 'TempEA' [-Wunused-variable]
- 1107 |     char *TempEA, AKDC;
-      |           ^~~~~~
-FinancialAM-05-CA.c:1106:10: warning: unused variable 'ConfirmOrBackMMAF' [-Wunused-variable]
- 1106 |     bool ConfirmOrBackMMAF = false;
-      |          ^~~~~~~~~~~~~~~~~
-FinancialAM-05-CA.c:1104:31: warning: unused variable 'SubmitOrContinue' [-Wunused-variable]
- 1104 |     int AvailableOptions = 6, SubmitOrContinue;
-      |                               ^~~~~~~~~~~~~~~~
-FinancialAM-05-CA.c: In function 'AccountRegistrationMenu':
-FinancialAM-05-CA.c:1941:16: warning: unused variable 'TempDay' [-Wunused-variable]
- 1941 |         size_t TempDay, TempDate, TempMonth, TempYear, Day, Date, Month, Year;
-      |                ^~~~~~~
-FinancialAM-05-CA.c:2090:44: warning: unused variable 'FinalPhoneNumber' [-Wunused-variable]
- 2090 |         char *CountryCode, *DigitsNumber, *FinalPhoneNumber;
-      |                                            ^~~~~~~~~~~~~~~~
-FinancialAM-05-CA.c:1297:58: warning: unused variable 'MessageID04' [-Wunused-variable]
- 1297 |     char MessageID02[BUFSIZE10], MessageID03[BUFSIZE10], MessageID04[BUFSIZE10];
-      |                                                          ^~~~~~~~~~~
-FinancialAM-05-CA.c:1297:34: warning: unused variable 'MessageID03' [-Wunused-variable]
- 1297 |     char MessageID02[BUFSIZE10], MessageID03[BUFSIZE10], MessageID04[BUFSIZE10];
-      |                                  ^~~~~~~~~~~
-FinancialAM-05-CA.c:1296:10: warning: unused variable 'ConfirmOrBackARM' [-Wunused-variable]
- 1296 |     bool ConfirmOrBackARM = false;
-      |          ^~~~~~~~~~~~~~~~
-FinancialAM-05-CA.c:1285:45: warning: unused variable 'FTDestination' [-Wunused-variable]
- 1285 |     char *SourceKeyStringValues[BUFSIZE07], FTDestination[1][BUFSIZE07];
-      |                                             ^~~~~~~~~~~~~
-FinancialAM-05-CA.c:1284:11: warning: variable 'SourceTextFileName' set but not used [-Wunused-but-set-variable]
- 1284 |     char *SourceTextFileName, *SourceKeyStringValue, *SelectedKeyString;
-      |           ^~~~~~~~~~~~~~~~~~
-FinancialAM-05-CA.c:1283:10: warning: unused variable 'C' [-Wunused-variable]
- 1283 |     char C, BUFFER[BUFSIZE16], DeleteTempDestinationTxtFile[128], TxtFileName[128] = "RegisteredAccounts.txt > Accounts";
-      |          ^
-FinancialAM-05-CA.c:1282:59: warning: unused variable 'FTDPos' [-Wunused-variable]
- 1282 |     int BufLen, Ptr = 0, KeyTracker = 0, LineTracker = 0, FTDPos = 0;
-      |                                                           ^~~~~~
-FinancialAM-05-CA.c:1282:42: warning: unused variable 'LineTracker' [-Wunused-variable]
- 1282 |     int BufLen, Ptr = 0, KeyTracker = 0, LineTracker = 0, FTDPos = 0;
-      |                                          ^~~~~~~~~~~
-FinancialAM-05-CA.c: In function 'AccountLoginMenu':
-FinancialAM-05-CA.c:2658:44: warning: unused variable 'FinalPhoneNumber' [-Wunused-variable]
- 2658 |         char *CountryCode, *DigitsNumber, *FinalPhoneNumber;
-      |                                            ^~~~~~~~~~~~~~~~
-FinancialAM-05-CA.c:2233:10: warning: unused variable 'ConfirmOrBackALM' [-Wunused-variable]
- 2233 |     bool ConfirmOrBackALM = false, ALMUpgrade = false;
-      |          ^~~~~~~~~~~~~~~~
-FinancialAM-05-CA.c:2228:88: warning: unused variable 'MadeTime' [-Wunused-variable]
- 2228 |     char UpdateLocalTime[BUFSIZE07], LocalTime[BUFSIZE07], AccountMadeTime[BUFSIZE07], MadeTime[BUFSIZE07];
-      |                                                                                        ^~~~~~~~
-FinancialAM-05-CA.c:2228:60: warning: unused variable 'AccountMadeTime' [-Wunused-variable]
- 2228 |     char UpdateLocalTime[BUFSIZE07], LocalTime[BUFSIZE07], AccountMadeTime[BUFSIZE07], MadeTime[BUFSIZE07];
-      |                                                            ^~~~~~~~~~~~~~~
-FinancialAM-05-CA.c:2228:38: warning: unused variable 'LocalTime' [-Wunused-variable]
- 2228 |     char UpdateLocalTime[BUFSIZE07], LocalTime[BUFSIZE07], AccountMadeTime[BUFSIZE07], MadeTime[BUFSIZE07];
-      |                                      ^~~~~~~~~
-FinancialAM-05-CA.c:2228:10: warning: unused variable 'UpdateLocalTime' [-Wunused-variable]
- 2228 |     char UpdateLocalTime[BUFSIZE07], LocalTime[BUFSIZE07], AccountMadeTime[BUFSIZE07], MadeTime[BUFSIZE07];
-      |          ^~~~~~~~~~~~~~~
-FinancialAM-05-CA.c:2227:38: warning: unused variable 'GRA' [-Wunused-variable]
- 2227 |     char LoginAccInsider[BUFSIZE07], GRA[BUFSIZE07];
-      |                                      ^~~
-FinancialAM-05-CA.c:2227:10: warning: unused variable 'LoginAccInsider' [-Wunused-variable]
- 2227 |     char LoginAccInsider[BUFSIZE07], GRA[BUFSIZE07];
-      |          ^~~~~~~~~~~~~~~
-FinancialAM-05-CA.c:2226:45: warning: unused variable 'FTDestination' [-Wunused-variable]
- 2226 |     char *SourceKeyStringValues[BUFSIZE07], FTDestination[6][BUFSIZE07];
-      |                                             ^~~~~~~~~~~~~
-FinancialAM-05-CA.c:2225:11: warning: variable 'SourceTextFileName' set but not used [-Wunused-but-set-variable]
- 2225 |     char *SourceTextFileName, *SourceKeyStringValue, *SelectedKeyString;
-      |           ^~~~~~~~~~~~~~~~~~
-FinancialAM-05-CA.c:2224:10: warning: unused variable 'C' [-Wunused-variable]
- 2224 |     char C, BUFFER[BUFSIZE16], DeleteTempDestinationTxtFile[128], TxtFileName[128] = "RegisteredAccounts.txt > First Name, Last Name, Personal E-mail, Phone Number, SKYR Username, SKYR Password";
-      |          ^
-FinancialAM-05-CA.c:2223:59: warning: unused variable 'FTDPos' [-Wunused-variable]
- 2223 |     int BufLen, Ptr = 0, KeyTracker = 0, LineTracker = 0, FTDPos = 0;
-      |                                                           ^~~~~~
-FinancialAM-05-CA.c:2223:42: warning: unused variable 'LineTracker' [-Wunused-variable]
- 2223 |     int BufLen, Ptr = 0, KeyTracker = 0, LineTracker = 0, FTDPos = 0;
-      |                                          ^~~~~~~~~~~
-FinancialAM-05-CA.c:2222:59: warning: unused variable 'TempMMAFInputs' [-Wunused-variable]
- 2222 |     FILE *FDestination, *FTempDestination, *FTempSource, *TempMMAFInputs;
-      |                                                           ^~~~~~~~~~~~~~
-FinancialAM-05-CA.c:2222:45: warning: unused variable 'FTempSource' [-Wunused-variable]
- 2222 |     FILE *FDestination, *FTempDestination, *FTempSource, *TempMMAFInputs;
-      |                                             ^~~~~~~~~~~
-FinancialAM-05-CA.c: In function 'AccountRecoveryMenu':
-FinancialAM-05-CA.c:89:36: warning: format '%d' expects argument of type 'int', but argument 4 has type 'size_t' {aka 'long long unsigned int'} [-Wformat=]
-   89 | #define ANSI_COLOR_LIGHTGREEN      "\x1b[1;38;5;82m"
+FinancialAM-05-CA.c: In function 'ArrowKeyChoiceDialog':
+FinancialAM-05-CA.c:102:36: warning: too many arguments for format [-Wformat-extra-args]
+  102 | #define ANSI_COLOR_LIGHTBLUE       "\x1b[1;38;5;33m"
       |                                    ^~~~~~~~~~~~~~~~~
-FinancialAM-05-CA.c:3061:40: note: in expansion of macro 'ANSI_COLOR_LIGHTGREEN'
- 3061 |                                 printf(ANSI_COLOR_LIGHTGREEN"\n\tLogged in as: \n\t          >> %s %s.\n\t              "ANSI_COLOR_RESET ANSI_COLOR_GREEN"(Account No. %d)\n\n"ANSI_COLOR_RESET, ShowFirstName, ShowLastName, (GlobalRegisteredAccounts + 1));
-      |                                        ^~~~~~~~~~~~~~~~~~~~~
-FinancialAM-05-CA.c:3061:170: note: format string is defined here
- 3061 |                                 printf(ANSI_COLOR_LIGHTGREEN"\n\tLogged in as: \n\t          >> %s %s.\n\t              "ANSI_COLOR_RESET ANSI_COLOR_GREEN"(Account No. %d)\n\n"ANSI_COLOR_RESET, ShowFirstName, ShowLastName, (GlobalRegisteredAccounts + 1));
-      |                                                                                                                                              
-                           ~^
-      |                                                                                                                                              
-                            |
-      |                                                                                                                                              
-                            int
-      |                                                                                                                                              
-                           %lld
-FinancialAM-05-CA.c:3137:44: warning: unused variable 'FinalPhoneNumber' [-Wunused-variable]
- 3137 |         char *CountryCode, *DigitsNumber, *FinalPhoneNumber;
-      |                                            ^~~~~~~~~~~~~~~~
-FinancialAM-05-CA.c:2830:10: warning: unused variable 'ConfirmOrBackACM' [-Wunused-variable]
- 2830 |     bool ConfirmOrBackACM = false, ACMUpgrade = false;
-      |          ^~~~~~~~~~~~~~~~
-FinancialAM-05-CA.c:2826:45: warning: unused variable 'FTDestination' [-Wunused-variable]
- 2826 |     char *SourceKeyStringValues[BUFSIZE07], FTDestination[6][BUFSIZE07];
-      |                                             ^~~~~~~~~~~~~
-FinancialAM-05-CA.c:2825:11: warning: variable 'SourceTextFileName' set but not used [-Wunused-but-set-variable]
- 2825 |     char *SourceTextFileName, *SourceKeyStringValue, *SelectedKeyString;
-      |           ^~~~~~~~~~~~~~~~~~
-FinancialAM-05-CA.c:2824:10: warning: unused variable 'C' [-Wunused-variable]
- 2824 |     char C, BUFFER[BUFSIZE16], DeleteTempDestinationTxtFile[128], TxtFileName[128] = "RegisteredAccounts.txt > First Name, Last Name, Personal E-mail, Phone Number, SKYR Username, SKYR Password";
-      |          ^
-FinancialAM-05-CA.c:2823:59: warning: unused variable 'FTDPos' [-Wunused-variable]
- 2823 |     int BufLen, Ptr = 0, KeyTracker = 0, LineTracker = 0, FTDPos = 0;
-      |                                                           ^~~~~~
-FinancialAM-05-CA.c:2823:42: warning: unused variable 'LineTracker' [-Wunused-variable]
- 2823 |     int BufLen, Ptr = 0, KeyTracker = 0, LineTracker = 0, FTDPos = 0;
-      |                                          ^~~~~~~~~~~
-FinancialAM-05-CA.c: In function 'ReadAndPrintLine':
-FinancialAM-05-CA.c:494:1: warning: control reaches end of non-void function [-Wreturn-type]
-  494 | }
-      | ^
+FinancialAM-05-CA.c:943:20: note: in expansion of macro 'ANSI_COLOR_LIGHTBLUE'
+  943 |             printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\tΓn\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\n\t"ANSI_COLOR_RESET BRIGHTGREEN156 ANSI_STYLE_BOLD"\t     Welcome to the: " ANSI_STYLE_UNDERLINE"@SKYR Personal Financial Management Support Application!\n\t"ANSI_COLOR_RESET BRIGHTPURPLE218 ANSI_STYLE_BOLD"\t\t  Save more for better future, and live happily ever after... :)\n\n\t"ANSI_COLOR_RESET BRIGHTBLUE159"Creation and Designing by: @EintsWaveX (Immanuel Eben); "ANSI_COLOR_RESET ANSI_COLOR_WHITE ANSI_STYLE_ITALIC"(support me on GitHub)!\n\t"ANSI_COLOR_RESET BRIGHTBLUE159"Ideas and Supporting by:\n\t    > @Ardia Pasha, @Arif Darmansyah, @Ilham Jamil, @Indah Natalia, and @Zaki Risqulah;\n\t      "ANSI_COLOR_RESET BRIGHTRED216 ANSI_STYLE_BOLD ANSI_STYLE_ITALIC"(F3)          (F5)              (F4)          (F1, F2)            (F6)" ANSI_COLOR_LIGHTMAGENTA"\n\tΓn\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppLanguageUI, UserName);
+      |                    ^~~~~~~~~~~~~~~~~~~~
+FinancialAM-05-CA.c:102:36: warning: too many arguments for format [-Wformat-extra-args]
+  102 | #define ANSI_COLOR_LIGHTBLUE       "\x1b[1;38;5;33m"
+      |                                    ^~~~~~~~~~~~~~~~~
+FinancialAM-05-CA.c:989:48: note: in expansion of macro 'ANSI_COLOR_LIGHTBLUE'
+  989 |         snprintf(WelcomingMessages, BUFSIZE16, ANSI_COLOR_LIGHTBLUE"\n\n\n\n\tΓn\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\n\t"ANSI_COLOR_RESET BRIGHTGREEN156 ANSI_STYLE_BOLD"\t     Welcome to the: " ANSI_STYLE_UNDERLINE"@SKYR Personal Financial Management Support Application!\n\t"ANSI_COLOR_RESET BRIGHTPURPLE218 ANSI_STYLE_BOLD"\t\t  Save more for better future, and live happily ever after... :)\n\n\t"ANSI_COLOR_RESET BRIGHTBLUE159"Creation and Designing by: @EintsWaveX (Immanuel Eben); "ANSI_COLOR_RESET ANSI_COLOR_WHITE ANSI_STYLE_ITALIC"(support me on GitHub)!\n\t"ANSI_COLOR_RESET BRIGHTBLUE159"Ideas and Supporting by:\n\t    > @Ardia Pasha, @Arif Darmansyah, @Ilham Jamil, @Indah Natalia, and @Zaki Risqulah;\n\t      "ANSI_COLOR_RESET BRIGHTRED216 ANSI_STYLE_BOLD ANSI_STYLE_ITALIC"(F3)          (F5)              (F4)          (F1, F2)            (F6)" ANSI_COLOR_LIGHTMAGENTA"\n\tΓn"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppLanguageUI, UserName);
+      |                                                ^~~~~~~~~~~~~~~~~~~~
+FinancialAM-05-CA.c: In function 'F2_MoneytoryGroupingPerCategory':
+FinancialAM-05-CA.c:4538:42: warning: unused parameter 'F2Selected' [-Wunused-parameter]
+ 4538 | void F2_MoneytoryGroupingPerCategory(int F2Selected) {
+      |                                      ~~~~^~~~~~~~~~
+FinancialAM-05-CA.c: In function 'F3_BudgetCreationAndMonitoring':
+FinancialAM-05-CA.c:4655:94: warning: suggest parentheses around '&&' within '||' [-Wparentheses]
+ 4655 |         } else if ((ManageTime.tm_year > CFTNBC_Year) || (ManageTime.tm_year == CFTNBC_Year) && ((((ManageTime.tm_mon + 1) != 12) ? ((ManageTime.tm_mon + 1) + 1) : 1) > CFTNBC_Month) || \
+      |                                                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+FinancialAM-05-CA.c:4656:147: warning: suggest parentheses around '&&' within '||' [-Wparentheses]
+ 4656 |                    (ManageTime.tm_year == CFTNBC_Year) && ((((ManageTime.tm_mon + 1) != 12) ? ((ManageTime.tm_mon + 1) + 1) : 1) == CFTNBC_Month) && (ManageTime.tm_mday > CFTNBC_Date)) {
+      |                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+FinancialAM-05-CA.c:4560:72: warning: unused variable 'KeepTrackExpenses' [-Wunused-variable]
+ 4560 |     char NextBudgetCreationOn[BUFSIZE07], KeepTrackIncomes[BUFSIZE07], KeepTrackExpenses[BUFSIZE07];
+      |                                                                        ^~~~~~~~~~~~~~~~~
+FinancialAM-05-CA.c:4560:43: warning: unused variable 'KeepTrackIncomes' [-Wunused-variable]
+ 4560 |     char NextBudgetCreationOn[BUFSIZE07], KeepTrackIncomes[BUFSIZE07], KeepTrackExpenses[BUFSIZE07];
+      |                                           ^~~~~~~~~~~~~~~~
+FinancialAM-05-CA.c: In function 'F4_FilterSearchingData':
+FinancialAM-05-CA.c:5304:33: warning: unused parameter 'F4Selected' [-Wunused-parameter]
+ 5304 | void F4_FilterSearchingData(int F4Selected) {
+      |                             ~~~~^~~~~~~~~~
+FinancialAM-05-CA.c: In function 'F5_ReminderAndSetNotifications':
+FinancialAM-05-CA.c:5364:41: warning: unused parameter 'F5Selected' [-Wunused-parameter]
+ 5364 | void F5_ReminderAndSetNotifications(int F5Selected) {
+      |                                     ~~~~^~~~~~~~~~
+FinancialAM-05-CA.c: In function 'F6_DataVisualization':
+FinancialAM-05-CA.c:5412:46: warning: using integer absolute value function 'abs' when argument is of floating-point type 'double' [-Wabsolute-value]
+ 5412 |             PerMoneyExpenses    = (long long)abs(atof(PerMoneyExpenseLine) * 1000);
+      |                                              ^~~
+FinancialAM-05-CA.c: In function 'F4_FilterSearchingData':
+FinancialAM-05-CA.c:5344:13: warning: 'CopyKeyFinderTxtFile' may be used uninitialized [-Wmaybe-uninitialized]       
+ 5344 |             strcpy(CopyKeyFinderTxtFile, KeyFinderTxtFile); CopyKeyFinderTxtFile = StringUppercase(CopyKeyFinderTxtFile);
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+FinancialAM-05-CA.c:5306:103: note: 'CopyKeyFinderTxtFile' was declared here
+ 5306 |     char MatchAnyListedTxtFile[BUFSIZE07], AnyListedTxtFile[BUFSIZE07], KeyFinderTxtFile[BUFSIZE10], *CopyKeyFinderTxtFile;
+      |                                                                                                       ^~~~~~~~~~~~~~~~~~~~
+FinancialAM-05-CA.c:5348:60: warning: 'DecryptTxtFile' accessing 65536 bytes in a region of size 5 [-Wstringop-overflow=]
+ 5348 |             if (strcmp(CopyKeyFinderTxtFile, "NONE") == 0) DecryptTxtFile(AnyListedTxtFile, true, EncryptionKey, "None");
+      |                                                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+FinancialAM-05-CA.c:5348:60: note: referencing argument 4 of type 'char[65536]'
+FinancialAM-05-CA.c:687:6: note: in a call to function 'DecryptTxtFile'
+  687 | void DecryptTxtFile(const char* DestinationTextFile, bool ReadDecryptedFile, int DecryptionKey, char ReadDecryptedKeyString[BUFSIZE16]) {
+      |      ^~~~~~~~~~~~~~
+FinancialAM-05-CA.c:5349:18: warning: 'DecryptTxtFile' accessing 65536 bytes in a region of size 1024 [-Wstringop-overflow=]
+ 5349 |             else DecryptTxtFile(AnyListedTxtFile, false, EncryptionKey, DecryptAndReadFile);
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+FinancialAM-05-CA.c:5349:18: note: referencing argument 4 of type 'char[65536]'
+FinancialAM-05-CA.c:687:6: note: in a call to function 'DecryptTxtFile'
+  687 | void DecryptTxtFile(const char* DestinationTextFile, bool ReadDecryptedFile, int DecryptionKey, char ReadDecryptedKeyString[BUFSIZE16]) {
+      |      ^~~~~~~~~~~~~~
