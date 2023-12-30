@@ -1,0 +1,23 @@
+────────────────────────────────────────────────────────────────────────────────────────────────────
+SKYR Corp. :: Personal Financial Management System [CLI-Win32] Application
+SKYR Corp. :: @PRE-RELEASE V1.3.44.85.3627.1005657991015497 [c12f906] (December 16, 2023)
+
+Section: Home (Dashbord) :: Main Menu of The Application Features
+(STATUS) Profile Account Linked to: aaa.
+────────────────────────────────────────────────────────────────────────────────────────────────────
+Registered Accounts: 4 account(s) in total.
+────────────────────────────────────────────────────────────────────────────────────────────────────
+Profile Account :: No. 1
+Created on: 2023-12-27 17:47:56
+
+First Name:		aaa
+Last Name:		aaa
+... (aaa's private e-mail address)
+SKYR Username:		aaa
+... (aaa's private password account)
+
+Date of Birth:		Saturday, 23rd of July 2005
+Age on Present:		18
+... (aaa's private phone number)
+Sex/Gender:		Male
+────────────────────────────────────────────────────────────────────────────────────────────────────
