@@ -22,7 +22,7 @@
 #             (usually the format is '...k' or '...K', but here just change the value without adding
 #             any letter, and max.: 3 decimal numbers behind the point if it's a float or double).
 # 
->>> PerExpenses = 15.000
+>>> PerExpenses = 10.000
 #
 # ---------------------------------------------------------------------------------------------------
 # END > CONFIGURATIONS FILE FOR SKYR-PERSONAL FINANCIAL MANAGEMENT SYSTEM APPLICATION

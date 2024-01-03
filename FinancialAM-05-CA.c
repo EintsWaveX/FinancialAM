@@ -154,6 +154,9 @@ size_t GlobalRegisteredAccounts = 0, GlobalRegisteredMTR = 0, GlobalRegisteredBC
 const char* UserApplicationLanguage;
 const char* SOURCEFILENULLERROR = "SourceFileNotExists";
 const char* DESTINATIONFILENULLERROR = "DestinationFileNotExists";
+bool ARMNotificationEnabled_01 = false, ARMNotificationEnabled_02 = false, ARMNotificationEnabled_03 = false;
+bool ALMNotificationEnabled_01 = false, ALMNotificationEnabled_02 = false;
+bool ACMNotificationEnabled_01 = false, ACMNotificationEnabled_02 = false, ACMNotificationEnabled_03 = false;
 
 const int EncryptionKey = 776853;
 char FullName[BUFSIZE10], UserName[BUFSIZE07];
@@ -1180,7 +1183,7 @@ void HorizontalHistogramUI_MONTH(const char* SourceFileTxtData, signed long long
 
         if (strlen(SaveLastInputDate) == 0) {
             strcpy(SaveLastInputDate, CurrentDate);
-            snprintf(DisplayDateAtYAxis, BUFSIZE07, "%s-%2d-%4d", CurrentDate, (ManageTime.tm_mon + 1), (1900 + ManageTime.tm_year));
+            snprintf(DisplayDateAtYAxis, BUFSIZE07, "%s-%02d-%04d", CurrentDate, (ManageTime.tm_mon + 1), (1900 + ManageTime.tm_year));
 
             if (strstr(ReadAndPrintLine("TempDestination.txt", (i * 10) + 15), "Expense(s)") != NULL) {
                 strcpy(TempTotalExpensePerDay, ReadAndPrintLine("TempDestination.txt", (i * 10) + 16)); TempTotalExpensePerDay[strlen(TempTotalExpensePerDay) - 1] = '\0';
@@ -1194,7 +1197,7 @@ void HorizontalHistogramUI_MONTH(const char* SourceFileTxtData, signed long long
         
         } else if (strlen(SaveLastInputDate) != 0 && strcmp(SaveLastInputDate, CurrentDate) == 0) {
             strcpy(SaveLastInputDate, CurrentDate);
-            snprintf(DisplayDateAtYAxis, BUFSIZE07, "%s-%2d-%4d", CurrentDate, (ManageTime.tm_mon + 1), (1900 + ManageTime.tm_year));
+            snprintf(DisplayDateAtYAxis, BUFSIZE07, "%s-%02d-%04d", CurrentDate, (ManageTime.tm_mon + 1), (1900 + ManageTime.tm_year));
 
             if (strstr(ReadAndPrintLine("TempDestination.txt", (i * 10) + 15), "Expense(s)") != NULL) {
                 strcpy(TempTotalExpensePerDay, ReadAndPrintLine("TempDestination.txt", (i * 10) + 16)); TempTotalExpensePerDay[strlen(TempTotalExpensePerDay) - 1] = '\0';
@@ -1241,7 +1244,7 @@ void HorizontalHistogramUI_MONTH(const char* SourceFileTxtData, signed long long
             // FinalTempTotalExpensePerDay[0] = 0; DisplayDateAtYAxis[0] = 0; TempCurrentDate[0] = 0;
             
             strcpy(SaveLastInputDate, CurrentDate);
-            snprintf(DisplayDateAtYAxis, BUFSIZE07, "%s-%2d-%4d", CurrentDate, (ManageTime.tm_mon + 1), (1900 + ManageTime.tm_year));
+            snprintf(DisplayDateAtYAxis, BUFSIZE07, "%s-%02d-%04d", CurrentDate, (ManageTime.tm_mon + 1), (1900 + ManageTime.tm_year));
 
             if (strstr(ReadAndPrintLine("TempDestination.txt", (i * 10) + 15), "Expense(s)") != NULL) {
                 strcpy(TempTotalExpensePerDay, ReadAndPrintLine("TempDestination.txt", (i * 10) + 16)); TempTotalExpensePerDay[strlen(TempTotalExpensePerDay) - 1] = '\0';
@@ -1286,7 +1289,7 @@ void HorizontalHistogramUI_MONTH(const char* SourceFileTxtData, signed long long
             FinalTempTotalExpensePerDay[0] = 0; DisplayDateAtYAxis[0] = 0; TempCurrentDate[0] = 0;
             
             strcpy(SaveLastInputDate, CurrentDate);
-            snprintf(DisplayDateAtYAxis, BUFSIZE07, "%s-%2d-%4d", CurrentDate, (ManageTime.tm_mon + 1), (1900 + ManageTime.tm_year));
+            snprintf(DisplayDateAtYAxis, BUFSIZE07, "%s-%02d-%04d", CurrentDate, (ManageTime.tm_mon + 1), (1900 + ManageTime.tm_year));
 
             if (strstr(ReadAndPrintLine("TempDestination.txt", (i * 10) + 15), "Expense(s)") != NULL) {
                 strcpy(TempTotalExpensePerDay, ReadAndPrintLine("TempDestination.txt", (i * 10) + 16)); TempTotalExpensePerDay[strlen(TempTotalExpensePerDay) - 1] = '\0';
@@ -3354,9 +3357,7 @@ int main(void) {
         for (int i = 0; i < FilePathNameTraversalCounter; i++) { CountSavedFiles++; }
         if (CountSavedFiles >= 1) {
             // puts(SaveFilesTxtName[0].FileNames);
-            if (strstr(SaveFilesTxtName[0].FileNames, "-F1-MTR-") == NULL) NULL;
-            else if (strstr(SaveFilesTxtName[0].FileNames, "-F3-BCAM-") == NULL) NULL;
-            else {
+            if (strstr(SaveFilesTxtName[0].FileNames, "-SaveFile") == NULL) {
                 fflush(stdout);
                 AccountLoginMenu(0);
             }
@@ -4557,7 +4558,7 @@ void F3_BudgetCreationAndMonitoring(int F3Selected) {
     char *SourceKeyStringValues[BUFSIZE07];
 
     char RegBCAMInsider[BUFSIZE07], BCAM[BUFSIZE07], MessageID23[BUFSIZE10], MessageID24[BUFSIZE10];
-    char NextBudgetCreationOn[BUFSIZE07], KeepTrackIncomes[BUFSIZE07], KeepTrackExpenses[BUFSIZE07];
+    char NextBudgetCreationOn[BUFSIZE07]; // , KeepTrackIncomes[BUFSIZE07], KeepTrackExpenses[BUFSIZE07];
     char MonthlyOrYearly[BUFSIZE07], MonthlyFinancialCreationCategory[BUFSIZE07], MonthlyLimitBudgetCreation[BUFSIZE07], MonthlyBudgetTargeting[BUFSIZE07], MonthlyBudgetCreationDescription[BUFSIZE07];
     char UpdateLocalTime[BUFSIZE07], LocalTime[BUFSIZE07], BCAMMadeTime[BUFSIZE07], MadeTime[BUFSIZE07];
 
@@ -4802,7 +4803,7 @@ void F3_BudgetCreationAndMonitoring(int F3Selected) {
                         snprintf(MadeTime, BUFSIZE07, "%d-%02d-%02d %02d:%02d:%02d", ManageTime.tm_year + 1900, ManageTime.tm_mon + 1, ManageTime.tm_mday, ManageTime.tm_hour, ManageTime.tm_min, ManageTime.tm_sec);
                         strcpy(BCAMMadeTime, "Budget Creation and Monitoring :: No. "); strcat(BCAMMadeTime, BCAM); strcat(BCAMMadeTime, "\n");
                         strcat(BCAMMadeTime, "Created on:\t\t "); strcat(BCAMMadeTime, MadeTime); strcat(BCAMMadeTime, "\n");
-                        snprintf(NextBudgetCreationOn, BUFSIZE07, "Next Budget Creation on: %d-%02d-%02d %02d:%02d:%02d", (((ManageTime.tm_mon + 1) != 12) ? (1900 + ManageTime.tm_year) : ((1900 + ManageTime.tm_year) + 1)), (((ManageTime.tm_mon + 1) != 12) ? ((ManageTime.tm_mon + 1) + 1) : 1), (((1900 + ManageTime.tm_year) % 4 != 0) ? ((ManageTime.tm_mday + 30) - DateOfMonths[ManageTime.tm_mon]) : ((ManageTime.tm_mday + 30) - DateOfMonths_LEAP[ManageTime.tm_mon])), ManageTime.tm_hour, ManageTime.tm_min, ManageTime.tm_sec);
+                        snprintf(NextBudgetCreationOn, BUFSIZE07, "Next Budget Creation on: %04d-%02d-%02d %02d:%02d:%02d", (((ManageTime.tm_mon + 1) != 12) ? (1900 + ManageTime.tm_year) : ((1900 + ManageTime.tm_year) + 1)), (((ManageTime.tm_mon + 1) != 12) ? ((ManageTime.tm_mon + 1) + 1) : 1), (((1900 + ManageTime.tm_year) % 4 != 0) ? ((ManageTime.tm_mday + 30) - DateOfMonths[ManageTime.tm_mon]) : ((ManageTime.tm_mday + 30) - DateOfMonths_LEAP[ManageTime.tm_mon])), ManageTime.tm_hour, ManageTime.tm_min, ManageTime.tm_sec);
 
                         // MonthlyOrYearly[BUFSIZE07], FinancialUsesCategory[BUFSIZE07], TotalBudgetCreation[BUFSIZE07], LastingBudgetCreation[BUFSIZE07], BudgetCreationDescription[BUFSIZE07]
                         strcpy(MonthlyOrYearly, "Monthly or Yearly Budget Creation Type:\t");              strcat(MonthlyOrYearly, BCAMInputs[GlobalRegisteredBCAM].MonthlyOrYearly);                                   strcat(MonthlyOrYearly, "\n");
@@ -4928,7 +4929,7 @@ void F3_BudgetCreationAndMonitoring(int F3Selected) {
                         snprintf(MadeTime, BUFSIZE07, "%d-%02d-%02d %02d:%02d:%02d", ManageTime.tm_year + 1900, ManageTime.tm_mon + 1, ManageTime.tm_mday, ManageTime.tm_hour, ManageTime.tm_min, ManageTime.tm_sec);
                         strcpy(BCAMMadeTime, "Budget Creation and Monitoring :: No. "); strcat(BCAMMadeTime, BCAM); strcat(BCAMMadeTime, "\n");
                         strcat(BCAMMadeTime, "Created on:\t\t "); strcat(BCAMMadeTime, MadeTime); strcat(BCAMMadeTime, "\n");
-                        snprintf(NextBudgetCreationOn, BUFSIZE07, "Next Budget Creation on: %d-%02d-%02d %02d:%02d:%02d", (((ManageTime.tm_mon + 1) != 12) ? (1900 + ManageTime.tm_year) : ((1900 + ManageTime.tm_year) + 1)), (((ManageTime.tm_mon + 1) != 12) ? ((ManageTime.tm_mon + 1) + 1) : 1), (((1900 + ManageTime.tm_year) % 4 != 0) ? ((ManageTime.tm_mday + 30) - DateOfMonths[ManageTime.tm_mon]) : ((ManageTime.tm_mday + 30) - DateOfMonths_LEAP[ManageTime.tm_mon])), ManageTime.tm_hour, ManageTime.tm_min, ManageTime.tm_sec);
+                        snprintf(NextBudgetCreationOn, BUFSIZE07, "Next Budget Creation on: %04d-%02d-%02d %02d:%02d:%02d", (((ManageTime.tm_mon + 1) != 12) ? (1900 + ManageTime.tm_year) : ((1900 + ManageTime.tm_year) + 1)), (((ManageTime.tm_mon + 1) != 12) ? ((ManageTime.tm_mon + 1) + 1) : 1), (((1900 + ManageTime.tm_year) % 4 != 0) ? ((ManageTime.tm_mday + 30) - DateOfMonths[ManageTime.tm_mon]) : ((ManageTime.tm_mday + 30) - DateOfMonths_LEAP[ManageTime.tm_mon])), ManageTime.tm_hour, ManageTime.tm_min, ManageTime.tm_sec);
 
                         // MonthlyOrYearly[BUFSIZE07], FinancialUsesCategory[BUFSIZE07], TotalBudgetCreation[BUFSIZE07], LastingBudgetCreation[BUFSIZE07], BudgetCreationDescription[BUFSIZE07]
                         strcpy(MonthlyOrYearly, "Monthly or Yearly Budget Creation Type:\t");              strcat(MonthlyOrYearly, BCAMInputs[GlobalRegisteredBCAM].MonthlyOrYearly);                                   strcat(MonthlyOrYearly, "\n");
@@ -5165,15 +5166,18 @@ void F3_BudgetCreationAndMonitoring(int F3Selected) {
         TBDTempD = strtok(InputMonthlyBudgetTargeting, "-"); TBDTempM = strtok(NULL, "-"); TBDTempY = strtok(NULL, "-");
         TBDTempD = TrimWhiteSpaces(TBDTempD); TBDTempM = TrimWhiteSpaces(TBDTempM); TBDTempY = TrimWhiteSpaces(TBDTempY);
         Date = atoi(TBDTempD); Month = atoi(TBDTempM); Year = atoi(TBDTempY);
+        // size_t FinalDate = 30;
+        size_t FinalDate  = (long long unsigned)(((1900 + ManageTime.tm_year) % 4 != 0) ? ((((ManageTime.tm_mday + 30) - DateOfMonths[ManageTime.tm_mon]) != 0) ? ((ManageTime.tm_mday + 30) - DateOfMonths[ManageTime.tm_mon]) : 31) : ((((ManageTime.tm_mday + 30) - DateOfMonths_LEAP[ManageTime.tm_mon]) != 0) ? ((ManageTime.tm_mday + 30) - DateOfMonths_LEAP[ManageTime.tm_mon]) : 31));
+        size_t FinalMonth = (FinalDate != 31) ? ((Month != (long long unsigned)(((ManageTime.tm_mon + 1) != 12) ? ((ManageTime.tm_mon + 1) + 1) : 1)) + 1) : (long long unsigned)(((ManageTime.tm_mon + 1) != 12) ? ((ManageTime.tm_mon + 1) + 1) : 1) - 1;
 
-        while (Date != (long long unsigned)(((1900 + ManageTime.tm_year) % 4 != 0) ? ((ManageTime.tm_mday + 30) - DateOfMonths[ManageTime.tm_mon]) : ((ManageTime.tm_mday + 30) - DateOfMonths_LEAP[ManageTime.tm_mon])) || Month != (long long unsigned)(((ManageTime.tm_mon + 1) != 12) ? ((ManageTime.tm_mon + 1) + 1) : 1) || Year != (long long unsigned)(((ManageTime.tm_mon + 1) != 12) ? (1900 + ManageTime.tm_year) : ((1900 + ManageTime.tm_year) + 1))) {
+        while (Date != FinalDate || Month != FinalMonth || Year != (long long unsigned)(((ManageTime.tm_mon + 1) != 12) ? (1900 + ManageTime.tm_year) : ((1900 + ManageTime.tm_year) + 1))) {
             ClearScreen();
             printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN"(STATUS) Profile Account Linked to: "ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN ANSI_STYLE_ITALIC ANSI_STYLE_UNDERLINE"%s.\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"────────────────────────────────────────────────────────────────────────────────────────────────────\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppFeature03, UserName);
 
             puts(ANSI_COLOR_LIGHTRED"\tWarning: Monthly budget creation MUST TARGET the next 30 DAYS from now, and neither for YESTERDAY"ANSI_COLOR_RESET);
             puts(ANSI_COLOR_LIGHTRED"\t         nor TOMORROW, even to non-other next 30 DAYS from now! Thus, your current monthly budget"ANSI_COLOR_RESET);
             puts(ANSI_COLOR_LIGHTRED"\t         MUST BE in the date of the NEXT 30 DAYS, it's on: ");
-            printf(ANSI_COLOR_LIGHTRED ANSI_STYLE_BOLD"\t             > %d-%d-%d (%s).\n\n"ANSI_COLOR_RESET, (((1900 + ManageTime.tm_year) % 4 != 0) ? ((ManageTime.tm_mday + 30) - DateOfMonths[ManageTime.tm_mon]) : ((ManageTime.tm_mday + 30) - DateOfMonths_LEAP[ManageTime.tm_mon])), (((ManageTime.tm_mon + 1) != 12) ? ((ManageTime.tm_mon + 1) + 1) : 1), (((ManageTime.tm_mon + 1) != 12) ? (1900 + ManageTime.tm_year) : ((1900 + ManageTime.tm_year) + 1)), DaysOfWeek[(ManageTime.tm_wday + 30) % 7]);
+            printf(ANSI_COLOR_LIGHTRED ANSI_STYLE_BOLD"\t             > %02lld-%02lld-%04d (%s).\n\n"ANSI_COLOR_RESET, (FinalDate), (FinalMonth), (((ManageTime.tm_mon + 1) != 12) ? (1900 + ManageTime.tm_year) : ((1900 + ManageTime.tm_year) + 1)), DaysOfWeek[(ManageTime.tm_wday + 30) % 7]);
 
             printf("\tMonthly or Yearly Budget Creation Type:\t%s\n\tFinancial Budget Creation Category:\t%s\n\tExpenses Limit at (in Rp.):\t\t%s\n      " BRIGHTBLUE157"> Budget Usage Target (at month):\t\t%s\n\t"ANSI_COLOR_RESET "Budget Creation Description:\n" ANSI_STYLE_BOLD ANSI_STYLE_ITALIC"    ... %s\n"ANSI_COLOR_RESET, BCAMInputs[GlobalRegisteredBCAM].MonthlyOrYearly, BCAMInputs[GlobalRegisteredBCAM].MonthlyFinancialCreationCategory, BCAMInputs[GlobalRegisteredBCAM].MonthlyLimitBudgetCreation, BCAMInputs[GlobalRegisteredBCAM].MonthlyBudgetTargeting, BCAMInputs[GlobalRegisteredBCAM].MonthlyBudgetCreationDescription);
             puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTYELLOW"Budget Usage Target (at month)."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your monthly budget target on your current monthly budget creation.");
@@ -5303,8 +5307,8 @@ void F3_BudgetCreationAndMonitoring(int F3Selected) {
 
 void F4_FilterSearchingData(int F4Selected) {
     // FILE *TempAccessVHTF;
-    char MatchAnyListedTxtFile[BUFSIZE07], AnyListedTxtFile[BUFSIZE07], KeyFinderTxtFile[BUFSIZE10], *CopyKeyFinderTxtFile;
-    char DecryptAndReadFile[BUFSIZE10];
+    char MatchAnyListedTxtFile[BUFSIZE07], AnyListedTxtFile[BUFSIZE07], KeyFinderTxtFile[BUFSIZE10], DecryptAndReadFile[BUFSIZE10];
+    char *CopyKeyFinderTxtFile;
 
     ClearScreen();
     // FinancialAM-05-Histogram-2ndWeekInDecember2023.txt
@@ -5340,7 +5344,7 @@ void F4_FilterSearchingData(int F4Selected) {
 
         if (strlen(KeyFinderTxtFile) > 0) {
             strcpy(KeyFinderTxtFile, TrimWhiteSpaces(KeyFinderTxtFile));
-            strcat(DecryptAndReadFile, AnyListedTxtFile); strcat(DecryptAndReadFile, " > "); strcat(DecryptAndReadFile, KeyFinderTxtFile);
+            strncpy(DecryptAndReadFile, AnyListedTxtFile, BUFSIZE10); strcat(DecryptAndReadFile, " > "); strcat(DecryptAndReadFile, KeyFinderTxtFile);
             strcpy(CopyKeyFinderTxtFile, KeyFinderTxtFile); CopyKeyFinderTxtFile = StringUppercase(CopyKeyFinderTxtFile);
 
             ClearScreen();
@@ -5409,7 +5413,7 @@ void F6_DataVisualization(int F6Selected) {
         if (access(VisualizeHistogramTxtFile, F_OK) == 0) {
             strtok_r(ReadAndPrintLine("FinancialAM-05-CA-CONFIGURATIONS.txt", 25), "=", &PerMoneyExpenseLine);
             PerMoneyExpenseLine = TrimWhiteSpaces(PerMoneyExpenseLine);
-            PerMoneyExpenses    = (long long)abs(atof(PerMoneyExpenseLine) * 1000);
+            PerMoneyExpenses    = (long long)fabsl(atof(PerMoneyExpenseLine) * 1000);
 
             printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN"(STATUS) Profile Account Linked to: "ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN ANSI_STYLE_ITALIC ANSI_STYLE_UNDERLINE"%s.\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"────────────────────────────────────────────────────────────────────────────────────────────────────\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppFeature06, UserName);
             HorizontalHistogramUI_MONTH(VisualizeHistogramTxtFile, PerMoneyExpenses);
@@ -5494,16 +5498,21 @@ void AccountRegistrationMenu(int ARMSelected) {
         FlagARM = true;
     }
     
-    if ((FN && LN && E && U && P) && !FirstARMUpgrade) {
-        AvailableOptions += 4; FirstARMUpgrade = true;
+    if ((FN && LN && E && U && P) && !FirstARMUpgrade && !ARMNotificationEnabled_02) {
         InfoMessageBox_OK("(Info) @SKYR-PFMSA; First Profile Input Data Upgraded", "All right, new starters! Here now we've upgraded the Registration Menu UI with 4 (four) new profiles input, such as:\n\n\t1. Date of Birth (DD-MM-YYYY)\n\t2. Present Age\n\t3. Phone Number (+? ?)\n\t4. Sex/Gender (M/F)\n\nAfter you fulfilled in everything it asked for, you may see the pop-up message like this again, indicating you're ready to submit your profil account and be registered into the file system!");
-
-    } if ((FN && LN && E && U && P) && (B && A && PN && S) && !SecondARMUpgrade) {
-        AvailableOptions += 5; SecondARMUpgrade = true;
+        ARMNotificationEnabled_02 = true;
+    } if ((FN && LN && E && U && P) && (B && A && PN && S) && !SecondARMUpgrade && !ARMNotificationEnabled_03) {
         InfoMessageBox_OK("(Info) @SKYR-PFMSA; Second Profile Input Data Upgraded", "All right, new starters! Here now we've upgraded the Registration Menu UI again, and now you can just keep going UPWARDS or DOWNWARDS until you see a complete different UI, making sure that you're ready to be registered as a new user using this application!");
+        ARMNotificationEnabled_03 = true;
     }
 
-    InfoMessageBox_OK("(Info) @SKYR-PFMSA; Importance of The Safety Profile Account", "For the safety purposes while you're going registrating a new account, or when trying to logged into the application, or even when you're going to recover of your missing account,\n\n\tWE ARE GOING TO DEPLETED EVERY INPUT YOU'VE PROGRESSED SO FAR, SO PLEASE JUST STAY IN ONE UI MENU;\n\nIn order to be save and more secure, so don't blame us when you're missing on your inputs after switching to different UIs... .");
+    if ((FN && LN && E && U && P) && !FirstARMUpgrade) {
+        AvailableOptions += 4; FirstARMUpgrade = true;
+    } if ((FN && LN && E && U && P) && (B && A && PN && S) && !SecondARMUpgrade) {
+        AvailableOptions += 5; SecondARMUpgrade = true;
+    }
+
+    if (!ARMNotificationEnabled_01) { InfoMessageBox_OK("(Info) @SKYR-PFMSA; Importance of The Safety Profile Account", "For the safety purposes while you're going registrating a new account, or when trying to logged into the application, or even when you're going to recover of your missing account,\n\n\tWE ARE GOING TO DEPLETED EVERY INPUT YOU'VE PROGRESSED SO FAR, SO PLEASE JUST STAY IN ONE UI MENU;\n\nIn order to be save and more secure, so don't blame us when you're missing on your inputs after switching to different UIs... ."); ARMNotificationEnabled_01 = true; }
 
     while (Selecting) {
         if (!FirstRun) {
@@ -6461,8 +6470,12 @@ void AccountLoginMenu(int ALMSelected) {
     }
 
     SKYRApplicationRunning = true;
-    if ((LE && LPN && LU && LP) && !ALMUpgrade) {
+    if ((LE && LPN && LU && LP) && !ALMUpgrade && !ALMNotificationEnabled_02) {
         InfoMessageBox_OK("(Info) @SKYR-PFMSA; Login Menu Upgraded", "All right, new starters! Here now we've upgraded the Login Menu UI, and now you can just keep going UPWARDS or DOWNWARDS until you see a complete different UI, making sure that you're ready to be logged in into this application!");
+        ALMNotificationEnabled_02 = true;
+    }
+
+    if ((LE && LPN && LU && LP) && !ALMUpgrade) {
         AvailableOptions += 1; ALMUpgrade = true;
     }
 
@@ -6478,7 +6491,7 @@ void AccountLoginMenu(int ALMSelected) {
         MainMenuProfileManager(MMPMSelected);
     }
 
-    InfoMessageBox_OK("(Info) @SKYR-PFMSA; Importance of The Safety Profile Account", "For the safety purposes while you're going registrating a new account, or when trying to logged into the application, or even when you're going to recover of your missing account,\n\n\tWE ARE GOING TO DEPLETED EVERY INPUT YOU'VE PROGRESSED SO FAR, SO PLEASE JUST STAY IN ONE UI MENU;\n\nIn order to be save and more secure, so don't blame us when you're missing on your inputs after switching to different UIs... .");
+    if (!ALMNotificationEnabled_01) { InfoMessageBox_OK("(Info) @SKYR-PFMSA; Importance of The Safety Profile Account", "For the safety purposes while you're going registrating a new account, or when trying to logged into the application, or even when you're going to recover of your missing account,\n\n\tWE ARE GOING TO DEPLETED EVERY INPUT YOU'VE PROGRESSED SO FAR, SO PLEASE JUST STAY IN ONE UI MENU;\n\nIn order to be save and more secure, so don't blame us when you're missing on your inputs after switching to different UIs... ."); ALMNotificationEnabled_01 = true; }
 
     while (Selecting) {
         if (!FirstRun) {
@@ -7023,174 +7036,23 @@ void AccountRecoveryMenu(int ACMSelected) {
     char FirstName[BUFSIZE07], LastName[BUFSIZE07], Email[BUFSIZE07], Username[BUFSIZE07], Password[BUFSIZE07], DateOfBirth[BUFSIZE07], AgeOnPresent[BUFSIZE07], PhoneNumber[BUFSIZE07], Sex[BUFSIZE07];
     char *ShowFirstName, *ShowLastName, *ShowEmail, *ShowUsername, *ShowPassword, *ShowDateOfBirth, *ShowAgeOnPresent, *ShowPhoneNumber, *ShowSex;
 
-    if ((CE && CPN && CU && CP) && !ACMUpgrade && AllEmpty != 4) {
-        AvailableOptions += 1; ACMUpgrade = true;
-        InfoMessageBox_OK("(Info) @SKYR-PFMSA; Recovery Menu Upgraded", "All right, lost users! Here now we've upgraded the Recovery Menu UI, and now you can just keep going UPWARDS or DOWNWARDS until you see a complete different UI, making sure that you're ready find your lost/missing accounts right away!");
-    }
+    if ((CE && CPN && CU && CP) && !ACMUpgrade && AllEmpty != 4) { AvailableOptions += 1; }
 
-    InfoMessageBox_OK("(Info) @SKYR-PFMSA; Importance of The Safety Profile Account", "For the safety purposes while you're going registrating a new account, or when trying to logged into the application, or even when you're going to recover of your missing account,\n\n\tWE ARE GOING TO DEPLETED EVERY INPUT YOU'VE PROGRESSED SO FAR, SO PLEASE JUST STAY IN ONE UI MENU;\n\nIn order to be save and more secure, so don't blame us when you're missing on your inputs after switching to different UIs... .");
+    if (!ACMNotificationEnabled_01) { InfoMessageBox_OK("(Info) @SKYR-PFMSA; Importance of The Safety Profile Account", "For the safety purposes while you're going registrating a new account, or when trying to logged into the application, or even when you're going to recover of your missing account,\n\n\tWE ARE GOING TO DEPLETED EVERY INPUT YOU'VE PROGRESSED SO FAR, SO PLEASE JUST STAY IN ONE UI MENU;\n\nIn order to be save and more secure, so don't blame us when you're missing on your inputs after switching to different UIs... ."); ACMNotificationEnabled_01 = true; }
+    if ((CE && CPN && CU && CP) && AllEmpty != 4 && !ACMNotificationEnabled_02) { InfoMessageBox_OK("(Info) @SKYR-PFMSA; Recovery Menu Upgraded", "All right, lost users! Here now we've upgraded the Recovery Menu UI, and now you can just keep going UPWARDS or DOWNWARDS until you see a complete different UI, making sure that you're ready find your lost/missing accounts right away!"); ACMNotificationEnabled_02 = true; ACMUpgrade = true; }
 
     while (Selecting) {
+        printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRecoveryUI);
+        
+        if (AllEmpty == 4 && !ACMNotificationEnabled_03) {
+            WarningMessageBox_CANCELTRYCONTINUE("(Warning): @SKYR-PFMSA; Empty Pre-requisites for Recovery Process", "Unfortunately, we can't process on the recovery account here because you've not providing anything but empty inputs, meaning you didn't know anything on what you're trying to revocer for about the little details on your missing account.\n\nPlease make sure you at least remember something about your missing profile account, at least from the phone number or the username you used when you're creating the account for the first time... .");
+            ACMNotificationEnabled_03 = true;
+        } if (AllEmpty == 4) printf(ANSI_COLOR_LIGHTRED"\tWarning: Recovery procedure can't be completed because you're not \n\t         providing at least ONE (1) information about your profile data!\n\n"ANSI_COLOR_RESET);
+
         if (!FirstRun) {
         /*  Separated by one line to another, handling ONLY FOUR (4) rows each parts.
         >   Personal E-mail, Phone Number, SKYR Username, SKYR Password
         */
-        printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRecoveryUI);
-        
-        if (AllEmpty == 4) {
-            WarningMessageBox_CANCELTRYCONTINUE("(Warning): @SKYR-PFMSA; Empty Pre-requisites for Recovery Process", "Unfortunately, we can't process on the recovery account here because you've not providing anything but empty inputs, meaning you didn't know anything on what you're trying to revocer for about the little details on your missing account.\n\nPlease make sure you at least remember something about your missing profile account, at least from the phone number or the username you used when you're creating the account for the first time... .");
-            printf(ANSI_COLOR_LIGHTRED"\tWarning: Recovery procedure can't be completed because you're not \n\t         providing at least ONE (1) information about your profile data!\n\n"ANSI_COLOR_RESET);
-        }
-
-        if ((ACMSelected + 1) > 0 && (ACMSelected + 1) <= 4 && (AvailableOptions == 4)) {
-            if ((ACMSelected + 1) == 1) {
-                if (!CE)  { printf("      " ANSI_COLOR_LIGHTYELLOW"> Personal E-mail:\t%s\n\t"ANSI_COLOR_RESET "Phone Number:\t\t%s\n\tSKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
-                else      { printf("      " ANSI_COLOR_LIGHTGREEN"> Personal E-mail:\t%s\n\t"ANSI_COLOR_RESET "Phone Number:\t\t%s\n\tSKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
-            } else if ((ACMSelected + 1) == 2) {
-                if (!CPN) { printf("\tPersonal E-mail:\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> Phone Number:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
-                else      { printf("\tPersonal E-mail:\t%s\n      " ANSI_COLOR_LIGHTGREEN"> Phone Number:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
-            } else if ((ACMSelected + 1) == 3) {
-                if (!CU)  { printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> SKYR Username:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
-                else      { printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n      " ANSI_COLOR_LIGHTGREEN"> SKYR Username:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
-            } else if ((ACMSelected + 1) == 4) {
-                if (!CP)  { printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n\tSKYR Username:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> SKYR Password:\t\t%s\n"ANSI_COLOR_RESET, ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
-                else      { printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n\tSKYR Username:\t\t%s\n      " ANSI_COLOR_LIGHTGREEN"> SKYR Password:\t\t%s\n"ANSI_COLOR_RESET, ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
-            }
-
-            if (AllEmpty != 4) { printf("\n\n\n\n\n\n\n\n\n\n\t%s", AppRecoveryUDRL); }
-            else { printf("\n\n\n\n\n\n\n\t%s", AppRecoveryUDRL); }
-        }
-        
-        else if ((ACMSelected + 1) > 0 && (ACMSelected + 1) <= 5 && (AvailableOptions == 5)) {
-            if ((ACMSelected + 1) == 1) {
-                if (!CE)  { printf("      " ANSI_COLOR_LIGHTYELLOW"> Personal E-mail:\t%s\n\t"ANSI_COLOR_RESET "Phone Number:\t\t%s\n\tSKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
-                else      { printf("      " ANSI_COLOR_LIGHTGREEN"> Personal E-mail:\t%s\n\t"ANSI_COLOR_RESET "Phone Number:\t\t%s\n\tSKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
-            } else if ((ACMSelected + 1) == 2) {
-                if (!CPN) { printf("\tPersonal E-mail:\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> Phone Number:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
-                else      { printf("\tPersonal E-mail:\t%s\n      " ANSI_COLOR_LIGHTGREEN"> Phone Number:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
-            } else if ((ACMSelected + 1) == 3) {
-                if (!CU)  { printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> SKYR Username:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
-                else      { printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n      " ANSI_COLOR_LIGHTGREEN"> SKYR Username:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
-            } else if ((ACMSelected + 1) == 4) {
-                if (!CP)  { printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n\tSKYR Username:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> SKYR Password:\t\t%s\n"ANSI_COLOR_RESET, ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
-                else      { printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n\tSKYR Username:\t\t%s\n      " ANSI_COLOR_LIGHTGREEN"> SKYR Password:\t\t%s\n"ANSI_COLOR_RESET, ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
-            }
-            
-            if (AllEmpty != 4) { printf("\n\n\n\n\n\n\n\n\n\n\t%s", AppRecoveryUDRL); }
-            else { printf("\n\n\n\n\n\n\n\t%s", AppRecoveryUDRL); }
-            
-            if ((ACMSelected + 1) == 5 && AllEmpty != 4) {
-                ClearScreen();
-                printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRecoveryUI);
-                
-                printf("\tInfo: You may have inserted a few remembrance of your profile account, and  \n\t      willing to do some recovery in order to get logged in back.\n");
-                printf(ANSI_COLOR_LIGHTCYAN"\n\tProceed to do the recovery account process?\n\n"ANSI_COLOR_RESET);
-                snprintf(MessageID6, BUFSIZE10, ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t────────────────────────────────────────────────────────────────────────────────────────────────────\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRecoveryUI);
-                snprintf(MessageID8, BUFSIZE10, ANSI_COLOR_LIGHTCYAN"\n\tProceed to do the recovery account process?\n"ANSI_COLOR_RESET);
-                
-                MessagesShown_ArrowKeyChoiceDialog[6] = MessageID6;
-                MessagesShown_ArrowKeyChoiceDialog[7] = "\tInfo: You may have inserted a few remembrance of your profile account, and  \n\t      willing to do some recovery in order to get logged in back.";
-                MessagesShown_ArrowKeyChoiceDialog[8] = MessageID8;
-                SubmitOrContinue = ArrowKeyChoiceDialog("Truth Confirmation", MessagesShown_ArrowKeyChoiceDialog, 6, 9);
-
-                if (SubmitOrContinue) {
-                    FDestination     = fopen("RegisteredAccounts.txt", "r");
-                    FTempDestination = fopen("TempDestination.txt", "w");
-
-                    while (fgets(BUFFER, sizeof(BUFFER), FDestination) != 0) {
-                        BufLen = strlen(BUFFER);
-                        for (int i = 0; i < BufLen; i++) BUFFER[i] += EncryptionKey;
-                        fputs(BUFFER, FTempDestination);
-                    } fclose(FDestination); fclose(FTempDestination);
-
-                    ClearScreen();
-                    printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRecoveryUI);
-                    printf(ANSI_COLOR_GREEN"\tInfo: We've founded a valid profile account data from the list of \n\t      your provided recovery account requirements here, as of:\n\n"ANSI_COLOR_RESET);
-                    
-                    for (int i = 1; i <= (4 - AllEmpty); i++) {
-                        if (!EmptyCE && !FlagCE)        { printf(ANSI_COLOR_BLUE"\t      [%d / %d] Provided Personal E-mail:\t\t%s\n"ANSI_COLOR_RESET, i, (4 - AllEmpty), ACMInputs[GlobalRegisteredAccounts].Email); FlagCE = true; }
-                        else if (!EmptyCPN && !FlagCPN) { printf(ANSI_COLOR_BLUE"\t      [%d / %d] Provided Phone Number:\t\t%s\n"ANSI_COLOR_RESET, i, (4 - AllEmpty), ACMInputs[GlobalRegisteredAccounts].PhoneNumber); FlagCPN = true; }
-                        else if (!EmptyCU && !FlagCU)   { printf(ANSI_COLOR_BLUE"\t      [%d / %d] Provided Username:\t\t%s\n"ANSI_COLOR_RESET, i, (4 - AllEmpty), ACMInputs[GlobalRegisteredAccounts].Username); FlagCU = true; }
-                        else if (!EmptyCP && !FlagCP)   { printf(ANSI_COLOR_BLUE"\t      [%d / %d] Provided Password:\t\t%s\n"ANSI_COLOR_RESET, i, (4 - AllEmpty), ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); FlagCP = true; }
-                    } FlagCE = false; FlagCPN = false; FlagCU = false; FlagCP = false;
-                    
-                    printf(ANSI_COLOR_ORANGE"\n\tNote: What you want to recover is all listed down here:\n\n"ANSI_COLOR_RESET);
-                    for (int i = 1; i <= AllEmpty; i++) {
-                        if (EmptyCE && !FlagCE)         { printf(ANSI_COLOR_YELLOW"\t      [%d / %d] Recover Personal E-mail:\t\t%s\n"ANSI_COLOR_RESET, i, AllEmpty, ACMInputs[GlobalRegisteredAccounts].Email); FlagCE = true; }
-                        else if (EmptyCPN && !FlagCPN)  { printf(ANSI_COLOR_YELLOW"\t      [%d / %d] Recover Phone Number:\t\t%s\n"ANSI_COLOR_RESET, i, AllEmpty, ACMInputs[GlobalRegisteredAccounts].PhoneNumber); FlagCPN = true; }
-                        else if (EmptyCU && !FlagCU)    { printf(ANSI_COLOR_YELLOW"\t      [%d / %d] Recover Username:\t\t\t%s\n"ANSI_COLOR_RESET, i, AllEmpty, ACMInputs[GlobalRegisteredAccounts].Username); FlagCU = true; }
-                        else if (EmptyCP && !FlagCP)    { printf(ANSI_COLOR_YELLOW"\t      [%d / %d] Recover Password:\t\t\t%s\n"ANSI_COLOR_RESET, i, AllEmpty, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); FlagCP = true; }
-                    } getchar();
-                    
-                    for (int GRA = 1; (long long unsigned int)GRA <= GlobalRegisteredAccounts; GRA++) {
-                        strncpy(FirstName,    ReadAndPrintLine("TempDestination.txt", 0 + (14 * GRA)), BUFSIZE07);
-                        strncpy(LastName,     ReadAndPrintLine("TempDestination.txt", 1 + (14 * GRA)), BUFSIZE07);
-                        strncpy(Email,        ReadAndPrintLine("TempDestination.txt", 2 + (14 * GRA)), BUFSIZE07);
-                        strncpy(Username,     ReadAndPrintLine("TempDestination.txt", 3 + (14 * GRA)), BUFSIZE07);
-                        strncpy(Password,     ReadAndPrintLine("TempDestination.txt", 4 + (14 * GRA)), BUFSIZE07);
-                        strncpy(DateOfBirth,  ReadAndPrintLine("TempDestination.txt", 6 + (14 * GRA)), BUFSIZE07);
-                        strncpy(AgeOnPresent, ReadAndPrintLine("TempDestination.txt", 7 + (14 * GRA)), BUFSIZE07);
-                        strncpy(PhoneNumber,  ReadAndPrintLine("TempDestination.txt", 8 + (14 * GRA)), BUFSIZE07);
-                        strncpy(Sex,          ReadAndPrintLine("TempDestination.txt", 9 + (14 * GRA)), BUFSIZE07);
-
-                        FirstName[strlen(FirstName) - 1] = '\0'; LastName[strlen(LastName) - 1] = '\0';
-                        Email[strlen(Email) - 1] = '\0'; Username[strlen(Username) - 1] = '\0'; Password[strlen(Password) - 1] = '\0';
-                        DateOfBirth[strlen(DateOfBirth) - 1] = '\0'; AgeOnPresent[strlen(AgeOnPresent) - 1] = '\0';
-                        PhoneNumber[strlen(PhoneNumber) - 1] = '\0'; Sex[strlen(Sex) - 1] = '\0';
-                        strtok_r(FirstName, ":", &ShowFirstName);       ShowFirstName = TrimWhiteSpaces(ShowFirstName);
-                        strtok_r(LastName, ":", &ShowLastName);         ShowLastName = TrimWhiteSpaces(ShowLastName);
-                        strtok_r(Email, ":", &ShowEmail);               ShowEmail = TrimWhiteSpaces(ShowEmail);
-                        strtok_r(Username, ":", &ShowUsername);         ShowUsername = TrimWhiteSpaces(ShowUsername);
-                        strtok_r(Password, ":", &ShowPassword);         ShowPassword = TrimWhiteSpaces(ShowPassword);
-                        strtok_r(DateOfBirth, ":", &ShowDateOfBirth);   ShowDateOfBirth = TrimWhiteSpaces(ShowDateOfBirth);
-                        strtok_r(AgeOnPresent, ":", &ShowAgeOnPresent); ShowAgeOnPresent = TrimWhiteSpaces(ShowAgeOnPresent);
-                        strtok_r(PhoneNumber, ":", &ShowPhoneNumber);   ShowPhoneNumber = TrimWhiteSpaces(ShowPhoneNumber);
-                        strtok_r(Sex, ":", &ShowSex);                   ShowSex = TrimWhiteSpaces(ShowSex);
-
-                        if (strstr(ShowEmail, ACMInputs[GlobalRegisteredAccounts].Email)                  != NULL || \
-                            strstr(ShowPhoneNumber, ACMInputs[GlobalRegisteredAccounts].PhoneNumber)      != NULL || \
-                            strstr(ShowUsername, ACMInputs[GlobalRegisteredAccounts].Username)            != NULL || \
-                            strstr(ShowPassword, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown) != NULL) {
-                                ClearScreen();
-                                printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRecoveryUI);
-
-                                printf(ANSI_COLOR_LIGHTPINK"\tInfo: Below here are listed the profile data, linked from your specific account recovery first step \n\t      by providing what can you remembered the least about your forgotten account.\n\n"ANSI_COLOR_RESET);
-                                puts(ANSI_COLOR_LIGHTCYAN"\t────────────────────────────────────────────────────────────────────────────────────────────────────"ANSI_COLOR_RESET);
-                                printf("\t%s",   ReadAndPrintLine("TempDestination.txt", (-3) + (14 * GRA)));
-                                printf("\t%s\n", ReadAndPrintLine("TempDestination.txt", (-2) + (14 * GRA)));
-                                printf("\t%s\n\t%s\n\t%s\n\t%s\n\t%s\n\n\t%s\n\t%s\n\t%s\n\t%s\n", \
-                                        ShowFirstName, ShowLastName, ShowEmail, ShowUsername, ShowPassword, \
-                                        ShowDateOfBirth, ShowAgeOnPresent, ShowPhoneNumber, ShowSex);
-                                puts(ANSI_COLOR_LIGHTCYAN"\t────────────────────────────────────────────────────────────────────────────────────────────────────"ANSI_COLOR_RESET);
-                                
-                        if ((long long unsigned int)GRA < GlobalRegisteredAccounts) { printf(ANSI_COLOR_LIGHTGREEN"\n\tPress [ENTER] button key on your keyboard to continue... "ANSI_COLOR_RESET); getchar(); }
-                        else { printf(ANSI_COLOR_GREEN"\tPress [ENTER] button key on your keyboard to go back to the previous menu... "ANSI_COLOR_RESET); getchar(); }
-                                
-                        } else {
-                            FirstName[0] = 0; LastName[0] = 0, Email[0] = 0, Username[0] = 0, Password[0] = 0;
-                            DateOfBirth[0] = 0, AgeOnPresent[0] = 0; PhoneNumber[0] = 0, Sex[0] = 0;
-                        }
-                    }
-
-                    strcpy(DeleteTempDestinationTxtFile, "del ");
-                    strcat(DeleteTempDestinationTxtFile, "TempDestination.txt");
-                    system(DeleteTempDestinationTxtFile);
-
-                    FlagCE = false; FlagCPN = false; FlagCU = false; FlagCP = false;
-                    ACMSelected = 0;
-                    if (strlen(FullName) != 0 && strlen(UserName) != 0) { MainMenuProfileManager(MMPMSelected); }
-                    else { AccountLoginMenu(0); }
-
-                } else { ACMSelected = 0; AccountRecoveryMenu(ACMSelected); } }
-            }
-
-        } else {
-            FirstRun = false;
-            printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRecoveryUI);
-        
-            if (AllEmpty == 4) {
-                printf(ANSI_COLOR_LIGHTRED"\tWarning: Recovery procedure can't be completed because you're not \n\t         providing at least ONE (1) information about your profile data!\n\n"ANSI_COLOR_RESET);
-            }
 
             if ((ACMSelected + 1) > 0 && (ACMSelected + 1) <= 4 && (AvailableOptions == 4)) {
                 if ((ACMSelected + 1) == 1) {
@@ -7207,7 +7069,7 @@ void AccountRecoveryMenu(int ACMSelected) {
                     else      { printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n\tSKYR Username:\t\t%s\n      " ANSI_COLOR_LIGHTGREEN"> SKYR Password:\t\t%s\n"ANSI_COLOR_RESET, ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
                 }
 
-                if (AllEmpty != 4) { printf("\n\n\n\n\n\n\n\n\n\n\t%s", AppRecoveryUDRL); }
+                if (AllEmpty != 4) { printf("\n\n\n\n\n\n\n\n\n\n\t%s", AppRecoveryUDRL); ACMNotificationEnabled_02 = false; ACMNotificationEnabled_03 = false; ACMUpgrade = false; }
                 else { printf("\n\n\n\n\n\n\n\t%s", AppRecoveryUDRL); }
             }
             
@@ -7226,7 +7088,153 @@ void AccountRecoveryMenu(int ACMSelected) {
                     else      { printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n\tSKYR Username:\t\t%s\n      " ANSI_COLOR_LIGHTGREEN"> SKYR Password:\t\t%s\n"ANSI_COLOR_RESET, ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
                 }
                 
-                if (AllEmpty != 4) { printf("\n\n\n\n\n\n\n\n\n\n\t%s", AppRecoveryUDRL); }
+                if (AllEmpty != 4) { printf("\n\n\n\n\n\n\n\n\n\n\t%s", AppRecoveryUDRL); ACMNotificationEnabled_02 = false; ACMNotificationEnabled_03 = false; ACMUpgrade = false; }
+                else { printf("\n\n\n\n\n\n\n\t%s", AppRecoveryUDRL); }
+                
+                if ((ACMSelected + 1) == 5 && AllEmpty != 4) {
+                    ClearScreen();
+                    printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRecoveryUI);
+                    
+                    printf("\tInfo: You may have inserted a few remembrance of your profile account, and  \n\t      willing to do some recovery in order to get logged in back.\n");
+                    printf(ANSI_COLOR_LIGHTCYAN"\n\tProceed to do the recovery account process?\n\n"ANSI_COLOR_RESET);
+                    snprintf(MessageID6, BUFSIZE10, ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t────────────────────────────────────────────────────────────────────────────────────────────────────\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRecoveryUI);
+                    snprintf(MessageID8, BUFSIZE10, ANSI_COLOR_LIGHTCYAN"\n\tProceed to do the recovery account process?\n"ANSI_COLOR_RESET);
+                    
+                    MessagesShown_ArrowKeyChoiceDialog[6] = MessageID6;
+                    MessagesShown_ArrowKeyChoiceDialog[7] = "\tInfo: You may have inserted a few remembrance of your profile account, and  \n\t      willing to do some recovery in order to get logged in back.";
+                    MessagesShown_ArrowKeyChoiceDialog[8] = MessageID8;
+                    SubmitOrContinue = ArrowKeyChoiceDialog("Truth Confirmation", MessagesShown_ArrowKeyChoiceDialog, 6, 9);
+
+                    if (SubmitOrContinue) {
+                        FDestination     = fopen("RegisteredAccounts.txt", "r");
+                        FTempDestination = fopen("TempDestination.txt", "w");
+
+                        while (fgets(BUFFER, sizeof(BUFFER), FDestination) != 0) {
+                            BufLen = strlen(BUFFER);
+                            for (int i = 0; i < BufLen; i++) BUFFER[i] += EncryptionKey;
+                            fputs(BUFFER, FTempDestination);
+                        } fclose(FDestination); fclose(FTempDestination);
+
+                        ClearScreen();
+                        printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRecoveryUI);
+                        printf(ANSI_COLOR_GREEN"\tInfo: We've founded a valid profile account data from the list of \n\t      your provided recovery account requirements here, as of:\n\n"ANSI_COLOR_RESET);
+                        
+                        for (int i = 1; i <= (4 - AllEmpty); i++) {
+                            if (!EmptyCE && !FlagCE)        { printf(ANSI_COLOR_BLUE"\t      [%d / %d] Provided Personal E-mail:\t\t%s\n"ANSI_COLOR_RESET, i, (4 - AllEmpty), ACMInputs[GlobalRegisteredAccounts].Email); FlagCE = true; }
+                            else if (!EmptyCPN && !FlagCPN) { printf(ANSI_COLOR_BLUE"\t      [%d / %d] Provided Phone Number:\t\t%s\n"ANSI_COLOR_RESET, i, (4 - AllEmpty), ACMInputs[GlobalRegisteredAccounts].PhoneNumber); FlagCPN = true; }
+                            else if (!EmptyCU && !FlagCU)   { printf(ANSI_COLOR_BLUE"\t      [%d / %d] Provided Username:\t\t%s\n"ANSI_COLOR_RESET, i, (4 - AllEmpty), ACMInputs[GlobalRegisteredAccounts].Username); FlagCU = true; }
+                            else if (!EmptyCP && !FlagCP)   { printf(ANSI_COLOR_BLUE"\t      [%d / %d] Provided Password:\t\t%s\n"ANSI_COLOR_RESET, i, (4 - AllEmpty), ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); FlagCP = true; }
+                        } FlagCE = false; FlagCPN = false; FlagCU = false; FlagCP = false;
+                        
+                        printf(ANSI_COLOR_ORANGE"\n\tNote: What you want to recover is all listed down here:\n\n"ANSI_COLOR_RESET);
+                        for (int i = 1; i <= AllEmpty; i++) {
+                            if (EmptyCE && !FlagCE)         { printf(ANSI_COLOR_YELLOW"\t      [%d / %d] Recover Personal E-mail:\t\t%s\n"ANSI_COLOR_RESET, i, AllEmpty, ACMInputs[GlobalRegisteredAccounts].Email); FlagCE = true; }
+                            else if (EmptyCPN && !FlagCPN)  { printf(ANSI_COLOR_YELLOW"\t      [%d / %d] Recover Phone Number:\t\t%s\n"ANSI_COLOR_RESET, i, AllEmpty, ACMInputs[GlobalRegisteredAccounts].PhoneNumber); FlagCPN = true; }
+                            else if (EmptyCU && !FlagCU)    { printf(ANSI_COLOR_YELLOW"\t      [%d / %d] Recover Username:\t\t\t%s\n"ANSI_COLOR_RESET, i, AllEmpty, ACMInputs[GlobalRegisteredAccounts].Username); FlagCU = true; }
+                            else if (EmptyCP && !FlagCP)    { printf(ANSI_COLOR_YELLOW"\t      [%d / %d] Recover Password:\t\t\t%s\n"ANSI_COLOR_RESET, i, AllEmpty, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); FlagCP = true; }
+                        } getchar();
+                        
+                        for (int GRA = 1; (long long unsigned int)GRA <= GlobalRegisteredAccounts; GRA++) {
+                            strncpy(FirstName,    ReadAndPrintLine("TempDestination.txt", 0 + (14 * GRA)), BUFSIZE07);
+                            strncpy(LastName,     ReadAndPrintLine("TempDestination.txt", 1 + (14 * GRA)), BUFSIZE07);
+                            strncpy(Email,        ReadAndPrintLine("TempDestination.txt", 2 + (14 * GRA)), BUFSIZE07);
+                            strncpy(Username,     ReadAndPrintLine("TempDestination.txt", 3 + (14 * GRA)), BUFSIZE07);
+                            strncpy(Password,     ReadAndPrintLine("TempDestination.txt", 4 + (14 * GRA)), BUFSIZE07);
+                            strncpy(DateOfBirth,  ReadAndPrintLine("TempDestination.txt", 6 + (14 * GRA)), BUFSIZE07);
+                            strncpy(AgeOnPresent, ReadAndPrintLine("TempDestination.txt", 7 + (14 * GRA)), BUFSIZE07);
+                            strncpy(PhoneNumber,  ReadAndPrintLine("TempDestination.txt", 8 + (14 * GRA)), BUFSIZE07);
+                            strncpy(Sex,          ReadAndPrintLine("TempDestination.txt", 9 + (14 * GRA)), BUFSIZE07);
+
+                            FirstName[strlen(FirstName) - 1] = '\0'; LastName[strlen(LastName) - 1] = '\0';
+                            Email[strlen(Email) - 1] = '\0'; Username[strlen(Username) - 1] = '\0'; Password[strlen(Password) - 1] = '\0';
+                            DateOfBirth[strlen(DateOfBirth) - 1] = '\0'; AgeOnPresent[strlen(AgeOnPresent) - 1] = '\0';
+                            PhoneNumber[strlen(PhoneNumber) - 1] = '\0'; Sex[strlen(Sex) - 1] = '\0';
+                            strtok_r(FirstName, ":", &ShowFirstName);       ShowFirstName = TrimWhiteSpaces(ShowFirstName);
+                            strtok_r(LastName, ":", &ShowLastName);         ShowLastName = TrimWhiteSpaces(ShowLastName);
+                            strtok_r(Email, ":", &ShowEmail);               ShowEmail = TrimWhiteSpaces(ShowEmail);
+                            strtok_r(Username, ":", &ShowUsername);         ShowUsername = TrimWhiteSpaces(ShowUsername);
+                            strtok_r(Password, ":", &ShowPassword);         ShowPassword = TrimWhiteSpaces(ShowPassword);
+                            strtok_r(DateOfBirth, ":", &ShowDateOfBirth);   ShowDateOfBirth = TrimWhiteSpaces(ShowDateOfBirth);
+                            strtok_r(AgeOnPresent, ":", &ShowAgeOnPresent); ShowAgeOnPresent = TrimWhiteSpaces(ShowAgeOnPresent);
+                            strtok_r(PhoneNumber, ":", &ShowPhoneNumber);   ShowPhoneNumber = TrimWhiteSpaces(ShowPhoneNumber);
+                            strtok_r(Sex, ":", &ShowSex);                   ShowSex = TrimWhiteSpaces(ShowSex);
+
+                            if (strstr(ShowEmail, ACMInputs[GlobalRegisteredAccounts].Email)                  != NULL || \
+                                strstr(ShowPhoneNumber, ACMInputs[GlobalRegisteredAccounts].PhoneNumber)      != NULL || \
+                                strstr(ShowUsername, ACMInputs[GlobalRegisteredAccounts].Username)            != NULL || \
+                                strstr(ShowPassword, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown) != NULL) {
+                                    ClearScreen();
+                                    printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRecoveryUI);
+
+                                    printf(ANSI_COLOR_LIGHTPINK"\tInfo: Below here are listed the profile data, linked from your specific account recovery first step \n\t      by providing what can you remembered the least about your forgotten account.\n\n"ANSI_COLOR_RESET);
+                                    puts(ANSI_COLOR_LIGHTCYAN"\t────────────────────────────────────────────────────────────────────────────────────────────────────"ANSI_COLOR_RESET);
+                                    printf("\t%s",   ReadAndPrintLine("TempDestination.txt", (-3) + (14 * GRA)));
+                                    printf("\t%s\n", ReadAndPrintLine("TempDestination.txt", (-2) + (14 * GRA)));
+                                    printf("\t%s\n\t%s\n\t%s\n\t%s\n\t%s\n\n\t%s\n\t%s\n\t%s\n\t%s\n", \
+                                            ShowFirstName, ShowLastName, ShowEmail, ShowUsername, ShowPassword, \
+                                            ShowDateOfBirth, ShowAgeOnPresent, ShowPhoneNumber, ShowSex);
+                                    puts(ANSI_COLOR_LIGHTCYAN"\t────────────────────────────────────────────────────────────────────────────────────────────────────"ANSI_COLOR_RESET);
+                                    
+                            if ((long long unsigned int)GRA < GlobalRegisteredAccounts) { printf(ANSI_COLOR_LIGHTGREEN"\n\tPress [ENTER] button key on your keyboard to continue... "ANSI_COLOR_RESET); getchar(); }
+                            else { printf(ANSI_COLOR_GREEN"\tPress [ENTER] button key on your keyboard to go back to the previous menu... "ANSI_COLOR_RESET); getchar(); }
+                                    
+                            } else {
+                                FirstName[0] = 0; LastName[0] = 0, Email[0] = 0, Username[0] = 0, Password[0] = 0;
+                                DateOfBirth[0] = 0, AgeOnPresent[0] = 0; PhoneNumber[0] = 0, Sex[0] = 0;
+                            }
+                        }
+
+                        strcpy(DeleteTempDestinationTxtFile, "del ");
+                        strcat(DeleteTempDestinationTxtFile, "TempDestination.txt");
+                        system(DeleteTempDestinationTxtFile);
+
+                        FlagCE = false; FlagCPN = false; FlagCU = false; FlagCP = false;
+                        ACMSelected = 0;
+                        if (strlen(FullName) != 0 && strlen(UserName) != 0) { MainMenuProfileManager(MMPMSelected); }
+                        else { AccountLoginMenu(0); }
+
+                    } else { ACMSelected = 0; AccountRecoveryMenu(ACMSelected); }
+                }
+            }
+
+        } else {
+            FirstRun = false;
+
+            if ((ACMSelected + 1) > 0 && (ACMSelected + 1) <= 4 && (AvailableOptions == 4)) {
+                if ((ACMSelected + 1) == 1) {
+                    if (!CE)  { printf("      " ANSI_COLOR_LIGHTYELLOW"> Personal E-mail:\t%s\n\t"ANSI_COLOR_RESET "Phone Number:\t\t%s\n\tSKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                    else      { printf("      " ANSI_COLOR_LIGHTGREEN"> Personal E-mail:\t%s\n\t"ANSI_COLOR_RESET "Phone Number:\t\t%s\n\tSKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                } else if ((ACMSelected + 1) == 2) {
+                    if (!CPN) { printf("\tPersonal E-mail:\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> Phone Number:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                    else      { printf("\tPersonal E-mail:\t%s\n      " ANSI_COLOR_LIGHTGREEN"> Phone Number:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                } else if ((ACMSelected + 1) == 3) {
+                    if (!CU)  { printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> SKYR Username:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                    else      { printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n      " ANSI_COLOR_LIGHTGREEN"> SKYR Username:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                } else if ((ACMSelected + 1) == 4) {
+                    if (!CP)  { printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n\tSKYR Username:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> SKYR Password:\t\t%s\n"ANSI_COLOR_RESET, ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                    else      { printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n\tSKYR Username:\t\t%s\n      " ANSI_COLOR_LIGHTGREEN"> SKYR Password:\t\t%s\n"ANSI_COLOR_RESET, ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                }
+
+                if (AllEmpty != 4) { printf("\n\n\n\n\n\n\n\n\n\n\t%s", AppRecoveryUDRL); ACMNotificationEnabled_02 = false; ACMNotificationEnabled_03 = false; ACMUpgrade = false; }
+                else { printf("\n\n\n\n\n\n\n\t%s", AppRecoveryUDRL); }
+            }
+            
+            else if ((ACMSelected + 1) > 0 && (ACMSelected + 1) <= 5 && (AvailableOptions == 5)) {
+                if ((ACMSelected + 1) == 1) {
+                    if (!CE)  { printf("      " ANSI_COLOR_LIGHTYELLOW"> Personal E-mail:\t%s\n\t"ANSI_COLOR_RESET "Phone Number:\t\t%s\n\tSKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                    else      { printf("      " ANSI_COLOR_LIGHTGREEN"> Personal E-mail:\t%s\n\t"ANSI_COLOR_RESET "Phone Number:\t\t%s\n\tSKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                } else if ((ACMSelected + 1) == 2) {
+                    if (!CPN) { printf("\tPersonal E-mail:\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> Phone Number:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                    else      { printf("\tPersonal E-mail:\t%s\n      " ANSI_COLOR_LIGHTGREEN"> Phone Number:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Username:\t\t%s\n\tSKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                } else if ((ACMSelected + 1) == 3) {
+                    if (!CU)  { printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> SKYR Username:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                    else      { printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n      " ANSI_COLOR_LIGHTGREEN"> SKYR Username:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Password:\t\t%s\n", ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                } else if ((ACMSelected + 1) == 4) {
+                    if (!CP)  { printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n\tSKYR Username:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> SKYR Password:\t\t%s\n"ANSI_COLOR_RESET, ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                    else      { printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n\tSKYR Username:\t\t%s\n      " ANSI_COLOR_LIGHTGREEN"> SKYR Password:\t\t%s\n"ANSI_COLOR_RESET, ACMInputs[GlobalRegisteredAccounts].Email, ACMInputs[GlobalRegisteredAccounts].PhoneNumber, ACMInputs[GlobalRegisteredAccounts].Username, ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown); }
+                }
+                
+                if (AllEmpty != 4) { printf("\n\n\n\n\n\n\n\n\n\n\t%s", AppRecoveryUDRL); ACMNotificationEnabled_02 = false; ACMNotificationEnabled_03 = false; ACMUpgrade = false; }
                 else { printf("\n\n\n\n\n\n\n\t%s", AppRecoveryUDRL); }
                 
                 if ((ACMSelected + 1) == 5 && AllEmpty != 4) {
@@ -7352,9 +7360,21 @@ void AccountRecoveryMenu(int ACMSelected) {
                     ACMSelected = 0; Updated = true;
                 } break;
             case KEY_RIGHT:
+                ACMInputs[GlobalRegisteredAccounts].Email[0] = 0;
+                ACMInputs[GlobalRegisteredAccounts].PhoneNumber[0] = 0;
+                ACMInputs[GlobalRegisteredAccounts].Username[0] = 0;
+                ACMInputs[GlobalRegisteredAccounts].Password[0] = 0;
+                ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown[0] = 0;
+
                 AccountRegistrationMenu(0);
                 break;
             case KEY_LEFT:
+                ACMInputs[GlobalRegisteredAccounts].Email[0] = 0;
+                ACMInputs[GlobalRegisteredAccounts].PhoneNumber[0] = 0;
+                ACMInputs[GlobalRegisteredAccounts].Username[0] = 0;
+                ACMInputs[GlobalRegisteredAccounts].Password[0] = 0;
+                ACMInputs[GlobalRegisteredAccounts].HiddenPasswordShown[0] = 0;
+
                 AccountLoginMenu(0);
                 break;
             case KEY_ENTER:
