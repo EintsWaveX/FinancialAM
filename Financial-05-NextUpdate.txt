@@ -1,4 +1,4 @@
 # FinancialAM-05 :: Console Line Interactive Application
 # Recent updates on the "main" branch:
-#   >>> Releasing the ALPHA PREVIEW of the application.
+#   >>> Fixing some multiple popups and few bugs in features.
 #
