@@ -1,6 +1,6 @@
 ────────────────────────────────────────────────────────────────────────────────────────────────────
 SKYR Corp. :: Personal Financial Management System [CLI-Win32] Application
-SKYR Corp. :: @PRE-RELEASE V1.3.44.85.3627.1005657991015497 [c12f906] (December 16, 2023)
+SKYR Corp. :: @PRE-RELEASE V2.0.62.85.7551 [e52beba] (January 3, 2023)
 
 Section: Home (Dashbord) :: Main Menu of The Application Features
 (STATUS) Profile Account Linked to: aaa.

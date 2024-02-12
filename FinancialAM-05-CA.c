@@ -213,7 +213,7 @@ const char *ArrowKeyChoiceDialogModes[] = {
     "Language Mode", "Account Register Mode", "Account Login Mode",
     "Main Menu", "Help Menu", "About Menu", "Recovery Menu", "Settings Menu"
 };
-char* MessagesShown_ArrowKeyChoiceDialog[BUFSIZE10] = {0};
+char *MessagesShown_ArrowKeyChoiceDialog[BUFSIZE10] = {0};
 
 void ErrorHandling(const char* ErrorType, const char* ErrorSource) {
     if (strcmp(ErrorType, SOURCEFILENULLERROR) == 0) {
@@ -234,7 +234,7 @@ struct AccountRegistrationMenuInputs {
     char DateOfBirth[BUFSIZE07], AgeOnPresent[BUFSIZE07], PhoneNumber[BUFSIZE07], Sex[BUFSIZE07], CareerProfiling[BUFSIZE07], AboutMe[BUFSIZE10];
     char AttendingCollege[BUFSIZE07], CompanyWorking[BUFSIZE07], DegreeIn[BUFSIZE07];
     char HiddenPasswordShown[BUFSIZE07];
-} ARMInputs[BUFSIZE10];
+} ARMInputs[BUFSIZE07];
 bool FN = false, LN = false, E = false, U = false, P = false;
 bool B = false, A = false, PN = false, S = false, CPR = false, PD = false;
 bool AC = false, CW = false, DI = false;
@@ -243,7 +243,7 @@ int ARMSelected = 0, FlagARM = false;
 struct AccountLoginMenuInputs {
     char Email[BUFSIZE07], PhoneNumber[BUFSIZE07], Username[BUFSIZE07], Password[BUFSIZE07];
     char HiddenPasswordShown[BUFSIZE07];
-} ALMInputs[BUFSIZE10];
+} ALMInputs[BUFSIZE07];
 char FirstName[BUFSIZE07], LastName[BUFSIZE07], Email[BUFSIZE07], Username[BUFSIZE07], Password[BUFSIZE07], DateOfBirth[BUFSIZE07], AgeOnPresent[BUFSIZE07], PhoneNumber[BUFSIZE07], Sex[BUFSIZE07];
 char *ShowFirstName, *ShowLastName, *ShowEmail, *ShowUsername, *ShowPassword, *ShowDateOfBirth, *ShowAgeOnPresent, *ShowPhoneNumber, *ShowSex;
 int GlobalAccount = 0, ALMSelected = 0, FlagALM = false;
@@ -252,7 +252,7 @@ bool LE = false, LPN = false, LU = false, LP = false;
 struct AccountRecoveryMenuInputs {
     char Email[BUFSIZE07], PhoneNumber[BUFSIZE07], Username[BUFSIZE07], Password[BUFSIZE07];
     char HiddenPasswordShown[BUFSIZE07];
-} ACMInputs[BUFSIZE10];
+} ACMInputs[BUFSIZE07];
 bool CE = false, CPN = false, CU = false, CP = false;
 bool EmptyCE = false, EmptyCPN = false, EmptyCU = false, EmptyCP = false;
 bool FlagCE = false, FlagCPN = false, FlagCU = false, FlagCP = false;
@@ -262,7 +262,7 @@ bool FlagACM = false;
 
 struct SaveFilesTxtName {
     char FileNames[BUFSIZE07];
-} SaveFilesTxtName[BUFSIZE10];
+} SaveFilesTxtName[BUFSIZE07];
 signed int FilePathNameTraversalCounter = 0, CountSavedFiles = 0;
 signed int Accounts = 0, SignedInAccountNo = 0;
 
@@ -296,7 +296,7 @@ struct MoneytoryTransactionsRegister {
     char TransactionDate[BUFSIZE07], IncomeOrExpenses[BUFSIZE07], TotalSpentMoney[BUFSIZE07];
     char FinancialUsesCategory[BUFSIZE07], MonthlyTotalBalance[BUFSIZE07], TransactionDescription[BUFSIZE07];
     char LocalTimeTransactionMade[BUFSIZE07];
-} MTRInputs[BUFSIZE10];
+} MTRInputs[BUFSIZE07];
 int F1Selected = 0;
 bool FlagF1MTR = false;
 bool TBD = false, IOE = false, TSM = false, FUC = false, MTB = false, TD = false;
@@ -326,7 +326,7 @@ struct MoneytoryGroupingPerCategory {
     
     char *UncategorizedByUsers[BUFSIZE10];
     char *Others[BUFSIZE10];
-} MGPCInputs[BUFSIZE10];
+} MGPCInputs[BUFSIZE07];
 int F2Selected = 0;
 
 struct BudgetCreationAndMonitoring {
@@ -337,7 +337,7 @@ struct BudgetCreationAndMonitoring {
     char MonthlyBudgetCreationDescription[BUFSIZE07], YearlyBudgetCreationDescription[BUFSIZE07];
     char MonthlyBudgetTargeting[BUFSIZE07], YearlyBudgetTargeting[BUFSIZE07];
     bool AlwaysCheckForReminders;
-} BCAMInputs[BUFSIZE10];
+} BCAMInputs[BUFSIZE07];
 int F3Selected = 0;
 bool MOR = false, BCC = false, BCL = false, BCT = false, BCD = false;
 bool FlagF3BCAM = false;
@@ -360,7 +360,7 @@ struct FilterSearchingData {
     */
     
     char FileName[BUFSIZE07];
-} FSDInputs[BUFSIZE10];
+} FSDInputs[BUFSIZE07];
 int F4Selected = 0;
     
 struct ReminderAndSetNotifications {
@@ -409,7 +409,7 @@ struct ReminderAndSetNotifications {
 
     char PopUpNotificationTitleWindow[BUFSIZE07];
     char PopUpNotificationMessageWindow[BUFSIZE10];
-} RASNInputs[BUFSIZE10];
+} RASNInputs[BUFSIZE07];
 int F5Selected = 0;
 
 struct DataVisualization {
@@ -430,7 +430,7 @@ struct DataVisualization {
     char XAxisTransactions[BUFSIZE07], YAxisMoneyOnSpent[BUFSIZE07];
     char GraphTitle[BUFSIZE07], GraphDescription[BUFSIZE07], GraphDefinitions[BUFSIZE07];
     char OtherAdditionalInformation[BUFSIZE07];
-} DVInputs[BUFSIZE10];
+} DVInputs[BUFSIZE07];
 int F6Selected = 0;
 
 /* PROTOTYPE FUNCTIONS DEFINITION */
@@ -5166,18 +5166,19 @@ void F3_BudgetCreationAndMonitoring(int F3Selected) {
         TBDTempD = strtok(InputMonthlyBudgetTargeting, "-"); TBDTempM = strtok(NULL, "-"); TBDTempY = strtok(NULL, "-");
         TBDTempD = TrimWhiteSpaces(TBDTempD); TBDTempM = TrimWhiteSpaces(TBDTempM); TBDTempY = TrimWhiteSpaces(TBDTempY);
         Date = atoi(TBDTempD); Month = atoi(TBDTempM); Year = atoi(TBDTempY);
-        // size_t FinalDate = 30;
+        
         size_t FinalDate  = (long long unsigned)(((1900 + ManageTime.tm_year) % 4 != 0) ? ((((ManageTime.tm_mday + 30) - DateOfMonths[ManageTime.tm_mon]) != 0) ? ((ManageTime.tm_mday + 30) - DateOfMonths[ManageTime.tm_mon]) : 31) : ((((ManageTime.tm_mday + 30) - DateOfMonths_LEAP[ManageTime.tm_mon]) != 0) ? ((ManageTime.tm_mday + 30) - DateOfMonths_LEAP[ManageTime.tm_mon]) : 31));
-        size_t FinalMonth = (FinalDate != 31) ? ((Month != (long long unsigned)(((ManageTime.tm_mon + 1) != 12) ? ((ManageTime.tm_mon + 1) + 1) : 1)) + 1) : (long long unsigned)(((ManageTime.tm_mon + 1) != 12) ? ((ManageTime.tm_mon + 1) + 1) : 1) - 1;
+        size_t FinalMonth = (FinalDate != 31) ? (((ManageTime.tm_mon + 1) != 12) ? ((ManageTime.tm_mon + 1) + 1) : 1) : (((ManageTime.tm_mon + 1) == 12) ? ((ManageTime.tm_mon + 1)) : 1);
+        size_t FinalYear  = 1900 + (long long unsigned)(((ManageTime.tm_mon + 1) != 12) ? (ManageTime.tm_year) : (ManageTime.tm_year + 1));
 
-        while (Date != FinalDate || Month != FinalMonth || Year != (long long unsigned)(((ManageTime.tm_mon + 1) != 12) ? (1900 + ManageTime.tm_year) : ((1900 + ManageTime.tm_year) + 1))) {
+        while (Date != FinalDate || Month != FinalMonth || Year != FinalYear) {
             ClearScreen();
             printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN"(STATUS) Profile Account Linked to: "ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN ANSI_STYLE_ITALIC ANSI_STYLE_UNDERLINE"%s.\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"────────────────────────────────────────────────────────────────────────────────────────────────────\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppFeature03, UserName);
 
             puts(ANSI_COLOR_LIGHTRED"\tWarning: Monthly budget creation MUST TARGET the next 30 DAYS from now, and neither for YESTERDAY"ANSI_COLOR_RESET);
             puts(ANSI_COLOR_LIGHTRED"\t         nor TOMORROW, even to non-other next 30 DAYS from now! Thus, your current monthly budget"ANSI_COLOR_RESET);
             puts(ANSI_COLOR_LIGHTRED"\t         MUST BE in the date of the NEXT 30 DAYS, it's on: ");
-            printf(ANSI_COLOR_LIGHTRED ANSI_STYLE_BOLD"\t             > %02lld-%02lld-%04d (%s).\n\n"ANSI_COLOR_RESET, (FinalDate), (FinalMonth), (((ManageTime.tm_mon + 1) != 12) ? (1900 + ManageTime.tm_year) : ((1900 + ManageTime.tm_year) + 1)), DaysOfWeek[(ManageTime.tm_wday + 30) % 7]);
+            printf(ANSI_COLOR_LIGHTRED ANSI_STYLE_BOLD"\t             > %02lld-%02lld-%04d (%s).\n\n"ANSI_COLOR_RESET, (FinalDate), (FinalMonth), (FinalYear), DaysOfWeek[(ManageTime.tm_wday + 30) % 7]);
 
             printf("\tMonthly or Yearly Budget Creation Type:\t%s\n\tFinancial Budget Creation Category:\t%s\n\tExpenses Limit at (in Rp.):\t\t%s\n      " BRIGHTBLUE157"> Budget Usage Target (at month):\t\t%s\n\t"ANSI_COLOR_RESET "Budget Creation Description:\n" ANSI_STYLE_BOLD ANSI_STYLE_ITALIC"    ... %s\n"ANSI_COLOR_RESET, BCAMInputs[GlobalRegisteredBCAM].MonthlyOrYearly, BCAMInputs[GlobalRegisteredBCAM].MonthlyFinancialCreationCategory, BCAMInputs[GlobalRegisteredBCAM].MonthlyLimitBudgetCreation, BCAMInputs[GlobalRegisteredBCAM].MonthlyBudgetTargeting, BCAMInputs[GlobalRegisteredBCAM].MonthlyBudgetCreationDescription);
             puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTYELLOW"Budget Usage Target (at month)."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your monthly budget target on your current monthly budget creation.");
@@ -5254,7 +5255,7 @@ void F3_BudgetCreationAndMonitoring(int F3Selected) {
         strcat(BCAMInputs[GlobalRegisteredBCAM].MonthlyBudgetTargeting, " ");
         strcat(BCAMInputs[GlobalRegisteredBCAM].MonthlyBudgetTargeting, TBDTempY);
 
-        for (int i = 0; i < 7; i++)  { DaysOfWeek[i][0] = 0; }
+        for (int i = 0; i < 7; i++)  { DaysOfWeek[i][0]   = 0; }
         for (int j = 0; j < 12; j++) { MonthsOfYear[j][0] = 0; }
         NumericalPattern[0] = 0;
         F3_BudgetCreationAndMonitoring(F3Selected);
