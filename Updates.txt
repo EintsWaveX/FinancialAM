@@ -102,8 +102,10 @@ List of signs (description):
     ~ Fixed counting 30 days further formula.
 
 # [13] SIXTH Addition(s); SECOND Deletion(s); FOURTH Update(s); SEVENTH Change(s)
-# Commit(s): 6 (six)
+# Commit(s): 8 (eight)
 >>> Commited on: February 18, 2024
+    ^ Updating the application title/status version and/or details.
+    ^ Updating the Updates.txt file.
     ^ Updating confirmation UI, array-of-struct simplifying, small code(s) refactoring.
     + Adding a self-update data file for keep tracking all made commits.
     ~ Renaming the RegisteredAccounts.txt file.
