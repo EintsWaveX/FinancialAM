@@ -2,7 +2,7 @@
 # Starting Project Date:
 #     > October 27, 2023
 # Latest Project Update:
-#     > February 13, 2024
+#     > March 4, 2024
 
 # ----------------------------------------------------------------------------------------------------
 # Contributors: EintsWaveX
@@ -114,9 +114,9 @@ List of signs (description):
     - Deleting any unnecessary files.
 
 # [14] FIFTH Update(s); EIGHTH Change(s)
-# Commit(s): 5 (five)
+# Commit(s): 8 (eight)
 >>> Commited on: March 4, 2024
-    ^ (3) Updating the Updates.txt file.
+    ^ (4) Updating the Updates.txt file.
     ^ [Part: 1] UI update, adding some shortcuts.
     ^ [Part: 1-TEMP] Using "aaa" account for testing purposes.
     ^ [Part: 2] Updating few leftover changes from the [Part: 1].
