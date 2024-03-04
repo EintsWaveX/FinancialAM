@@ -20,10 +20,11 @@
 #include <wctype.h>             // Wide character typing method (String type conversion)
 
 // #include <gtk-4.0/gtk/gtk.h>    // GTK-4.0+ Application Implementation
-#include <conio.h>              // Windows handling compatibility
+// #include <conio.h>              // Windows handling compatibility
+#include <termios.h>            // UNIX/POSIX handling compatibility
 // #include <raylib.h>             // Raylib library to display graphs and more
 // #include <SDL2/SDL.h>           // SDL2 library to support more with Raylib
-#include <windows.h>            // Windows header file (apps and notifications)
+// #include <windows.h>            // Windows header file (apps and notifications)
 
 /*
 DEFINE::FDBufferSIZE
@@ -61,11 +62,19 @@ Usage:  For more safe-choice input session, so the user
         the whole core of the app functionality by some
         unexpected errors or bugs.
 */
-#define KEY_UP      72
-#define KEY_DOWN    80
-#define KEY_RIGHT   77
-#define KEY_LEFT    75
-#define KEY_ENTER   '\r'
+//// NOTE: WINDOWS API specific key-commands.
+// #define KEY_UP      72
+// #define KEY_DOWN    80
+// #define KEY_RIGHT   77
+// #define KEY_LEFT    75
+// #define KEY_ENTER   '\r'
+
+//// NOTE: UNIX/POSIX API specific key-commands.
+#define KEY_UP      65
+#define KEY_DOWN    66
+#define KEY_RIGHT   67
+#define KEY_LEFT    68
+#define KEY_ENTER   10
 
 /*
 DEFINE::DEFINITIVEHISTOGRAM
@@ -143,6 +152,23 @@ void ClearScreen(void) {
 #else
     #error "ERROR: Unsupported platform for performing clear screen!"
 #endif
+}
+
+//// NOTE: _getch() implementation on WINDOWS API.
+//// INFO: UNIX/POSIX system specific.
+int _getch(void) {
+    struct termios oldt, newt;
+    int ch;
+
+    tcgetattr(STDIN_FILENO, &oldt);
+
+    newt = oldt;
+    newt.c_lflag &= ~(ICANON | ECHO);
+    
+    tcsetattr(STDIN_FILENO, TCSANOW, &newt);
+    ch = getchar();
+    tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
+    return ch;
 }
 
 /* ERROR HANDLING METHOD */
@@ -225,10 +251,8 @@ char *MessagesShown_ArrowKeyChoiceDialog[BUFSIZE10] = {0};
 void ErrorHandling(const char* ErrorType, const char* ErrorSource) {
     if (strcmp(ErrorType, SOURCEFILENULLERROR) == 0) {
         fprintf(stderr, "Unable to open the source file named '%s'!\n           > Make sure you have the file names '%s' ready to be opened,\n      and not some empty folder or none specified beforehand.\n\nErrorCode: %s", ErrorSource, ErrorSource, ErrorType);
-        getchar();
     } if (strcmp(ErrorType, DESTINATIONFILENULLERROR) == 0) {
         fprintf(stderr, "Unable to create the destination file named '%s'!\n    > This maybe an error that occured if there's an error for having\n      permission to make and write to a file, error in naming the file,\n      and many more. Try to troubleshoot for the errors and try again!\n\nErrorCode: %s", ErrorSource, ErrorType);
-        getchar();
     }
 }
 
@@ -468,13 +492,14 @@ char *TrimWhiteSpaces(char*);
 char *StringUppercase(char*);
 char *ReadAndPrintLine(const char*, intmax_t);
 
-// Notifications Features (CORE FEATURES)
-// Notification features available: 4
+//// Notifications Features (CORE FEATURES)
+//// Notification features available: 4
+//// NOTE: Find out to do the similiar notification features in UNIX/POSIX platforms.
 
-int InfoMessageBox_OK(const char*, const char*);
-int QuestionMessageBox_YESNOCANCEL(const char*, const char*);
-int WarningMessageBox_CANCELTRYCONTINUE(const char*, const char*);
-int ErrorMessageBox_OKCANCEL(const char*, const char*);
+// int InfoMessageBox_OK(const char*, const char*);
+// int QuestionMessageBox_YESNOCANCEL(const char*, const char*);
+// int WarningMessageBox_CANCELTRYCONTINUE(const char*, const char*);
+// int ErrorMessageBox_OKCANCEL(const char*, const char*);
 
 // Available main application features: 6
 
@@ -514,57 +539,58 @@ void HorizontalHistogramUI_YEAR(const char*, signed long long int);
 
 /* STARTING THE DECLARATIONS: REMINDER AND NOTIFICATIONS */
 /* Initialize functions and classes (if needed) */
+//// NOTE: Find out to do the similiar notification features in UNIX/POSIX platforms.
 
-char* Title, Message, Description;
-int InfoMessageBox_OK(const char* Title, const char* Message) {
-    int MessageBoxID = MessageBox( \
-        NULL, \
-        (LPCSTR) Message, \
-        (LPCSTR) Title, MB_ICONINFORMATION | MB_OK | MB_DEFBUTTON1);
+// char* Title, Message, Description;
+// int InfoMessageBox_OK(const char* Title, const char* Message) {
+//     int MessageBoxID = MessageBox( \
+//         NULL, \
+//         (LPCSTR) Message, \
+//         (LPCSTR) Title, MB_ICONINFORMATION | MB_OK | MB_DEFBUTTON1);
     
-    switch (MessageBoxID) {
-        case IDOK: break;
-        default: break;
-    } return MessageBoxID;
-}
+//     switch (MessageBoxID) {
+//         case IDOK: break;
+//         default: break;
+//     } return MessageBoxID;
+// }
 
-int QuestionMessageBox_YESNOCANCEL(const char* Title, const char* Message) {
-    int MessageBoxID = MessageBox( \
-        NULL, \
-        (LPCSTR) Message, \
-        (LPCSTR) Title, MB_ICONQUESTION | MB_YESNOCANCEL | MB_DEFBUTTON2);
+// int QuestionMessageBox_YESNOCANCEL(const char* Title, const char* Message) {
+//     int MessageBoxID = MessageBox( \
+//         NULL, \
+//         (LPCSTR) Message, \
+//         (LPCSTR) Title, MB_ICONQUESTION | MB_YESNOCANCEL | MB_DEFBUTTON2);
 
-    switch (MessageBoxID) {
-        case IDYES: break;
-        case IDNO: break;
-        case IDCANCEL: break;
-    } return MessageBoxID;
-}
+//     switch (MessageBoxID) {
+//         case IDYES: break;
+//         case IDNO: break;
+//         case IDCANCEL: break;
+//     } return MessageBoxID;
+// }
 
-int WarningMessageBox_CANCELTRYCONTINUE(const char* Title, const char* Message) {
-    int MessageBoxID = MessageBox( \
-        NULL, \
-        (LPCSTR) Message, \
-        (LPCSTR) Title, MB_ICONEXCLAMATION | MB_CANCELTRYCONTINUE | MB_DEFBUTTON2);
+// int WarningMessageBox_CANCELTRYCONTINUE(const char* Title, const char* Message) {
+//     int MessageBoxID = MessageBox( \
+//         NULL, \
+//         (LPCSTR) Message, \
+//         (LPCSTR) Title, MB_ICONEXCLAMATION | MB_CANCELTRYCONTINUE | MB_DEFBUTTON2);
 
-    switch (MessageBoxID) {
-        case IDCANCEL: break;
-        case IDTRYAGAIN: break;
-        case IDCONTINUE: break;
-    } return MessageBoxID;
-}
+//     switch (MessageBoxID) {
+//         case IDCANCEL: break;
+//         case IDTRYAGAIN: break;
+//         case IDCONTINUE: break;
+//     } return MessageBoxID;
+// }
 
-int ErrorMessageBox_OKCANCEL(const char* Title, const char* Message) {
-    int MessageBoxID = MessageBox( \
-        NULL, \
-        (LPCSTR) Message, \
-        (LPCSTR) Title, MB_ICONERROR | MB_OKCANCEL | MB_DEFBUTTON1);
+// int ErrorMessageBox_OKCANCEL(const char* Title, const char* Message) {
+//     int MessageBoxID = MessageBox( \
+//         NULL, \
+//         (LPCSTR) Message, \
+//         (LPCSTR) Title, MB_ICONERROR | MB_OKCANCEL | MB_DEFBUTTON1);
 
-    switch (MessageBoxID) {
-        case IDOK: break;
-        case IDCANCEL: break;
-    } return MessageBoxID;
-}
+//     switch (MessageBoxID) {
+//         case IDOK: break;
+//         case IDCANCEL: break;
+//     } return MessageBoxID;
+// }
 
 /* STARTING THE DECLARATIONS: ENCRYPTION AND DECRYPTION DATA */
 /* Initialize functions and classes (if needed) */
@@ -632,7 +658,7 @@ void OverWriteStringAtLine(const char* FSourceTxtFile, const char* NewOverWriteS
 	fclose(FDestination);
 	remove(FileName); rename(FTempDestinationTxtFile, FileName);
 
-    strcpy(DeleteTempDestinationTxtFile, "del ");
+    strcpy(DeleteTempDestinationTxtFile, "rm ");
     strcat(DeleteTempDestinationTxtFile, "FTempDestination.txt");
     system(DeleteTempDestinationTxtFile);
 }
@@ -679,7 +705,7 @@ void EncryptTxtFile(const char* SourceTextFile, const char* DestinationTextFile,
     fclose(FSource); fclose(FDestination);
 
     if (SourceTextFileDeletion) {
-        strcpy(DeleteSourceTxtFile, "del ");
+        strcpy(DeleteSourceTxtFile, "rm ");
         strcat(DeleteSourceTxtFile, SourceTextFile);
         system(DeleteSourceTxtFile);
     } else NULL;
@@ -762,12 +788,12 @@ void DecryptTxtFile(const char* DestinationTextFile, bool ReadDecryptedFile, int
                             SKSVIndex++;
                     } FTDIndex++; SKSVIndex = 0;
                 }
-                strcpy(DeleteTempDestinationTxtFile, "del ");
+                strcpy(DeleteTempDestinationTxtFile, "rm ");
                 strcat(DeleteTempDestinationTxtFile, "TempDestination.txt");
                 system(DeleteTempDestinationTxtFile);
             }
         } else {
-            strcpy(DeleteTempDestinationTxtFile, "del ");
+            strcpy(DeleteTempDestinationTxtFile, "rm ");
             strcat(DeleteTempDestinationTxtFile, "TempDestination.txt");
             system(DeleteTempDestinationTxtFile);
         }
@@ -828,7 +854,7 @@ void SaveDataInTxtFile(const char* DestinationTextFile, const int EncryptionKey,
     fprintf(FDestination, "%s",   ReadAndPrintLine("TempDestination.txt", 9 + (14 * GlobalAccount)));
     fprintf(FDestination, "────────────────────────────────────────────────────────────────────────────────────────────────────\n");
 
-    // strcpy(DeleteTempDestinationTxtFile, "del ");
+    // strcpy(DeleteTempDestinationTxtFile, "rm ");
     // strcat(DeleteTempDestinationTxtFile, "TempDestination.txt");
     // system(DeleteTempDestinationTxtFile);
     EncryptTxtFile("TempDestination.txt", DestinationTextFile, EncryptionKey, true);;
@@ -996,7 +1022,7 @@ int ArrowKeyChoiceDialog(const char* AppModeMenu, char* MessagesShown_ArrowKeyCh
                     Selecting = false; Updated = true;
                     break;
                 default: {
-                    if (AKDC == KEY_UP || AKDC == KEY_DOWN || AKDC == KEY_LEFT || AKDC == KEY_RIGHT || AKDC == KEY_ENTER) { ClearScreen(); continue; }
+                    if (AKDC == KEY_UP || AKDC == KEY_DOWN || AKDC == KEY_LEFT || AKDC == KEY_RIGHT || AKDC == KEY_ENTER || AKDC == 91 || AKDC == 27) { ClearScreen(); continue; }
                     (AKDC > 0) ? PreviousAKDC = (int)AKDC : 0;
                     (AKDC > 0) ? CatchDefaultAKDC = true : false;
                 } break;
@@ -1035,7 +1061,7 @@ int ArrowKeyChoiceDialog(const char* AppModeMenu, char* MessagesShown_ArrowKeyCh
                 ANSI_COLOR_LIGHTMAGENTA"\tMenargetkan aplikasi ke dalam Bahasa Inggris, sekali lagi mohon maaf atas ketidaknyamanannya... ."ANSI_COLOR_RESET);
             
             printf(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"\n\t[ENTER] Go to the registration profile account process... . "ANSI_COLOR_RESET);
-            getchar();
+            _getch();
             AccountRegistrationMenu(0);
         }
     } return 0;
@@ -1045,6 +1071,8 @@ int ArrowKeyChoiceDialog(const char* AppModeMenu, char* MessagesShown_ArrowKeyCh
 /* TRIAL PURPOSES */
 /* TRIAL PURPOSES */
 void HorizontalHistogramUI_WEEK(const char* SourceFileTxtData, signed long long int PerMoneyExpenses) {
+    fflush(stdout); fflush(stdin);
+
     char *HHMonday_X, *HHTuesday_X, *HHWednesday_X, *HHThursday_X, *HHFriday_X, *HHSaturday_X, *HHSunday_X;
     char *HHMonday_Y, *HHTuesday_Y, *HHWednesday_Y, *HHThursday_Y, *HHFriday_Y, *HHSaturday_Y, *HHSunday_Y;
     signed int HHMonday_NX, HHTuesday_NX, HHWednesday_NX, HHThursday_NX, HHFriday_NX, HHSaturday_NX, HHSunday_NX;
@@ -1162,6 +1190,8 @@ void HorizontalHistogramUI_WEEK(const char* SourceFileTxtData, signed long long 
 /* ACTUAL HISTOGRAM DISPLAY FEATURE */
 /* ACTUAL HISTOGRAM DISPLAY FEATURE */
 void HorizontalHistogramUI_MONTH(const char* SourceFileTxtData, signed long long int PerMoneyExpenses) {
+    fflush(stdout); fflush(stdin);
+
     time_t Time = time(NULL);
     struct tm ManageTime = *localtime(&Time);
 
@@ -1396,7 +1426,7 @@ void HorizontalHistogramUI_MONTH(const char* SourceFileTxtData, signed long long
         }
     }
 
-    strcpy(DeleteTempDestinationTxtFile, "del ");
+    strcpy(DeleteTempDestinationTxtFile, "rm ");
     strcat(DeleteTempDestinationTxtFile, "TempDestination.txt");
     system(DeleteTempDestinationTxtFile);
 
@@ -1418,7 +1448,7 @@ void HorizontalHistogramUI_MONTH(const char* SourceFileTxtData, signed long long
     printf("\t        > (accumulated spending - total spent on actual recorded transaction history)\n"ANSI_COLOR_RESET);
 
     puts("");
-    getchar(); MainMenuApplicationFeatures(MMAFSelected);
+    _getch(); MainMenuApplicationFeatures(MMAFSelected);
 }
 /* ACTUAL HISTOGRAM DISPLAY FEATURE */
 /* ACTUAL HISTOGRAM DISPLAY FEATURE */
@@ -1436,6 +1466,7 @@ int RandInt(int Lower, int Upper) {
 
 void F1_FUC01_FinancialUsesCategoryUI(int FUCSelected) {
     ClearScreen();
+    fflush(stdout); fflush(stdin);
 
     int AvailableOptions = 10; // , SubmitOrContinue;
     bool Selecting = true, Updated = false, FirstRun = true;
@@ -1537,6 +1568,7 @@ void F1_FUC01_FinancialUsesCategoryUI(int FUCSelected) {
 
 void F1_FUC02_FinancialUsesCategoryUI(int FUCSelected) {
     ClearScreen();
+    fflush(stdout); fflush(stdin);
 
     int AvailableOptions = 20; // , SubmitOrContinue;
     bool Selecting = true, Updated = false, FirstRun = true;
@@ -1638,6 +1670,7 @@ void F1_FUC02_FinancialUsesCategoryUI(int FUCSelected) {
 
 void F1_FUC03_FinancialUsesCategoryUI(int FUCSelected) {
     ClearScreen();
+    fflush(stdout); fflush(stdin);
 
     int AvailableOptions = 30; // , SubmitOrContinue;
     bool Selecting = true, Updated = false, FirstRun = true;
@@ -1739,6 +1772,7 @@ void F1_FUC03_FinancialUsesCategoryUI(int FUCSelected) {
 
 void F1_FUC04_FinancialUsesCategoryUI(int FUCSelected) {
     ClearScreen();
+    fflush(stdout); fflush(stdin);
 
     int AvailableOptions = 40; // , SubmitOrContinue;
     bool Selecting = true, Updated = false, FirstRun = true;
@@ -1840,6 +1874,7 @@ void F1_FUC04_FinancialUsesCategoryUI(int FUCSelected) {
 
 void F1_FUC05_FinancialUsesCategoryUI(int FUCSelected) {
     ClearScreen();
+    fflush(stdout); fflush(stdin);
 
     int AvailableOptions = 50; // , SubmitOrContinue;
     bool Selecting = true, Updated = false, FirstRun = true;
@@ -1941,6 +1976,7 @@ void F1_FUC05_FinancialUsesCategoryUI(int FUCSelected) {
 
 void F1_FUC06_FinancialUsesCategoryUI(int FUCSelected) {
     ClearScreen();
+    fflush(stdout); fflush(stdin);
 
     int AvailableOptions = 60; // , SubmitOrContinue;
     bool Selecting = true, Updated = false, FirstRun = true;
@@ -2045,6 +2081,7 @@ void F1_FUC06_FinancialUsesCategoryUI(int FUCSelected) {
 
 void F2_FUC01_FinancialUsesCategoryUI(int FUCSelected) {
     ClearScreen();
+    fflush(stdout); fflush(stdin);
 
     int AvailableOptions = 10; // , SubmitOrContinue;
     bool Selecting = true, Updated = false, FirstRun = true;
@@ -2145,6 +2182,7 @@ void F2_FUC01_FinancialUsesCategoryUI(int FUCSelected) {
 
 void F2_FUC02_FinancialUsesCategoryUI(int FUCSelected) {
     ClearScreen();
+    fflush(stdout); fflush(stdin);
 
     int AvailableOptions = 20; // , SubmitOrContinue;
     bool Selecting = true, Updated = false, FirstRun = true;
@@ -2245,6 +2283,7 @@ void F2_FUC02_FinancialUsesCategoryUI(int FUCSelected) {
 
 void F2_FUC03_FinancialUsesCategoryUI(int FUCSelected) {
     ClearScreen();
+    fflush(stdout); fflush(stdin);
 
     int AvailableOptions = 30; // , SubmitOrContinue;
     bool Selecting = true, Updated = false, FirstRun = true;
@@ -2345,6 +2384,7 @@ void F2_FUC03_FinancialUsesCategoryUI(int FUCSelected) {
 
 void F2_FUC04_FinancialUsesCategoryUI(int FUCSelected) {
     ClearScreen();
+    fflush(stdout); fflush(stdin);
 
     int AvailableOptions = 40; // , SubmitOrContinue;
     bool Selecting = true, Updated = false, FirstRun = true;
@@ -2445,6 +2485,7 @@ void F2_FUC04_FinancialUsesCategoryUI(int FUCSelected) {
 
 void F2_FUC05_FinancialUsesCategoryUI(int FUCSelected) {
     ClearScreen();
+    fflush(stdout); fflush(stdin);
 
     int AvailableOptions = 50; // , SubmitOrContinue;
     bool Selecting = true, Updated = false, FirstRun = true;
@@ -2545,6 +2586,7 @@ void F2_FUC05_FinancialUsesCategoryUI(int FUCSelected) {
 
 void F2_FUC06_FinancialUsesCategoryUI(int FUCSelected) {
     ClearScreen();
+    fflush(stdout); fflush(stdin);
 
     int AvailableOptions = 60; // , SubmitOrContinue;
     bool Selecting = true, Updated = false, FirstRun = true;
@@ -2645,6 +2687,7 @@ void F2_FUC06_FinancialUsesCategoryUI(int FUCSelected) {
 
 void F3_FUC01_FinancialUsesCategoryUI(int FUCSelected) {
     ClearScreen();
+    fflush(stdout); fflush(stdin);
 
     int AvailableOptions = 10; // , SubmitOrContinue;
     bool Selecting = true, Updated = false, FirstRun = true;
@@ -2746,6 +2789,7 @@ void F3_FUC01_FinancialUsesCategoryUI(int FUCSelected) {
 
 void F3_FUC02_FinancialUsesCategoryUI(int FUCSelected) {
     ClearScreen();
+    fflush(stdout); fflush(stdin);
 
     int AvailableOptions = 20; // , SubmitOrContinue;
     bool Selecting = true, Updated = false, FirstRun = true;
@@ -2847,6 +2891,7 @@ void F3_FUC02_FinancialUsesCategoryUI(int FUCSelected) {
 
 void F3_FUC03_FinancialUsesCategoryUI(int FUCSelected) {
     ClearScreen();
+    fflush(stdout); fflush(stdin);
 
     int AvailableOptions = 30; // , SubmitOrContinue;
     bool Selecting = true, Updated = false, FirstRun = true;
@@ -2948,6 +2993,7 @@ void F3_FUC03_FinancialUsesCategoryUI(int FUCSelected) {
 
 void F3_FUC04_FinancialUsesCategoryUI(int FUCSelected) {
     ClearScreen();
+    fflush(stdout); fflush(stdin);
 
     int AvailableOptions = 40; // , SubmitOrContinue;
     bool Selecting = true, Updated = false, FirstRun = true;
@@ -3049,6 +3095,7 @@ void F3_FUC04_FinancialUsesCategoryUI(int FUCSelected) {
 
 void F3_FUC05_FinancialUsesCategoryUI(int FUCSelected) {
     ClearScreen();
+    fflush(stdout); fflush(stdin);
 
     int AvailableOptions = 50; // , SubmitOrContinue;
     bool Selecting = true, Updated = false, FirstRun = true;
@@ -3150,6 +3197,7 @@ void F3_FUC05_FinancialUsesCategoryUI(int FUCSelected) {
 
 void F3_FUC06_FinancialUsesCategoryUI(int FUCSelected) {
     ClearScreen();
+    fflush(stdout); fflush(stdin);
 
     int AvailableOptions = 60; // , SubmitOrContinue;
     bool Selecting = true, Updated = false, FirstRun = true;
@@ -3249,8 +3297,8 @@ void F3_FUC06_FinancialUsesCategoryUI(int FUCSelected) {
     F3_BudgetCreationAndMonitoring(F3Selected);
 }
 
-/* DRIVER MAIN PROGRAM */
-/* NOTE: MUST USE FILE HANDLING IN ORDER TO BE WORKING */
+///* DRIVER MAIN PROGRAM *///
+///* NOTE: MUST USE FILE HANDLING IN ORDER TO BE WORKING *///
 
 /*
 Requirements:
@@ -3271,7 +3319,10 @@ int main(void) {
     // ErrorMessageBox_OKCANCEL("Error Message: Default 'Category' Changings Error.", "You may have received this error pop-up message because you've been trying to do some changes on a system's default categories made in this app's core already. Several times before you only get knocked out from the menu, and because now you've been trying so badly to do it so even though you already knew that ALL default variables CANNOT EVER BE CHANGED WHATSOEVER!\n\nPlease keep in mind to not spamming this error messages, because from the first you got this messages within three days will always pop-up this. If you insist, then unfortunately you have to be banned from this menu for a temporary time!");
 
     ClearScreen();
-    SetConsoleOutputCP(65001);
+
+    //// INFO: WINDOWS API ONLY SPECIFIC! ////
+    // SetConsoleOutputCP(65001);
+    //// INFO: WINDOWS API ONLY SPECIFIC! ////
     
     /*
     InfoMessageBox_OK("(Info) @SKYR-PFMSA; Application Features Availability", "Development Progress of Personal Financial Management Support Application:\n\n\t1. Moneytory Transaction Registration.\n\tSTATUS: Complete (100%)\n\tFuture Update: (able to work for yearly budget\n\ttoo).\n\n\t2. Moneytory Grouping per Category.\n\tSTATUS: In-progress (50%)\n\tReasoning: Delayed (not enough time left).\n\tFuture Update: (completing the basis first).\n\n\t3. Budget Creation and Monitoring.\n\tSTATUS: Completed (100%)\n\tFuture Update: (make the yearly budget creation\n\tand monitoring be working too).\n\n\t4. Filter and Searching Data.\n\tSTATUS: Completed (100%)\n\tFuture Update: (make the UI more understandable).\n\n\t5. Reminder and Notifications.\n\tSTATUS: Completed (100%)\n\tFuture Update: (make more pop-up notifications\n\tthoroughly).\n\n\t6. Data Visualization.\n\tSTATUS: Completed (100%)\n\tFuture Update: (better UI and histogram\n\tmechanism).");
@@ -3282,8 +3333,8 @@ int main(void) {
 
     // puts("Hello, World!");
     
-    // Just adding a newline padding to the console while pre-testing encryption data file here.
-    // NOTE: Just for safety, use "return 0;" when debugging with these codes below!
+    //// INFO: Just adding a newline padding to the console while pre-testing encryption data file here.
+    //// NOTE: Just for safety, use "return 0;" when debugging with these codes below!
     // puts("");
     // EncryptTxtFile("DecodedTextSample.txt", "EncodedTextSample.txt", EncryptionKey, false);
     // DecryptTxtFile("SKYR-FMSA-RegisteredAccounts.txt", true, EncryptionKey, "None");
@@ -3351,7 +3402,7 @@ int main(void) {
             strtok_r(SignedInUsername, ":", &SignedInUsernamePTR); SignedInUsernamePTR = TrimWhiteSpaces(SignedInUsernamePTR);
             strncpy(UserName, SignedInUsernamePTR, BUFSIZE07);
 
-            strcpy(DeleteTempDestinationTxtFile, "del ");
+            strcpy(DeleteTempDestinationTxtFile, "rm ");
             strcat(DeleteTempDestinationTxtFile, "TempDestination.txt");
             system(DeleteTempDestinationTxtFile);
 
@@ -3373,7 +3424,7 @@ int main(void) {
             strncpy(ALMInputs.HiddenPasswordShown, LoggedInHiddenShownPassword, BUFSIZE07);
             strncpy(ALMInputs.PhoneNumber, LoggedInPhoneNumber, BUFSIZE07);
 
-            strcpy(DeleteTempDestinationTxtFile, "del ");
+            strcpy(DeleteTempDestinationTxtFile, "rm ");
             strcat(DeleteTempDestinationTxtFile, "TempDestination.txt");
             system(DeleteTempDestinationTxtFile);
 
@@ -3392,6 +3443,7 @@ int main(void) {
 
 void MainMenuApplicationFeatures(int MMAFSelected) {
     ClearScreen();
+    fflush(stdout); fflush(stdin);
 
     int AvailableOptions = 6; // , SubmitOrContinue;
     bool Selecting = true, Updated = false, FirstRun = true;
@@ -3478,7 +3530,7 @@ void MainMenuApplicationFeatures(int MMAFSelected) {
                 Selecting = false; Updated = true;
                 break;
             default: {
-                if (AKDC == KEY_UP || AKDC == KEY_DOWN || AKDC == KEY_LEFT || AKDC == KEY_RIGHT || AKDC == KEY_ENTER) { ClearScreen(); continue; }
+                if (AKDC == KEY_UP || AKDC == KEY_DOWN || AKDC == KEY_LEFT || AKDC == KEY_RIGHT || AKDC == KEY_ENTER || AKDC == 91 || AKDC == 27) { ClearScreen(); continue; }
                 (AKDC > 0) ? PreviousAKDC = (int)AKDC : 0;
                 (AKDC > 0) ? CatchDefaultAKDC = true : false;
             } break;
@@ -3511,6 +3563,7 @@ void MainMenuApplicationFeatures(int MMAFSelected) {
 
 void MainMenuProfileManager(int MMPMSelected) {
     ClearScreen();
+    fflush(stdout); fflush(stdin);
 
     int AvailableOptions = 5; // , SubmitOrContinue;
     bool Selecting = true, Updated = false, FirstRun = true;
@@ -3597,7 +3650,7 @@ void MainMenuProfileManager(int MMPMSelected) {
                 Selecting = false; Updated = true;
                 break;
             default: {
-                if (AKDC == KEY_UP || AKDC == KEY_DOWN || AKDC == KEY_LEFT || AKDC == KEY_RIGHT || AKDC == KEY_ENTER) { ClearScreen(); continue; }
+                if (AKDC == KEY_UP || AKDC == KEY_DOWN || AKDC == KEY_LEFT || AKDC == KEY_RIGHT || AKDC == KEY_ENTER || AKDC == 91 || AKDC == 27) { ClearScreen(); continue; }
                 (AKDC > 0) ? PreviousAKDC = (int)AKDC : 0;
                 (AKDC > 0) ? CatchDefaultAKDC = true : false;
             } break;
@@ -3633,7 +3686,7 @@ void MainMenuProfileManager(int MMPMSelected) {
         // Check if the user is TRULY not going to logout!
         if (!SubmitOrContinue) MainMenuProfileManager(0);
 
-        InfoMessageBox_OK("(Info) @SKYR-PFMSA; Account has Successfully Logged Out", "You've successfully logged out from your current account!\n\nNow you will be directed into the Account Login Menu right after you agreed to this message on your terminal... .");
+        //// InfoMessageBox_OK("(Info) @SKYR-PFMSA; Account has Successfully Logged Out", "You've successfully logged out from your current account!\n\nNow you will be directed into the Account Login Menu right after you agreed to this message on your terminal... .");
         FullName[0] = 0; UserName[0] = 0;
         GlobalAccount = 0; ALMSelected = 0; FlagALM = false;
         LE = false; LPN = false; LU = false; LP = false;
@@ -3643,7 +3696,7 @@ void MainMenuProfileManager(int MMPMSelected) {
             ALMInputs.Username[0] = 0; ALMInputs.Password[0] = 0; ALMInputs.HiddenPasswordShown[0] = 0;
 
             if (access(SaveFilesTxtName[i].FileNames, F_OK) == 0 && strstr(SaveFilesTxtName[i].FileNames, "-SaveFile") != NULL) {
-                strcpy(DeleteTempDestinationTxtFile, "del ");
+                strcpy(DeleteTempDestinationTxtFile, "rm ");
                 strcat(DeleteTempDestinationTxtFile, SaveFilesTxtName[i].FileNames);
                 system(DeleteTempDestinationTxtFile);
             }
@@ -3659,6 +3712,7 @@ void MainMenuProfileManager(int MMPMSelected) {
 
 void MainMenuApplicationInformations(int MMAISelected) {
     ClearScreen();
+    fflush(stdout); fflush(stdin);
 
     int AvailableOptions = 6; // , SubmitOrContinue;
     bool Selecting = true, Updated = false, FirstRun = true;
@@ -3738,7 +3792,7 @@ void MainMenuApplicationInformations(int MMAISelected) {
                 Selecting = false; Updated = true;
                 break;
             default: {
-                if (AKDC == KEY_UP || AKDC == KEY_DOWN || AKDC == KEY_LEFT || AKDC == KEY_RIGHT || AKDC == KEY_ENTER) { ClearScreen(); continue; }
+                if (AKDC == KEY_UP || AKDC == KEY_DOWN || AKDC == KEY_LEFT || AKDC == KEY_RIGHT || AKDC == KEY_ENTER || AKDC == 91 || AKDC == 27) { ClearScreen(); continue; }
                 (AKDC > 0) ? PreviousAKDC = (int)AKDC : 0;
                 (AKDC > 0) ? CatchDefaultAKDC = true : false;
             } break;
@@ -3777,6 +3831,7 @@ void MainMenuApplicationInformations(int MMAISelected) {
 
 void F1_MoneytoryTransactionsRegister(int F1Selected) {
     ClearScreen();
+    fflush(stdout); fflush(stdin);
 
     FILE *FDestination, *FDestination02, *FSourceTemp, *FDestinationTemp, *FDestinationTemp02;
     time_t Time = time(NULL);
@@ -3809,7 +3864,7 @@ void F1_MoneytoryTransactionsRegister(int F1Selected) {
     snprintf(UserBudgetCreationTxtFile, BUFSIZE07, "%s-F3-BCAM-%s-%d.txt", UserName, MonthsOfYear[ManageTime.tm_mon], (1900 + ManageTime.tm_year));
     
     if (access(UserBudgetCreationTxtFile, F_OK) != 0) {
-        InfoMessageBox_OK("(Info) Moneytory Transaction Registration: No Monthly Budget(s) were Created", \
+        //// InfoMessageBox_OK("(Info) Moneytory Transaction Registration: No Monthly Budget(s) were Created", \
                           "We're truly sorry for the incoviniences, but right know you can't make any transactions be registered into the file system while having NO MONTHLY BUDGET for keep tracking the moneytory of your income(s) and/or expense(s) for the next 30 DAYS.\n\nSee right on your terminal for further informations, and if you still willingly to make any moneytory transaction be registered, make sure you already have the monthly budget on you!");
 
         ClearScreen();
@@ -3825,7 +3880,7 @@ void F1_MoneytoryTransactionsRegister(int F1Selected) {
         printf("\t      Happy Transactions, %s!\n\n", UserName);
 
         printf(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"\t[ENTER] Head back to main menu of the application... ");
-        getchar(); MainMenuApplicationFeatures(MMAFSelected);
+        _getch(); MainMenuApplicationFeatures(MMAFSelected);
     }
 
     // strtok_r(ReadAndPrintLine(UserBudgetCreationTxtFile, 2 + (14 * SignedInAccountNo)), ":", &BalanceBudget);
@@ -3857,7 +3912,7 @@ void F1_MoneytoryTransactionsRegister(int F1Selected) {
         
         strcpy(TempCountRegisteredTransactions, ReadAndPrintLine("TempDestination.txt", 9));
 
-        strcpy(DeleteTempDestinationTxtFile, "del "); strcat(DeleteTempDestinationTxtFile, "TempDestination.txt");
+        strcpy(DeleteTempDestinationTxtFile, "rm "); strcat(DeleteTempDestinationTxtFile, "TempDestination.txt");
         system(DeleteTempDestinationTxtFile);
 
         TempCountRegisteredTransactions[strlen(TempCountRegisteredTransactions) - 1] = '\0';
@@ -3896,15 +3951,15 @@ void F1_MoneytoryTransactionsRegister(int F1Selected) {
     TrackExpenses = strtok(TrackExpenses, ","); strtok_r(TrackExpenses, "p", &TrackExpenses);
     MonthlyTrackExpenses = (long long)atoi(TrackExpenses);
 
-    strcpy(DeleteTempDestinationTxtFile, "del "); strcat(DeleteTempDestinationTxtFile, "TempDestination02.txt");
+    strcpy(DeleteTempDestinationTxtFile, "rm "); strcat(DeleteTempDestinationTxtFile, "TempDestination02.txt");
     system(DeleteTempDestinationTxtFile);
 
     if (MonthlyBalanceBudget <= 100000) {
-        WarningMessageBox_CANCELTRYCONTINUE("(Warning) Moneytory Transaction Registration: Upcoming \"Debt\" in Monthly Budget Limit", "We're recommending you to stop record and doing anymore unnecessary transactions, since you're monthly limit got drained a lot and can/or be less than zero already!\n\nIf you insist to keep recording the transactions, do this on your own consent, since you're going exceed of your monthly budget limit.\n\nHighly recommended for record the INCOME(s) ONLY, in order to cover the exccesive EXPENSE(s)... .");
+        //// WarningMessageBox_CANCELTRYCONTINUE("(Warning) Moneytory Transaction Registration: Upcoming \"Debt\" in Monthly Budget Limit", "We're recommending you to stop record and doing anymore unnecessary transactions, since you're monthly limit got drained a lot and can/or be less than zero already!\n\nIf you insist to keep recording the transactions, do this on your own consent, since you're going exceed of your monthly budget limit.\n\nHighly recommended for record the INCOME(s) ONLY, in order to cover the exccesive EXPENSE(s)... .");
     }
 
     if ((TBD && IOE && TSM && FUC && TD) && !FirstF1MTRUpgrade) {
-        InfoMessageBox_OK("(Info) Moneytory Transaction Registration: Completing The Pre-requisites and Submission", \
+        //// InfoMessageBox_OK("(Info) Moneytory Transaction Registration: Completing The Pre-requisites and Submission", \
                           "You've completed all the pre-requisites for registering your moneytory transaction for today, and you actually can fill in more financial transaction every time WITHIN on that day only.\n\nBut remember, once you've submitted the pre-requisites down below, you CAN'T EDIT or DELETE ANYMORE since it will be saved onto the file system and will be displayed using the Histogram Graph for better lookup and maintaining your income(s) and/or expense(s) for the future!\n\nThis message may appear everytime you make changes, so make sure that whatever you're filling in the pre-requisites ARE INDEED on what actual transactions you've made along the way of the day!\n\nPROGRESS: Keep moving UPWARD or DOWNWARD until you see a complete different UI for SUBMITTING your Moneytory Transaction Registration!");
         AvailableOptions++; FirstF1MTRUpgrade = true;
     }
@@ -4556,14 +4611,16 @@ void F1_MoneytoryTransactionsRegister(int F1Selected) {
 
 void F2_MoneytoryGroupingPerCategory(int F2Selected) {
     ClearScreen();
+    fflush(stdout); fflush(stdin);
 
-    InfoMessageBox_OK("(Info) Moneytory Grouping per Category: Unavailable Feature; (not ready yet)", "We're deeply sorry, but this feature may not be working until further notices on my GitHub account (@EintsWaveX)...\n\nBut don't worry, just stay tuned and you may proceed to use the FOURTH feature and look up by the filter keyword of the type of your Moneytory Category you'd like to find about!\n\nYou may proceed here to get knowing that there're\n\n\t> 60 DIFFERENT TYPES of Financial Category,\n\nand we divide each categories by ten per pages (meaning there're 6 pages in total).\n\nTrue fact, this feature is used for both FIRST feature and THIRD feature, it's just that the grouping automatically here doesn't being implemented yet...\n\nAlright then, you may just press the [ENTER] button key on your keyboard to go back to the main menu of this application... .");
+    //// InfoMessageBox_OK("(Info) Moneytory Grouping per Category: Unavailable Feature; (not ready yet)", "We're deeply sorry, but this feature may not be working until further notices on my GitHub account (@EintsWaveX)...\n\nBut don't worry, just stay tuned and you may proceed to use the FOURTH feature and look up by the filter keyword of the type of your Moneytory Category you'd like to find about!\n\nYou may proceed here to get knowing that there're\n\n\t> 60 DIFFERENT TYPES of Financial Category,\n\nand we divide each categories by ten per pages (meaning there're 6 pages in total).\n\nTrue fact, this feature is used for both FIRST feature and THIRD feature, it's just that the grouping automatically here doesn't being implemented yet...\n\nAlright then, you may just press the [ENTER] button key on your keyboard to go back to the main menu of this application... .");
     F2_FUC01_FinancialUsesCategoryUI(0);
     MainMenuApplicationFeatures(MMAFSelected);
 }
 
 void F3_BudgetCreationAndMonitoring(int F3Selected) {
     ClearScreen();
+    fflush(stdout); fflush(stdin);
 
     FILE *FDestination, *FSourceTemp, *FDestinationTemp;
     time_t Time = time(NULL);
@@ -4606,7 +4663,7 @@ void F3_BudgetCreationAndMonitoring(int F3Selected) {
     if (ManageTime.tm_mday >= 21) {
         ClearScreen();
 
-        WarningMessageBox_CANCELTRYCONTINUE("(Warning): Budget Creation and Monitoring: Creating Monthly Budget at The End of The Month", "You're going to make a monthly budget limit, but there's only few days up ahead before getting into the next month, and since in a new month IS THE SAME AS a new monthly limit budget, so then we need you to fill in the monthly budget every EARLY DATE of each month, so it will be refreshed every next 30 DAYS.\n\nSee right on your terminal screen right after you click any of the buttons of the pop-up notification here to get more details!");
+        //// WarningMessageBox_CANCELTRYCONTINUE("(Warning): Budget Creation and Monitoring: Creating Monthly Budget at The End of The Month", "You're going to make a monthly budget limit, but there's only few days up ahead before getting into the next month, and since in a new month IS THE SAME AS a new monthly limit budget, so then we need you to fill in the monthly budget every EARLY DATE of each month, so it will be refreshed every next 30 DAYS.\n\nSee right on your terminal screen right after you click any of the buttons of the pop-up notification here to get more details!");
         printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN"(STATUS) Profile Account Linked to: "ANSI_COLOR_RESET ANSI_STYLE_BOLD BRIGHTBLUE158 ANSI_STYLE_ITALIC ANSI_STYLE_UNDERLINE"%s.\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"────────────────────────────────────────────────────────────────────────────────────────────────────\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppFeature03, UserName);
 
         printf(BRIGHTRED216"\tWarning: It's the date at %02d on current month, %s. You're going to make a monthly budget\n\t         limit, but there's only few days up ahead before getting into the next month, and since in\n\t         a new month IS THE SAME AS a new monthly limit budget, so then we need you to fill in the\n\t         monthly budget every EARLY DATE of each month, so it will be refreshed every next 30\n\t         DAYS... .\n"ANSI_COLOR_RESET, ManageTime.tm_mday, MonthsOfYear[ManageTime.tm_mon]);
@@ -4659,7 +4716,7 @@ void F3_BudgetCreationAndMonitoring(int F3Selected) {
         // CFTNBC_Hour   = 10; // atoi(strtok(NULL, ":"));
         // printf("%d-%d-%04d\n", CFTNBC_Date, CFTNBC_Month, CFTNBC_Year);
         // printf("%02d:%02d:%02d\n", CFTNBC_Second, CFTNBC_Minute, CFTNBC_Hour);
-        // getchar();
+        // _getch();
 
         // (((ManageTime.tm_mon + 1) != 12) ? (1900 + ManageTime.tm_year) : ((1900 + ManageTime.tm_year) + 1)), (((ManageTime.tm_mon + 1) != 12) ? ((ManageTime.tm_mon + 1) + 1) : 1)
         if ((ManageTime.tm_mday == CFTNBC_Date) && ((((ManageTime.tm_mon + 1) != 12) ? ((ManageTime.tm_mon + 1) + 1) : 1) == CFTNBC_Month) && (ManageTime.tm_year == CFTNBC_Year)) {
@@ -4677,7 +4734,7 @@ void F3_BudgetCreationAndMonitoring(int F3Selected) {
                         NULL;
 
         } else {
-            InfoMessageBox_OK("(Info) Budget Creation and Monitoring: Unavailable Budget Creation Time Period", \
+            //// InfoMessageBox_OK("(Info) Budget Creation and Monitoring: Unavailable Budget Creation Time Period", \
                               "We're sorry to let you know, but as what the message says before while you're going to submit your monthly budget creation, you CAN'T CREATE any monthly budget at the moment, until the next 30 DAYS right after you submitted the monthly budget before.\n\nSee right on your terminal for further information, and remember the dates and times before you're going to submit another monthly budget creation!");
 
             printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN"(STATUS) Profile Account Linked to: "ANSI_COLOR_RESET ANSI_STYLE_BOLD BRIGHTBLUE158 ANSI_STYLE_ITALIC ANSI_STYLE_UNDERLINE"%s.\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"────────────────────────────────────────────────────────────────────────────────────────────────────\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppFeature03, UserName);
@@ -4691,7 +4748,7 @@ void F3_BudgetCreationAndMonitoring(int F3Selected) {
 
             puts("\n");
             printf(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"\t[ENTER] Head back to main menu of the application... "ANSI_COLOR_RESET);
-            getchar(); MainMenuApplicationFeatures(MMAFSelected);
+            _getch(); MainMenuApplicationFeatures(MMAFSelected);
         }
 
         strtok_r(TxtFileName, ">", &SelectedKeyString);
@@ -4708,7 +4765,7 @@ void F3_BudgetCreationAndMonitoring(int F3Selected) {
         
         strcpy(TempCountRegisteredBudgetCreations, ReadAndPrintLine("TempDestination.txt", 9));
 
-        strcpy(DeleteTempDestinationTxtFile, "del ");
+        strcpy(DeleteTempDestinationTxtFile, "rm ");
         strcat(DeleteTempDestinationTxtFile, "TempDestination.txt");
         system(DeleteTempDestinationTxtFile);
 
@@ -4722,7 +4779,7 @@ void F3_BudgetCreationAndMonitoring(int F3Selected) {
     }
 
     if ((MOR && BCC && BCL && BCT && BCD) && !FirstF3BCAMUpgrade) {
-        InfoMessageBox_OK("(Info) Budget Creation and Monitoring: Completing The Pre-requisites and Submission", \
+        //// InfoMessageBox_OK("(Info) Budget Creation and Monitoring: Completing The Pre-requisites and Submission", \
                           "You've completed all the pre-requisites for registering your budget creation and monitoring for today's month, and for the fact that when you create the budget for the current month, it means that you CAN'T MAKE ANOTHER ONE until the NEXT 30 DAYS starting after you submitted the budget creation onto the file system.\n\nAlso remember, once you've submitted the pre-requisites down below, you CAN'T EDIT or DELETE ANYMORE since it will be saved onto the file system and will be used for keep tracking all of your income(s) and/or expense(s) by the Moneytory Transaction Registration feature, and also be displayed using the Histogram Graph for better lookup and maintaining your income(s) and/or expense(s) for the future!\n\nThis message may appear everytime you make changes, so make sure that whatever you're filling in the pre-requisites ARE INDEED on what actual budget you wanted to make for the whole month until the very next 30 DAYS coming ahead!\n\nPROGRESS: Keep moving UPWARD or DOWNWARD until you see a complete different UI for SUBMITTING your MONTHLY Budget Creation and Moneytory!");
         AvailableOptions++; FirstF3BCAMUpgrade = true;
     }
@@ -5321,11 +5378,12 @@ void F3_BudgetCreationAndMonitoring(int F3Selected) {
 }
 
 void F4_FilterSearchingData(int F4Selected) {
-    // FILE *TempAccessVHTF;
-    char MatchAnyListedTxtFile[BUFSIZE07], AnyListedTxtFile[BUFSIZE07], KeyFinderTxtFile[BUFSIZE10], DecryptAndReadFile[BUFSIZE10];
-
     ClearScreen();
+    fflush(stdout); fflush(stdin);
+
+    // FILE *TempAccessVHTF;
     // FinancialAM-05-Histogram-2ndWeekInDecember2023.txt
+    char MatchAnyListedTxtFile[BUFSIZE07], AnyListedTxtFile[BUFSIZE07], KeyFinderTxtFile[BUFSIZE10], DecryptAndReadFile[BUFSIZE10];
     
     printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN"(STATUS) Profile Account Linked to: "ANSI_COLOR_RESET ANSI_STYLE_BOLD BRIGHTBLUE158 ANSI_STYLE_ITALIC ANSI_STYLE_UNDERLINE"%s.\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"────────────────────────────────────────────────────────────────────────────────────────────────────\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppFeature04, UserName);
     printf(BRIGHTPURPLE218 ANSI_STYLE_BOLD"\tLists of availables Moneytory Transaction Registration file system:\n\n"ANSI_COLOR_RESET);
@@ -5370,7 +5428,7 @@ void F4_FilterSearchingData(int F4Selected) {
             
             printf(ANSI_COLOR_LIGHTBLUE"\n\t────────────────────────────────────────────────────────────────────────────────────────────────────"ANSI_COLOR_RESET);
             printf(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"\n\n\t[ENTER] Head back to the main menu... ");
-            getchar(); MainMenuApplicationFeatures(0);
+            _getch(); MainMenuApplicationFeatures(0);
         
         } else {
             F4_FilterSearchingData(0);
@@ -5383,6 +5441,7 @@ void F4_FilterSearchingData(int F4Selected) {
 
 void F5_ReminderAndSetNotifications(int F5Selected) {
     ClearScreen();
+    fflush(stdout); fflush(stdin);
 
     // printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN"(STATUS) Profile Account Linked to: "ANSI_COLOR_RESET ANSI_STYLE_BOLD BRIGHTBLUE158 ANSI_STYLE_ITALIC ANSI_STYLE_UNDERLINE"%s.\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"────────────────────────────────────────────────────────────────────────────────────────────────────\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppFeature05, UserName);
     // puts(ANSI_COLOR_LIGHTRED"\t(DEMO MODE) Updating Soon: This spesific main menu session is still on DEVELOPMENT, and will be \n\tupdated in the future, soon enough before the 16th WEEK.");
@@ -5391,18 +5450,19 @@ void F5_ReminderAndSetNotifications(int F5Selected) {
     // puts(ANSI_COLOR_ORANGE"\n\tIn order to try to use this feature, try to use the program manually from the 'int main()' section. \n\tRight there, comment the condition to try to register and log in, and un-comment the lines that have \n\tseveral naming functions starting with 'INFO', 'QUESTION', 'WARNING', and 'ERROR'.");
     // puts(ANSI_COLOR_LIGHTORANGE"\n\tExperimental demonstrations: Un-comment those 4 lines as stated above, and enjoy some Windows' old \n\tpop-up notifications, and make some changes for the titles and the messages for each notifications \n\tin order to experience the changes accordingly.");
     // puts(ANSI_COLOR_GREEN ANSI_STYLE_ITALIC"\n\tSee more at my GitHub project here: https://github.com/EintsWaveX/ALPRO-FinalAssessments-EL4705_03");
-    // getchar();
-    InfoMessageBox_OK("(Info) Reminder and Notifications: Notifications Only", "Just a pop-up notification here, what would you expect?\n\nOh yes, don't forget to keep updated the information when the next update for further customize-able notifications, with the toogle to whether turning on or off the notifications... .\n\nBut before you go, just to mention that all the pop-up notifications you see here are actually made for C++ code, but somehow are able to be translated into C code here (but of course I gotta make the changes first), and all features (even the profile manager section) must have their own type of notifications!");
+    // _getch();
+    //// InfoMessageBox_OK("(Info) Reminder and Notifications: Notifications Only", "Just a pop-up notification here, what would you expect?\n\nOh yes, don't forget to keep updated the information when the next update for further customize-able notifications, with the toogle to whether turning on or off the notifications... .\n\nBut before you go, just to mention that all the pop-up notifications you see here are actually made for C++ code, but somehow are able to be translated into C code here (but of course I gotta make the changes first), and all features (even the profile manager section) must have their own type of notifications!");
     MainMenuApplicationFeatures(MMAFSelected);
 }
 
 void F6_DataVisualization(int F6Selected) {
+    ClearScreen();
+    fflush(stdout); fflush(stdin);
+
     // FILE *TempAccessVHTF;
+    // FinancialAM-05-Histogram-2ndWeekInDecember2023.txt
     char MatchHistogramTxtFile[BUFSIZE07], VisualizeHistogramTxtFile[BUFSIZE07], *PerMoneyExpenseLine;
     signed long long int PerMoneyExpenses = 0;
-
-    ClearScreen();
-    // FinancialAM-05-Histogram-2ndWeekInDecember2023.txt
     
     printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN"(STATUS) Profile Account Linked to: "ANSI_COLOR_RESET ANSI_STYLE_BOLD BRIGHTBLUE158 ANSI_STYLE_ITALIC ANSI_STYLE_UNDERLINE"%s.\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"────────────────────────────────────────────────────────────────────────────────────────────────────\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppFeature06, UserName);
     printf(BRIGHTPURPLE218 ANSI_STYLE_BOLD"\tLists of availables Moneytory Transaction Registration file system:\n\n"ANSI_COLOR_RESET);
@@ -5433,7 +5493,7 @@ void F6_DataVisualization(int F6Selected) {
 
             printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN"(STATUS) Profile Account Linked to: "ANSI_COLOR_RESET ANSI_STYLE_BOLD BRIGHTBLUE158 ANSI_STYLE_ITALIC ANSI_STYLE_UNDERLINE"%s.\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"────────────────────────────────────────────────────────────────────────────────────────────────────\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppFeature06, UserName);
             HorizontalHistogramUI_MONTH(VisualizeHistogramTxtFile, PerMoneyExpenses);
-            getchar(); MainMenuApplicationFeatures(F6Selected);
+            _getch(); MainMenuApplicationFeatures(F6Selected);
         } else {
             F6_DataVisualization(F6Selected);
         }
@@ -5444,11 +5504,13 @@ void F6_DataVisualization(int F6Selected) {
 }
 
 void LanguageMenu(void) {
+    fflush(stdout); fflush(stdin);
     ArrowKeyChoiceDialog("Language Mode", MessagesShown_ArrowKeyChoiceDialog, 0, 2);
 }
 
 void AccountRegistrationMenu(int ARMSelected) {
     ClearScreen();
+    fflush(stdout); fflush(stdin);
 
     time_t Time = time(NULL);
     struct tm ManageTime = *localtime(&Time);
@@ -5502,7 +5564,7 @@ void AccountRegistrationMenu(int ARMSelected) {
         
         strcpy(TempCountSKYRFMSARegisteredAccounts, ReadAndPrintLine("TempDestination.txt", 9));
 
-        strcpy(DeleteTempDestinationTxtFile, "del ");
+        strcpy(DeleteTempDestinationTxtFile, "rm ");
         strcat(DeleteTempDestinationTxtFile, "TempDestination.txt");
         system(DeleteTempDestinationTxtFile);
 
@@ -5519,10 +5581,10 @@ void AccountRegistrationMenu(int ARMSelected) {
     }
     
     if ((FN && LN && E && U && P) && !FirstARMUpgrade && !ARMNotificationEnabled_02) {
-        InfoMessageBox_OK("(Info) @SKYR-PFMSA; First Profile Input Data Upgraded", "All right, new starters! Here now we've upgraded the Registration Menu UI with 4 (four) new profiles input, such as:\n\n\t1. Date of Birth (DD-MM-YYYY)\n\t2. Present Age\n\t3. Phone Number (+? ?)\n\t4. Sex/Gender (M/F)\n\nAfter you fulfilled in everything it asked for, you may see the pop-up message like this again, indicating you're ready to submit your profil account and be registered into the file system!");
+        //// InfoMessageBox_OK("(Info) @SKYR-PFMSA; First Profile Input Data Upgraded", "All right, new starters! Here now we've upgraded the Registration Menu UI with 4 (four) new profiles input, such as:\n\n\t1. Date of Birth (DD-MM-YYYY)\n\t2. Present Age\n\t3. Phone Number (+? ?)\n\t4. Sex/Gender (M/F)\n\nAfter you fulfilled in everything it asked for, you may see the pop-up message like this again, indicating you're ready to submit your profil account and be registered into the file system!");
         ARMNotificationEnabled_02 = true;
     } if ((FN && LN && E && U && P) && (B && A && PN && S) && !SecondARMUpgrade && !ARMNotificationEnabled_03) {
-        InfoMessageBox_OK("(Info) @SKYR-PFMSA; Second Profile Input Data Upgraded", "All right, new starters! Here now we've upgraded the Registration Menu UI again, and now you can just keep going UPWARDS or DOWNWARDS until you see a complete different UI, making sure that you're ready to be registered as a new user using this application!");
+        //// InfoMessageBox_OK("(Info) @SKYR-PFMSA; Second Profile Input Data Upgraded", "All right, new starters! Here now we've upgraded the Registration Menu UI again, and now you can just keep going UPWARDS or DOWNWARDS until you see a complete different UI, making sure that you're ready to be registered as a new user using this application!");
         ARMNotificationEnabled_03 = true;
     }
 
@@ -5532,7 +5594,9 @@ void AccountRegistrationMenu(int ARMSelected) {
         AvailableOptions += 5; SecondARMUpgrade = true;
     }
 
-    if (!ARMNotificationEnabled_01) { InfoMessageBox_OK("(Info) @SKYR-PFMSA; Importance of The Safety Profile Account", "For the safety purposes while you're going registrating a new account, or when trying to logged into the application, or even when you're going to recover of your missing account,\n\n\tWE ARE GOING TO DEPLETED EVERY INPUT YOU'VE PROGRESSED SO FAR, SO PLEASE JUST STAY IN ONE UI MENU;\n\nIn order to be save and more secure, so don't blame us when you're missing on your inputs after switching to different UIs... ."); ARMNotificationEnabled_01 = true; }
+    if (!ARMNotificationEnabled_01) { //// InfoMessageBox_OK("(Info) @SKYR-PFMSA; Importance of The Safety Profile Account", "For the safety purposes while you're going registrating a new account, or when trying to logged into the application, or even when you're going to recover of your missing account,\n\n\tWE ARE GOING TO DEPLETED EVERY INPUT YOU'VE PROGRESSED SO FAR, SO PLEASE JUST STAY IN ONE UI MENU;\n\nIn order to be save and more secure, so don't blame us when you're missing on your inputs after switching to different UIs... .");
+        ARMNotificationEnabled_01 = true;
+    }
 
     while (Selecting) {
         if (!FirstRun) {
@@ -5684,7 +5748,8 @@ void AccountRegistrationMenu(int ARMSelected) {
                         TempARMInputs = fopen("TempSKYR-FMSA-RegisteredAccounts.txt", "a+");
 
                         if (!FlagARM) { strcpy(GRA, "1"); }
-                        else if (FlagARM && GlobalSKYRFMSARegisteredAccounts > 1) { itoa(GlobalSKYRFMSARegisteredAccounts, GRA, 10); }
+                        else if (FlagARM && GlobalSKYRFMSARegisteredAccounts > 1) { sprintf(GRA, "%lld", GlobalSKYRFMSARegisteredAccounts); }
+                        //// NOTE: Replacement of 'itoa(GlobalSKYRFMSARegisteredAccounts, GRA, 10);' implementation on WINDOWS API.
                         
                         snprintf(MadeTime, BUFSIZE07, "%d-%02d-%02d %02d:%02d:%02d", ManageTime.tm_year + 1900, ManageTime.tm_mon + 1, ManageTime.tm_mday, ManageTime.tm_hour, ManageTime.tm_min, ManageTime.tm_sec);
                         strcpy(AccountMadeTime, "Profile Account :: No. "); strcat(AccountMadeTime, GRA); strcat(AccountMadeTime, "\n");
@@ -5721,7 +5786,7 @@ void AccountRegistrationMenu(int ARMSelected) {
                         strcpy(RegAccInsider, "Registered Accounts: "); strcat(RegAccInsider, GRA); strcat(RegAccInsider, " account(s) in total.");
                         OverWriteStringAtLine("TempSKYR-FMSA-RegisteredAccounts.txt", RegAccInsider, 0, 9);
                         EncryptTxtFile("TempSKYR-FMSA-RegisteredAccounts.txt", "SKYR-FMSA-RegisteredAccounts.txt", EncryptionKey, true);
-                        printf(BRIGHTGREEN154"\t[ENTER] Proceed to the Login Menu... "); getchar();
+                        printf(BRIGHTGREEN154"\t[ENTER] Proceed to the Login Menu... "); _getch();
                         AccountLoginMenu(0);
 
                     } else { ARMSelected = 0; AccountRegistrationMenu(ARMSelected); }
@@ -5868,7 +5933,8 @@ void AccountRegistrationMenu(int ARMSelected) {
                         TempARMInputs = fopen("TempSKYR-FMSA-RegisteredAccounts.txt", "a+");
 
                         if (!FlagARM) { strcpy(GRA, "1"); }
-                        else if (FlagARM && GlobalSKYRFMSARegisteredAccounts > 1) { itoa(GlobalSKYRFMSARegisteredAccounts, GRA, 10); }
+                        else if (FlagARM && GlobalSKYRFMSARegisteredAccounts > 1) { sprintf(GRA, "%lld", GlobalSKYRFMSARegisteredAccounts); }
+                        //// NOTE: Replacement of 'itoa(GlobalSKYRFMSARegisteredAccounts, GRA, 10);' implementation on WINDOWS API.
                         
                         snprintf(MadeTime, BUFSIZE07, "%d-%02d-%02d %02d:%02d:%02d", ManageTime.tm_year + 1900, ManageTime.tm_mon + 1, ManageTime.tm_mday, ManageTime.tm_hour, ManageTime.tm_min, ManageTime.tm_sec);
                         strcpy(AccountMadeTime, "Profile Account :: No. "); strcat(AccountMadeTime, GRA); strcat(AccountMadeTime, "\n");
@@ -5905,7 +5971,7 @@ void AccountRegistrationMenu(int ARMSelected) {
                         strcpy(RegAccInsider, "Registered Accounts: "); strcat(RegAccInsider, GRA); strcat(RegAccInsider, " account(s) in total.");
                         OverWriteStringAtLine("TempSKYR-FMSA-RegisteredAccounts.txt", RegAccInsider, 0, 9);
                         EncryptTxtFile("TempSKYR-FMSA-RegisteredAccounts.txt", "SKYR-FMSA-RegisteredAccounts.txt", EncryptionKey, true);
-                        printf(BRIGHTGREEN154"\t[ENTER] Proceed to the Login Menu... "); getchar();
+                        printf(BRIGHTGREEN154"\t[ENTER] Proceed to the Login Menu... "); _getch();
                         AccountLoginMenu(0);
 
                     } else { ARMSelected = 0; AccountRegistrationMenu(ARMSelected); }
@@ -5957,7 +6023,7 @@ void AccountRegistrationMenu(int ARMSelected) {
                 Selecting = false; Updated = true; CatchDefaultAKDC = false;
                 break;
             default: {
-                if (AKDC == KEY_UP || AKDC == KEY_DOWN || AKDC == KEY_LEFT || AKDC == KEY_RIGHT || AKDC == KEY_ENTER) { ClearScreen(); continue; }
+                if (AKDC == KEY_UP || AKDC == KEY_DOWN || AKDC == KEY_LEFT || AKDC == KEY_RIGHT || AKDC == KEY_ENTER || AKDC == 91 || AKDC == 27) { ClearScreen(); continue; }
                 (AKDC > 0) ? PreviousAKDC = (int)AKDC : 0;
                 (AKDC > 0) ? CatchDefaultAKDC = true : false;
             } break;
@@ -6360,7 +6426,7 @@ void AccountRegistrationMenu(int ARMSelected) {
             
             printf(ANSI_COLOR_LIGHTRED"\tWarning: Before inserting your present age in here, make sure to fill in your \n\t\t date of birth, considering that there'll be a checking if your present \n\t\t age is a valid!\n\n"ANSI_COLOR_RESET);
             printf(ANSI_COLOR_LIGHTORANGE"\tDate of Birth:\t\t(your birthdate)\n      " ANSI_COLOR_LIGHTYELLOW"> Age on Present:\t\t%s\n\t"ANSI_COLOR_RESET "Phone Number:\t\t%s\n\tSex/Gender:\t\t%s\n", ARMInputs.DateOfBirth, ARMInputs.AgeOnPresent, ARMInputs.PhoneNumber, ARMInputs.Sex);
-            printf(ANSI_COLOR_LIGHTMAGENTA"\n\tPlease proceed back to the registration menu by pressing your [ENTER] button \n\tkey on the keyboard. "ANSI_COLOR_RESET); getchar();
+            printf(ANSI_COLOR_LIGHTMAGENTA"\n\tPlease proceed back to the registration menu by pressing your [ENTER] button \n\tkey on the keyboard. "ANSI_COLOR_RESET); _getch();
             AccountRegistrationMenu(ARMSelected);
         } ClearScreen();
 
@@ -6572,6 +6638,7 @@ void AccountRegistrationMenu(int ARMSelected) {
 
 void AccountLoginMenu(int ALMSelected) {
     ClearScreen();
+    fflush(stdout); fflush(stdin);
 
     FILE *FDestination, *FTempDestination;
     int BufLen, Ptr = 0, KeyTracker = 0;
@@ -6616,7 +6683,7 @@ void AccountLoginMenu(int ALMSelected) {
         
         strcpy(TempCountSKYRFMSARegisteredAccounts, ReadAndPrintLine("TempDestination.txt", 9));
 
-        strcpy(DeleteTempDestinationTxtFile, "del ");
+        strcpy(DeleteTempDestinationTxtFile, "rm ");
         strcat(DeleteTempDestinationTxtFile, "TempDestination.txt");
         system(DeleteTempDestinationTxtFile);
 
@@ -6634,7 +6701,7 @@ void AccountLoginMenu(int ALMSelected) {
 
     SKYRApplicationRunning = true;
     if ((LE && LPN && LU && LP) && !ALMUpgrade && !ALMNotificationEnabled_02) {
-        InfoMessageBox_OK("(Info) @SKYR-PFMSA; Login Menu Upgraded", "All right, new starters! Here now we've upgraded the Login Menu UI, and now you can just keep going UPWARDS or DOWNWARDS until you see a complete different UI, making sure that you're ready to be logged in into this application!");
+        //// InfoMessageBox_OK("(Info) @SKYR-PFMSA; Login Menu Upgraded", "All right, new starters! Here now we've upgraded the Login Menu UI, and now you can just keep going UPWARDS or DOWNWARDS until you see a complete different UI, making sure that you're ready to be logged in into this application!");
         ALMNotificationEnabled_02 = true;
     }
 
@@ -6643,18 +6710,20 @@ void AccountLoginMenu(int ALMSelected) {
     }
 
     if (strlen(FullName) != 0 && strlen(UserName) != 0) {
-        InfoMessageBox_OK("(Info): @SKYR-PFMSA; Account's Still Logged In", "We've detected that you're still logged into your current account (with the details on your terminal afterwards), so please logged out from your account first, then you may hop into login another account you had on the registered accounts list.");
+        //// InfoMessageBox_OK("(Info): @SKYR-PFMSA; Account's Still Logged In", "We've detected that you're still logged into your current account (with the details on your terminal afterwards), so please logged out from your account first, then you may hop into login another account you had on the registered accounts list.");
 
         printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppLoginUI);
         printf(BRIGHTGREEN156"\tInfo: We checked that you're still logged into an account as:\n\t      "ANSI_COLOR_RESET BRIGHTBLUE158 ANSI_STYLE_BOLD"Full Name: %s\n\t      "ANSI_COLOR_RESET BRIGHTBLUE159 ANSI_STYLE_BOLD"Username:  %s\n"ANSI_COLOR_RESET, FullName, UserName);
         puts(BRIGHTPINK219 ANSI_STYLE_BOLD"\n\tNote: Consider to signing out from this account first before continuing to signing in into another \n\t      account you've registered beforehand!\n");
         printf(ANSI_COLOR_MAGENTA ANSI_STYLE_ITALIC"\t[ENTER] Proceed to go back to the profile managing menu in the main menu... ");
         
-        getchar();
+        _getch();
         MainMenuProfileManager(MMPMSelected);
     }
 
-    if (!ALMNotificationEnabled_01) { InfoMessageBox_OK("(Info) @SKYR-PFMSA; Importance of The Safety Profile Account", "For the safety purposes while you're going registrating a new account, or when trying to logged into the application, or even when you're going to recover of your missing account,\n\n\tWE ARE GOING TO DEPLETED EVERY INPUT YOU'VE PROGRESSED SO FAR, SO PLEASE JUST STAY IN ONE UI MENU;\n\nIn order to be save and more secure, so don't blame us when you're missing on your inputs after switching to different UIs... ."); ALMNotificationEnabled_01 = true; }
+    if (!ALMNotificationEnabled_01) { //// InfoMessageBox_OK("(Info) @SKYR-PFMSA; Importance of The Safety Profile Account", "For the safety purposes while you're going registrating a new account, or when trying to logged into the application, or even when you're going to recover of your missing account,\n\n\tWE ARE GOING TO DEPLETED EVERY INPUT YOU'VE PROGRESSED SO FAR, SO PLEASE JUST STAY IN ONE UI MENU;\n\nIn order to be save and more secure, so don't blame us when you're missing on your inputs after switching to different UIs... .");
+        ALMNotificationEnabled_01 = true;
+    }
 
     while (Selecting) {
         if (!FirstRun) {
@@ -6753,7 +6822,7 @@ void AccountLoginMenu(int ALMSelected) {
                             (strcmp(ShowPhoneNumber, ALMInputs.PhoneNumber) == 0) && \
                             (strcmp(ShowUsername, ALMInputs.Username)       == 0) && \
                             (strcmp(ShowPassword, ALMInputs.Password)       == 0)) {   
-                                strcpy(DeleteTempDestinationTxtFile, "del ");
+                                strcpy(DeleteTempDestinationTxtFile, "rm ");
                                 strcat(DeleteTempDestinationTxtFile, "TempDestination.txt");
                                 system(DeleteTempDestinationTxtFile);
 
@@ -6766,7 +6835,7 @@ void AccountLoginMenu(int ALMSelected) {
                                 puts(ANSI_COLOR_LIGHTMAGENTA"\tNow you may proceed to the main menu by pressing the [ENTER] button key on \n\tyour keyboard right away."ANSI_COLOR_RESET);
 
                                 GlobalAccount = GRA;
-                                getchar();
+                                _getch();
 
                                 strcpy(FullName, ShowFirstName); strcat(FullName, " "); strcat(FullName, ShowLastName);
                                 strcpy(UserName, ShowUsername);
@@ -6777,7 +6846,7 @@ void AccountLoginMenu(int ALMSelected) {
                                 FirstName[0] = 0; LastName[0] = 0, Email[0] = 0, Username[0] = 0, Password[0] = 0;
                                 DateOfBirth[0] = 0, AgeOnPresent[0] = 0; PhoneNumber[0] = 0, Sex[0] = 0;
                                 
-                                strcpy(DeleteTempDestinationTxtFile, "del ");
+                                strcpy(DeleteTempDestinationTxtFile, "rm ");
                                 strcat(DeleteTempDestinationTxtFile, "TempDestination.txt");
                                 system(DeleteTempDestinationTxtFile);
 
@@ -6785,7 +6854,7 @@ void AccountLoginMenu(int ALMSelected) {
                                 printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppLoginUI);
                                 
                                 puts(ANSI_COLOR_LIGHTRED"\tError: We checked that it seems like one or more inserted profile account(s) you \n\t       provide before isn't validating the same as the original registered \n\t       profile account(s) of yours that you're trying to logged in as by now.\n"ANSI_COLOR_RESET ANSI_COLOR_LIGHTYELLOW"\n\tConsider to re-check your logged in profile data and make sure that if you forget \n\tsomething, then you may to look for a recovery account by tapping [9] button \n\tkey on your keyboard, then proceed to fulfill-in important things afterwards.\n"ANSI_COLOR_RESET);
-                                getchar();
+                                _getch();
                                 ALMSelected = 0; AccountLoginMenu(ALMSelected);
                             }
                         }
@@ -6888,7 +6957,7 @@ void AccountLoginMenu(int ALMSelected) {
                                 (strcmp(ShowPhoneNumber, ALMInputs.PhoneNumber) == 0) && \
                                 (strcmp(ShowUsername, ALMInputs.Username)       == 0) && \
                                 (strcmp(ShowPassword, ALMInputs.Password)       == 0)) {   
-                                    strcpy(DeleteTempDestinationTxtFile, "del ");
+                                    strcpy(DeleteTempDestinationTxtFile, "rm ");
                                     strcat(DeleteTempDestinationTxtFile, "TempDestination.txt");
                                     system(DeleteTempDestinationTxtFile);
 
@@ -6901,7 +6970,7 @@ void AccountLoginMenu(int ALMSelected) {
                                     puts(ANSI_COLOR_LIGHTMAGENTA"\tNow you may proceed to the main menu by pressing the [ENTER] button key on \n\tyour keyboard right away."ANSI_COLOR_RESET);
 
                                     GlobalAccount = GRA;
-                                    getchar();
+                                    _getch();
 
                                     strcpy(FullName, ShowFirstName); strcat(FullName, " "); strcat(FullName, ShowLastName);
                                     strcpy(UserName, ShowUsername);
@@ -6912,7 +6981,7 @@ void AccountLoginMenu(int ALMSelected) {
                                     FirstName[0] = 0; LastName[0] = 0, Email[0] = 0, Username[0] = 0, Password[0] = 0;
                                     DateOfBirth[0] = 0, AgeOnPresent[0] = 0; PhoneNumber[0] = 0, Sex[0] = 0;
 
-                                    strcpy(DeleteTempDestinationTxtFile, "del ");
+                                    strcpy(DeleteTempDestinationTxtFile, "rm ");
                                     strcat(DeleteTempDestinationTxtFile, "TempDestination.txt");
                                     system(DeleteTempDestinationTxtFile);
 
@@ -6920,7 +6989,7 @@ void AccountLoginMenu(int ALMSelected) {
                                     printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppLoginUI);
                                     
                                     puts(ANSI_COLOR_LIGHTRED"\tError: We checked that it seems like one or more inserted profile account(s) you \n\t       provide before isn't validating the same as the original registered \n\t       profile account(s) of yours that you're trying to logged in as by now.\n"ANSI_COLOR_RESET ANSI_COLOR_LIGHTYELLOW"\n\tConsider to re-check your logged in profile data and make sure that if you forget \n\tsomething, then you may to look for a recovery account by tapping [9] button \n\tkey on your keyboard, then proceed to fulfill-in important things afterwards.\n"ANSI_COLOR_RESET);
-                                    getchar();
+                                    _getch();
                                     ALMSelected = 0; AccountLoginMenu(ALMSelected);
                                 }
                             }
@@ -6977,7 +7046,7 @@ void AccountLoginMenu(int ALMSelected) {
                 Selecting = false; Updated = true;
                 break;
             default: {
-                if (AKDC == KEY_UP || AKDC == KEY_DOWN || AKDC == KEY_LEFT || AKDC == KEY_RIGHT || AKDC == KEY_ENTER) { ClearScreen(); continue; }
+                if (AKDC == KEY_UP || AKDC == KEY_DOWN || AKDC == KEY_LEFT || AKDC == KEY_RIGHT || AKDC == KEY_ENTER || AKDC == 91 || AKDC == 27) { ClearScreen(); continue; }
                 (AKDC > 0) ? PreviousAKDC = (int)AKDC : 0;
                 (AKDC > 0) ? CatchDefaultAKDC = true : false;
             } break;
@@ -7298,7 +7367,7 @@ void AccountLoginMenu(int ALMSelected) {
         printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppLoginUI);
 
         if (LU) {
-            printf(ANSI_COLOR_GREEN"\tInfo: We'd checked that you earlier had already insert your username as: \n\t          >> %s.\n\n\t      But don't worry, if you want to make a change, then you may proceed to do so.\n\n"ANSI_COLOR_RESET, ARMInputs.Username);
+            printf(ANSI_COLOR_GREEN"\tInfo: We'd checked that you earlier had already insert your username as: \n\t          >> %s.\n\n\t      But don't worry, if you want to make a change, then you may proceed to do so.\n\n"ANSI_COLOR_RESET, ALMInputs.Username);
             printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n      " ANSI_COLOR_LIGHTGREEN"> SKYR Username:\t\t%s\n\t"ANSI_COLOR_RESET "SKYR Password:\t\t%s\n", ALMInputs.Email, ALMInputs.PhoneNumber, ALMInputs.Username, (!ALMShowThePassword) ? ALMInputs.HiddenPasswordShown : ALMInputs.Password);
             puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTGREEN"SKYR Username."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your username profile account.");
             puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The username must starts with a character and shall not contains a single space, so use \n\t      underscores or dashes to represents the next characters."ANSI_COLOR_RESET);
@@ -7491,6 +7560,7 @@ void AccountLoginMenu(int ALMSelected) {
 
 void AccountRecoveryMenu(int ACMSelected) {
     ClearScreen();
+    fflush(stdout); fflush(stdin);
 
     FILE *FDestination, *FTempDestination;
     int BufLen;
@@ -7509,15 +7579,18 @@ void AccountRecoveryMenu(int ACMSelected) {
 
     if ((CE && CPN && CU && CP) && !ACMUpgrade && AllEmpty != 4) { AvailableOptions += 1; }
 
-    if (!ACMNotificationEnabled_01) { InfoMessageBox_OK("(Info) @SKYR-PFMSA; Importance of The Safety Profile Account", "For the safety purposes while you're going registrating a new account, or when trying to logged into the application, or even when you're going to recover of your missing account,\n\n\tWE ARE GOING TO DEPLETED EVERY INPUT YOU'VE PROGRESSED SO FAR, SO PLEASE JUST STAY IN ONE UI MENU;\n\nIn order to be save and more secure, so don't blame us when you're missing on your inputs after switching to different UIs... ."); ACMNotificationEnabled_01 = true; }
-    if ((CE && CPN && CU && CP) && AllEmpty != 4 && !ACMNotificationEnabled_02) { InfoMessageBox_OK("(Info) @SKYR-PFMSA; Recovery Menu Upgraded", "All right, fellow lost users! Here now we've upgraded the Recovery Menu UI, and now you can just keep going UPWARDS or DOWNWARDS until you see a complete different UI, making sure that you're ready find your lost/missing accounts right away!"); ACMNotificationEnabled_02 = true; ACMUpgrade = true; }
+    if (!ACMNotificationEnabled_01) { //// InfoMessageBox_OK("(Info) @SKYR-PFMSA; Importance of The Safety Profile Account", "For the safety purposes while you're going registrating a new account, or when trying to logged into the application, or even when you're going to recover of your missing account,\n\n\tWE ARE GOING TO DEPLETED EVERY INPUT YOU'VE PROGRESSED SO FAR, SO PLEASE JUST STAY IN ONE UI MENU;\n\nIn order to be save and more secure, so don't blame us when you're missing on your inputs after switching to different UIs... ."); 
+        ACMNotificationEnabled_01 = true;
+    } if ((CE && CPN && CU && CP) && AllEmpty != 4 && !ACMNotificationEnabled_02) { //// InfoMessageBox_OK("(Info) @SKYR-PFMSA; Recovery Menu Upgraded", "All right, fellow lost users! Here now we've upgraded the Recovery Menu UI, and now you can just keep going UPWARDS or DOWNWARDS until you see a complete different UI, making sure that you're ready find your lost/missing accounts right away!"); 
+        ACMNotificationEnabled_02 = true; ACMUpgrade = true;
+    }
 
     while (Selecting) {
         printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRecoveryUI);
         if (CatchDefaultAKDC) { (AllEmpty != 4) ? printf(ANSI_COLOR_LIGHTRED"\tError: The auto-enter shortcut key labeled as '%c' (ID: 0x%02X) is not registered at the moment!\n\n"ANSI_COLOR_RESET, ((int)PreviousAKDC != 12) ? (char)PreviousAKDC : "\\n", (int)PreviousAKDC) : printf(ANSI_COLOR_LIGHTRED"\tError:   The auto-enter shortcut key labeled as '%c' (ID: 0x%02X) is not registered at the moment!\n"ANSI_COLOR_RESET, ((int)PreviousAKDC != 12) ? (char)PreviousAKDC : "\\n", (int)PreviousAKDC); }
         
         if (AllEmpty == 4 && !ACMNotificationEnabled_03) {
-            WarningMessageBox_CANCELTRYCONTINUE("(Warning): @SKYR-PFMSA; Empty Pre-requisites for Recovery Process", "Unfortunately, we can't process on the recovery account here because you've not providing anything but empty inputs, meaning you didn't know anything on what you're trying to revocer for about the little details on your missing account.\n\nPlease make sure you at least remember something about your missing profile account, at least from the phone number or the username you used when you're creating the account for the first time... .");
+            //// WarningMessageBox_CANCELTRYCONTINUE("(Warning): @SKYR-PFMSA; Empty Pre-requisites for Recovery Process", "Unfortunately, we can't process on the recovery account here because you've not providing anything but empty inputs, meaning you didn't know anything on what you're trying to revocer for about the little details on your missing account.\n\nPlease make sure you at least remember something about your missing profile account, at least from the phone number or the username you used when you're creating the account for the first time... .");
             ACMNotificationEnabled_03 = true;
         } if (AllEmpty == 4) printf(ANSI_COLOR_LIGHTORANGE"\tWarning: Recovery procedure can't be completed because you're not providing at least ONE (1) \n\t         information about your profile data!\n\n"ANSI_COLOR_RESET);
 
@@ -7604,7 +7677,7 @@ void AccountRecoveryMenu(int ACMSelected) {
                             else if (EmptyCPN && !FlagCPN)  { printf(ANSI_COLOR_YELLOW"\t      [%d / %d] Recover Phone Number:\t\t%s\n"ANSI_COLOR_RESET, i, AllEmpty, ACMInputs.PhoneNumber); FlagCPN = true; }
                             else if (EmptyCU && !FlagCU)    { printf(ANSI_COLOR_YELLOW"\t      [%d / %d] Recover Username:\t\t\t%s\n"ANSI_COLOR_RESET, i, AllEmpty, ACMInputs.Username); FlagCU = true; }
                             else if (EmptyCP && !FlagCP)    { printf(ANSI_COLOR_YELLOW"\t      [%d / %d] Recover Password:\t\t\t%s\n"ANSI_COLOR_RESET, i, AllEmpty, ACMInputs.HiddenPasswordShown); FlagCP = true; }
-                        } getchar();
+                        } _getch();
                         
                         for (int GRA = 1; (long long unsigned int)GRA <= GlobalSKYRFMSARegisteredAccounts; GRA++) {
                             strncpy(FirstName,    ReadAndPrintLine("TempDestination.txt", 0 + (14 * GRA)), BUFSIZE07);
@@ -7647,8 +7720,8 @@ void AccountRecoveryMenu(int ACMSelected) {
                                             ShowDateOfBirth, ShowAgeOnPresent, ShowPhoneNumber, ShowSex);
                                     puts(ANSI_COLOR_LIGHTCYAN"\t────────────────────────────────────────────────────────────────────────────────────────────────────"ANSI_COLOR_RESET);
                                     
-                            if ((long long unsigned int)GRA < GlobalSKYRFMSARegisteredAccounts) { printf(ANSI_COLOR_LIGHTGREEN"\n\tPress [ENTER] button key on your keyboard to continue... "ANSI_COLOR_RESET); getchar(); }
-                            else { printf(ANSI_COLOR_GREEN"\tPress [ENTER] button key on your keyboard to go back to the previous menu... "ANSI_COLOR_RESET); getchar(); }
+                            if ((long long unsigned int)GRA < GlobalSKYRFMSARegisteredAccounts) { printf(ANSI_COLOR_LIGHTGREEN"\n\tPress [ENTER] button key on your keyboard to continue... "ANSI_COLOR_RESET); _getch(); }
+                            else { printf(ANSI_COLOR_GREEN"\tPress [ENTER] button key on your keyboard to go back to the previous menu... "ANSI_COLOR_RESET); _getch(); }
                                     
                             } else {
                                 FirstName[0] = 0; LastName[0] = 0, Email[0] = 0, Username[0] = 0, Password[0] = 0;
@@ -7656,7 +7729,7 @@ void AccountRecoveryMenu(int ACMSelected) {
                             }
                         }
 
-                        strcpy(DeleteTempDestinationTxtFile, "del ");
+                        strcpy(DeleteTempDestinationTxtFile, "rm ");
                         strcat(DeleteTempDestinationTxtFile, "TempDestination.txt");
                         system(DeleteTempDestinationTxtFile);
 
@@ -7759,7 +7832,7 @@ void AccountRecoveryMenu(int ACMSelected) {
                             else if (EmptyCPN && !FlagCPN)  { printf(ANSI_COLOR_YELLOW"\t      [%d / %d] Recover Phone Number:\t\t%s\n"ANSI_COLOR_RESET, i, AllEmpty, ACMInputs.PhoneNumber); FlagCPN = true; }
                             else if (EmptyCU && !FlagCU)    { printf(ANSI_COLOR_YELLOW"\t      [%d / %d] Recover Username:\t\t\t%s\n"ANSI_COLOR_RESET, i, AllEmpty, ACMInputs.Username); FlagCU = true; }
                             else if (EmptyCP && !FlagCP)    { printf(ANSI_COLOR_YELLOW"\t      [%d / %d] Recover Password:\t\t\t%s\n"ANSI_COLOR_RESET, i, AllEmpty, ACMInputs.HiddenPasswordShown); FlagCP = true; }
-                        } getchar();
+                        } _getch();
                         
                         for (int GRA = 1; (long long unsigned int)GRA <= GlobalSKYRFMSARegisteredAccounts; GRA++) {
                             strncpy(FirstName,    ReadAndPrintLine("TempDestination.txt", 0 + (14 * GRA)), BUFSIZE07);
@@ -7802,10 +7875,10 @@ void AccountRecoveryMenu(int ACMSelected) {
                                             ShowFirstName, ShowLastName, ShowEmail, ShowUsername, ShowPassword, \
                                             ShowDateOfBirth, ShowAgeOnPresent, ShowPhoneNumber, ShowSex);
                                     puts(ANSI_COLOR_LIGHTCYAN"\t────────────────────────────────────────────────────────────────────────────────────────────────────"ANSI_COLOR_RESET);
-                                    getchar();
+                                    _getch();
                             
-                            if ((long long unsigned int)GRA < GlobalSKYRFMSARegisteredAccounts) { printf(ANSI_COLOR_LIGHTGREEN"\n\tPress [ENTER] button key on your keyboard to continue... "ANSI_COLOR_RESET); getchar(); }
-                        else { printf(ANSI_COLOR_GREEN"\tPress [ENTER] button key on your keyboard to go back to the previous menu... "ANSI_COLOR_RESET); getchar(); }
+                            if ((long long unsigned int)GRA < GlobalSKYRFMSARegisteredAccounts) { printf(ANSI_COLOR_LIGHTGREEN"\n\tPress [ENTER] button key on your keyboard to continue... "ANSI_COLOR_RESET); _getch(); }
+                        else { printf(ANSI_COLOR_GREEN"\tPress [ENTER] button key on your keyboard to go back to the previous menu... "ANSI_COLOR_RESET); _getch(); }
                                     
                             } else {
                                 FirstName[0] = 0; LastName[0] = 0, Email[0] = 0, Username[0] = 0, Password[0] = 0;
@@ -7813,7 +7886,7 @@ void AccountRecoveryMenu(int ACMSelected) {
                             }
                         }
 
-                        strcpy(DeleteTempDestinationTxtFile, "del ");
+                        strcpy(DeleteTempDestinationTxtFile, "rm ");
                         strcat(DeleteTempDestinationTxtFile, "TempDestination.txt");
                         system(DeleteTempDestinationTxtFile);
 
@@ -7877,7 +7950,7 @@ void AccountRecoveryMenu(int ACMSelected) {
             case '3': ACMSelected = 2; Selecting = false; Updated = true; PreviousAKDC = 0; CatchDefaultAKDC = false; break;
             case '4': ACMSelected = 3; Selecting = false; Updated = true; PreviousAKDC = 0; CatchDefaultAKDC = false; break;
             default: {
-                if (AKDC == KEY_UP || AKDC == KEY_DOWN || AKDC == KEY_LEFT || AKDC == KEY_RIGHT || AKDC == KEY_ENTER) { ClearScreen(); continue; }
+                if (AKDC == KEY_UP || AKDC == KEY_DOWN || AKDC == KEY_LEFT || AKDC == KEY_RIGHT || AKDC == KEY_ENTER || AKDC == 91 || AKDC == 27) { ClearScreen(); continue; }
                 (AKDC > 0) ? PreviousAKDC = (int)AKDC : 0;
                 (AKDC > 0) ? CatchDefaultAKDC = true : false;
             } break;
