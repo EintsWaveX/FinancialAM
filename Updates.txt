@@ -47,8 +47,8 @@ List of signs (description):
 >>> Commited on: November 15, 2023
     + Adding 6 main features by head of structures.
     + Adding 9/14 registration data for profile account.
-    ~ No changes made, only do a little tweaking.
     + 9/14 regs. data; 6 main structures of features.
+    ~ No changes made, only do a little tweaking.
 
 # [05] SECOND Change(s)
 # Commit(s): 2 (two)
@@ -68,16 +68,16 @@ List of signs (description):
     + Successfully implement the login account feature.
 
 # [08] FOURTH Addition(s); FIRST Deletion(s); FOURTH Change(s)
-# Commit(s): 8 (eight)
+# Commit(s): 9 (eight)
 >>> Commited on: November 27, 2023
-    - Deleting the previous warning textfile.
-    + Listed 43 warnings and 2 notes for now.
-    + Implementing the logout profile account system.
-    ~ Multiple registered accounts, fixing minor bugs.
-    + Application's collection of warnings and notes.
-    ~ Fixing registration writing into textfile bug.
     + (1) Implemented multiple registered accounts.
     + (2) Implemented multiple registered accounts.
+    + Listed 43 warnings and 2 notes for now.
+    + Implementing the logout profile account system.
+    + Application's collection of warnings and notes.
+    ~ Multiple registered accounts, fixing minor bugs.
+    ~ Fixing registration writing into textfile bug.
+    - Deleting the previous warning textfile.
 
 # [09] FIFTH Addition(s)
 # Commit(s): 1 (one)
@@ -85,7 +85,7 @@ List of signs (description):
     + Adding a basic horizontal histogram CLI.
 
 # [10] SECOND Update(s)
-# Commit(s): 2 (two)
+# Commit(s): 3 (two)
 >>> Committed on: December 31, 2023
     ^ (1) Releasing the ALPHA PREVIEW of the application.
     ^ (2) Releasing the ALPHA PREVIEW of the application.
@@ -102,7 +102,7 @@ List of signs (description):
     ~ Fixed counting 30 days further formula.
 
 # [13] SIXTH Addition(s); SECOND Deletion(s); FOURTH Update(s); SEVENTH Change(s)
-# Commit(s): 10 (ten)
+# Commit(s): 12 (ten)
 >>> Commited on: February 18, 2024
     ^ (3) Updating the Updates.txt file.
     ^ (3) Updating the application title/status version and/or details.
@@ -116,7 +116,9 @@ List of signs (description):
 # [14] FIFTH Update(s); EIGHTH Change(s)
 # Commit(s): 5 (five)
 >>> Commited on: March 4, 2024
-    ^ (2) Updating the Updates.txt file.
+    ^ (3) Updating the Updates.txt file.
     ^ [Part: 1] UI update, adding some shortcuts.
     ^ [Part: 1-TEMP] Using "aaa" account for testing purposes.
     ^ [Part: 2] Updating few leftover changes from the [Part: 1].
+    + [BETA: 1] Releasing both versions for WINDOWS and UNIX/POSIX platforms.
+    - Deleting old CA and GUI files because of the newer and unused ones.
