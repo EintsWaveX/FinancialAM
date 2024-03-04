@@ -104,13 +104,18 @@ List of signs (description):
 # [13] SIXTH Addition(s); SECOND Deletion(s); FOURTH Update(s); SEVENTH Change(s)
 # Commit(s): 10 (ten)
 >>> Commited on: February 18, 2024
-    ^ (1) Updating the application title/status version and/or details.
-    ^ (2) Updating the application title/status version and/or details.
-    ^ (1) Updating the Updates.txt file.
-    ^ (2) Updating the Updates.txt file.
+    ^ (3) Updating the Updates.txt file.
+    ^ (3) Updating the application title/status version and/or details.
     ^ Updating confirmation UI, array-of-struct simplifying, small code(s) refactoring.
     + Adding a self-update data file for keep tracking all made commits.
     ~ Renaming the RegisteredAccounts.txt file.
     - Deleting self-account data and few more unnecessary files.
     ^ Updating the sample decoded/encoded files.
     - Deleting any unnecessary files.
+
+# [14] FIFTH Update(s); EIGHTH Change(s)
+# Commit(s): 3 (three)
+>>> Commited on: March 4, 2024
+    ^ (1) Updating the Updates.txt file.
+    ^ [Part: 1] UI update, adding some shortcuts.
+    ^ [Part: 1-TEMP] Using "aaa" account for testing purposes.
