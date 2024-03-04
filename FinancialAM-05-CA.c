@@ -6155,13 +6155,13 @@ void AccountRegistrationMenu(int ARMSelected) {
                 printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRegisterUI);
 
                 if (P) {
-                    printf(ANSI_COLOR_YELLOW"\tView: Hiding the (unshown) hidden password...\n"ANSI_COLOR_RESET);
+                    printf(ANSI_COLOR_LIGHTYELLOW"\t[SHOW: Press [>] key button] "ANSI_COLOR_RESET ANSI_COLOR_YELLOW"View Mode: Hiding the (unshown) hidden password...\n"ANSI_COLOR_RESET);
                     printf(ANSI_COLOR_GREEN"\tInfo: We'd checked that you earlier had already insert your password as: \n\t          >> %s.\n\n\t      But don't worry, if you want to make a change, then you may proceed to do so.\n\n"ANSI_COLOR_RESET, ((!ARMShowThePassword) ? ARMInputs.HiddenPasswordShown : ARMInputs.Password));
                     printf("\tFirst Name:\t\t%s\n\tLast Name:\t\t%s\n\tPersonal E-mail:\t%s\n\tSKYR Username:\t\t%s\n      " ANSI_COLOR_LIGHTGREEN"> SKYR Password:\t\t%s\n"ANSI_COLOR_RESET, ARMInputs.FirstName, ARMInputs.LastName, ARMInputs.Email, ARMInputs.Username, ((!ARMShowThePassword) ? ARMInputs.HiddenPasswordShown : ARMInputs.Password));
                     puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTGREEN"SKYR Password."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your password profile account.");
                     puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The password must contains at least 8 characters and a maximum 16 letters for better cautions \n\t      insert with. The password insertion is censored, and you can peek the password you've \n\t      inserted with: \n\t\t    "ANSI_COLOR_RESET BRIGHTPURPLE218"an OPTIONAL RIGHT-KEY BUTTON [>], then press [ENTER] to confirm!"ANSI_COLOR_RESET);
                 } else {
-                    printf(ANSI_COLOR_YELLOW"\tView: Hiding the (unshown) hidden password...\n\n"ANSI_COLOR_RESET);
+                    printf(ANSI_COLOR_LIGHTYELLOW"\t[SHOW: Press [>] key button] "ANSI_COLOR_RESET ANSI_COLOR_YELLOW"View Mode: Hiding the (unshown) hidden password...\n\n"ANSI_COLOR_RESET);
                     printf("\tFirst Name:\t\t%s\n\tLast Name:\t\t%s\n\tPersonal E-mail:\t%s\n\tSKYR Username:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> SKYR Password:\t\t%s\n"ANSI_COLOR_RESET, ARMInputs.FirstName, ARMInputs.LastName, ARMInputs.Email, ARMInputs.Username, ((!ARMShowThePassword) ? ARMInputs.HiddenPasswordShown : ARMInputs.Password));
                     puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTYELLOW"SKYR Password."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your password profile account.");
                     puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The password must contains at least 8 characters and a maximum 16 letters for better cautions \n\t      insert with. The password insertion is censored, and you can peek the password you've \n\t      inserted with: \n\t\t    "ANSI_COLOR_RESET BRIGHTPURPLE218"an OPTIONAL RIGHT-KEY BUTTON [>], then press [ENTER] to confirm!"ANSI_COLOR_RESET);
@@ -6170,13 +6170,13 @@ void AccountRegistrationMenu(int ARMSelected) {
                 printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRegisterUI);
 
                 if (P) {
-                    printf(ANSI_COLOR_ORANGE"\tView: Showing the hidden password...\n"ANSI_COLOR_RESET);
+                    printf(ANSI_COLOR_LIGHTORANGE"\t[HIDE: Press [<] key button] "ANSI_COLOR_RESET ANSI_COLOR_ORANGE"View Mode: Showing the hidden password...\n"ANSI_COLOR_RESET);
                     printf(ANSI_COLOR_GREEN"\tInfo: We'd checked that you earlier had already insert your password as: \n\t          >> %s.\n\n\t      But don't worry, if you want to make a change, then you may proceed to do so.\n\n"ANSI_COLOR_RESET, ARMInputs.Password);
                     printf("\tFirst Name:\t\t%s\n\tLast Name:\t\t%s\n\tPersonal E-mail:\t%s\n\tSKYR Username:\t\t%s\n      " ANSI_COLOR_LIGHTGREEN"> SKYR Password:\t\t%s\n"ANSI_COLOR_RESET, ARMInputs.FirstName, ARMInputs.LastName, ARMInputs.Email, ARMInputs.Username, ARMInputs.Password);
                     puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTGREEN"SKYR Password."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your password profile account.");
                     puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The password must contains at least 8 characters and a maximum 16 letters for better cautions \n\t      insert with. The password insertion is censored, and you can peek the password you've \n\t      inserted with: \n\t\t    "ANSI_COLOR_RESET BRIGHTPURPLE218"an OPTIONAL RIGHT-KEY BUTTON [>], then press [ENTER] to confirm!"ANSI_COLOR_RESET);
                 } else {
-                    printf(ANSI_COLOR_ORANGE"\tView: Showing the hidden password...\n\n"ANSI_COLOR_RESET);
+                    printf(ANSI_COLOR_LIGHTORANGE"\t[HIDE: Press [<] key button] "ANSI_COLOR_RESET ANSI_COLOR_ORANGE"View Mode: Showing the hidden password...\n\n"ANSI_COLOR_RESET);
                     printf("\tFirst Name:\t\t%s\n\tLast Name:\t\t%s\n\tPersonal E-mail:\t%s\n\tSKYR Username:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> SKYR Password:\t\t%s\n"ANSI_COLOR_RESET, ARMInputs.FirstName, ARMInputs.LastName, ARMInputs.Email, ARMInputs.Username, ARMInputs.Password);
                     puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTYELLOW"SKYR Password."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your password profile account.");
                     puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The password must contains at least 8 characters and a maximum 16 letters for better cautions \n\t      insert with. The password insertion is censored, and you can peek the password you've \n\t      inserted with: \n\t\t    "ANSI_COLOR_RESET BRIGHTPURPLE218"an OPTIONAL RIGHT-KEY BUTTON [>], then press [ENTER] to confirm!"ANSI_COLOR_RESET);
@@ -6215,7 +6215,7 @@ void AccountRegistrationMenu(int ARMSelected) {
 
             if (!ARMShowThePassword) {
                 printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRegisterUI);
-                printf(ANSI_COLOR_YELLOW"\tView: Hiding the (unshown) hidden password...\n"ANSI_COLOR_RESET);
+                printf(ANSI_COLOR_LIGHTYELLOW"\t[SHOW: Press [>] key button] "ANSI_COLOR_RESET ANSI_COLOR_YELLOW"View Mode: Hiding the (unshown) hidden password...\n"ANSI_COLOR_RESET);
                 
                 puts(ANSI_COLOR_LIGHTRED"\tWarning: You must have to insert your password in any unique way possible (min. 8 characters)!\n"ANSI_COLOR_RESET);
                 printf("\tFirst Name:\t\t%s\n\tLast Name:\t\t%s\n\tPersonal E-mail:\t%s\n\tSKYR Username:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> SKYR Password:\t\t%s\n"ANSI_COLOR_RESET, ARMInputs.FirstName, ARMInputs.LastName, ARMInputs.Email, ARMInputs.Username, ((!ARMShowThePassword) ? ARMInputs.HiddenPasswordShown : ARMInputs.Password));
@@ -6223,7 +6223,7 @@ void AccountRegistrationMenu(int ARMSelected) {
                 puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The password must contains at least 8 characters and a maximum 16 letters for better cautions \n\t      insert with. The password insertion is censored, and you can peek the password you've \n\t      inserted with: \n\t\t    "ANSI_COLOR_RESET BRIGHTPURPLE218"an OPTIONAL RIGHT-KEY BUTTON [>], then press [ENTER] to confirm!"ANSI_COLOR_RESET);
             } else {
                 printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRegisterUI);
-                printf(ANSI_COLOR_ORANGE"\tView: Showing the hidden password...\n"ANSI_COLOR_RESET);
+                printf(ANSI_COLOR_LIGHTORANGE"\t[HIDE: Press [<] key button] "ANSI_COLOR_RESET ANSI_COLOR_ORANGE"View Mode: Showing the hidden password...\n"ANSI_COLOR_RESET);
                 
                 puts(ANSI_COLOR_LIGHTRED"\tWarning: You must have to insert your password in any unique way possible (min. 8 characters)!\n"ANSI_COLOR_RESET);
                 printf("\tFirst Name:\t\t%s\n\tLast Name:\t\t%s\n\tPersonal E-mail:\t%s\n\tSKYR Username:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> SKYR Password:\t\t%s\n"ANSI_COLOR_RESET, ARMInputs.FirstName, ARMInputs.LastName, ARMInputs.Email, ARMInputs.Username, ARMInputs.Password);
@@ -7394,13 +7394,13 @@ void AccountLoginMenu(int ALMSelected) {
                 printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppLoginUI);
 
                 if (LP) {
-                    printf(ANSI_COLOR_YELLOW"\tView: Hiding the (unshown) hidden password...\n"ANSI_COLOR_RESET);
+                    printf(ANSI_COLOR_LIGHTYELLOW"\t[SHOW: Press [>] key button] "ANSI_COLOR_RESET ANSI_COLOR_YELLOW"View Mode: Hiding the (unshown) hidden password...\n"ANSI_COLOR_RESET);
                     printf(ANSI_COLOR_GREEN"\tInfo: We'd checked that you earlier had already insert your password as: \n\t          >> %s.\n\n\t      But don't worry, if you want to make a change, then you may proceed to do so.\n\n"ANSI_COLOR_RESET, ALMInputs.HiddenPasswordShown);
                     printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n\tSKYR Username:\t\t%s\n      " ANSI_COLOR_LIGHTGREEN"> SKYR Password:\t\t%s\n"ANSI_COLOR_RESET, ALMInputs.Email, ALMInputs.PhoneNumber, ALMInputs.Username, ALMInputs.HiddenPasswordShown);
                     puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTGREEN"SKYR Password."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your password profile account.");
                     puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The password must contains at least 8 characters and a maximum 16 letters for better cautions \n\t      insert with. The password insertion is censored, and you can peek the password you've \n\t      inserted with: \n\t\t    "ANSI_COLOR_RESET BRIGHTPURPLE218"an OPTIONAL RIGHT-KEY BUTTON [>], then press [ENTER] to confirm!"ANSI_COLOR_RESET);
                 } else {
-                    printf(ANSI_COLOR_YELLOW"\tView: Hiding the (unshown) hidden password...\n\n"ANSI_COLOR_RESET);
+                    printf(ANSI_COLOR_LIGHTYELLOW"\t[SHOW: Press [>] key button] "ANSI_COLOR_RESET ANSI_COLOR_YELLOW"View Mode: Hiding the (unshown) hidden password...\n\n"ANSI_COLOR_RESET);
                     printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n\tSKYR Username:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> SKYR Password:\t\t%s\n"ANSI_COLOR_RESET, ALMInputs.Email, ALMInputs.PhoneNumber, ALMInputs.Username, ALMInputs.HiddenPasswordShown);
                     puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTYELLOW"SKYR Password."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your password profile account.");
                     puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The password must contains at least 8 characters and a maximum 16 letters for better cautions \n\t      insert with. The password insertion is censored, and you can peek the password you've \n\t      inserted with: \n\t\t    "ANSI_COLOR_RESET BRIGHTPURPLE218"an OPTIONAL RIGHT-KEY BUTTON [>], then press [ENTER] to confirm!"ANSI_COLOR_RESET);
@@ -7409,13 +7409,13 @@ void AccountLoginMenu(int ALMSelected) {
                 printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppLoginUI);
 
                 if (LP) {
-                    printf(ANSI_COLOR_ORANGE"\tView: Showing the hidden password...\n"ANSI_COLOR_RESET);
+                    printf(ANSI_COLOR_LIGHTORANGE"\t[HIDE: Press [<] key button] "ANSI_COLOR_RESET ANSI_COLOR_ORANGE"View Mode: Showing the hidden password...\n"ANSI_COLOR_RESET);
                     printf(ANSI_COLOR_GREEN"\tInfo: We'd checked that you earlier had already insert your password as: \n\t          >> %s.\n\n\t      But don't worry, if you want to make a change, then you may proceed to do so.\n\n"ANSI_COLOR_RESET, ALMInputs.Password);
                     printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n\tSKYR Username:\t\t%s\n      " ANSI_COLOR_LIGHTGREEN"> SKYR Password:\t\t%s\n"ANSI_COLOR_RESET, ALMInputs.Email, ALMInputs.PhoneNumber, ALMInputs.Username, ALMInputs.Password);
                     puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTGREEN"SKYR Password."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your password profile account.");
                     puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The password must contains at least 8 characters and a maximum 16 letters for better cautions \n\t      insert with. The password insertion is censored, and you can peek the password you've \n\t      inserted with: \n\t\t    "ANSI_COLOR_RESET BRIGHTPURPLE218"an OPTIONAL RIGHT-KEY BUTTON [>], then press [ENTER] to confirm!"ANSI_COLOR_RESET);
                 } else {
-                    printf(ANSI_COLOR_ORANGE"\tView: Showing the hidden password...\n\n"ANSI_COLOR_RESET);
+                    printf(ANSI_COLOR_LIGHTORANGE"\t[HIDE: Press [<] key button] "ANSI_COLOR_RESET ANSI_COLOR_ORANGE"View Mode: Showing the hidden password...\n\n"ANSI_COLOR_RESET);
                     printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n\tSKYR Username:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> SKYR Password:\t\t%s\n"ANSI_COLOR_RESET, ALMInputs.Email, ALMInputs.PhoneNumber, ALMInputs.Username, ALMInputs.Password);
                     puts("\n\tYou have chosen to fill the part in " ANSI_COLOR_LIGHTYELLOW"SKYR Password."ANSI_COLOR_RESET "\n\tPlease proceed to fill in your password profile account.");
                     puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The password must contains at least 8 characters and a maximum 16 letters for better cautions \n\t      insert with. The password insertion is censored, and you can peek the password you've \n\t      inserted with: \n\t\t    "ANSI_COLOR_RESET BRIGHTPURPLE218"an OPTIONAL RIGHT-KEY BUTTON [>], then press [ENTER] to confirm!"ANSI_COLOR_RESET);
@@ -7454,7 +7454,7 @@ void AccountLoginMenu(int ALMSelected) {
 
             if (!ARMShowThePassword) {
                 printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppLoginUI);
-                printf(ANSI_COLOR_YELLOW"\tView: Hiding the (unshown) hidden password...\n"ANSI_COLOR_RESET);
+                printf(ANSI_COLOR_LIGHTYELLOW"\t[SHOW: Press [>] key button] "ANSI_COLOR_RESET ANSI_COLOR_YELLOW"View Mode: Hiding the (unshown) hidden password...\n"ANSI_COLOR_RESET);
                 
                 puts(ANSI_COLOR_LIGHTRED"\tWarning: You must have to insert your password in any unique way possible (min. 8 characters)!\n"ANSI_COLOR_RESET);
                 printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n\tSKYR Username:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> SKYR Password:\t\t%s\n"ANSI_COLOR_RESET, ALMInputs.Email, ALMInputs.PhoneNumber, ALMInputs.Username, (!ALMShowThePassword) ? ALMInputs.HiddenPasswordShown : ALMInputs.Password);
@@ -7462,7 +7462,7 @@ void AccountLoginMenu(int ALMSelected) {
                 puts(ANSI_COLOR_LIGHTMAGENTA"\tNote: The password must contains at least 8 characters and a maximum 16 letters for better cautions \n\t      insert with. The password insertion is censored, and you can peek the password you've \n\t      inserted with: \n\t\t    "ANSI_COLOR_RESET BRIGHTPURPLE218"an OPTIONAL RIGHT-KEY BUTTON [>], then press [ENTER] to confirm!"ANSI_COLOR_RESET);
             } else {
                 printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppLoginUI);
-                printf(ANSI_COLOR_ORANGE"\tView: Showing the hidden password...\n"ANSI_COLOR_RESET);
+                printf(ANSI_COLOR_LIGHTORANGE"\t[HIDE: Press [<] key button] "ANSI_COLOR_RESET ANSI_COLOR_ORANGE"View Mode: Showing the hidden password...\n"ANSI_COLOR_RESET);
                 
                 puts(ANSI_COLOR_LIGHTRED"\tWarning: You must have to insert your password in any unique way possible (min. 8 characters)!\n"ANSI_COLOR_RESET);
                 printf("\tPersonal E-mail:\t%s\n\tPhone Number:\t\t%s\n\tSKYR Username:\t\t%s\n      " ANSI_COLOR_LIGHTYELLOW"> SKYR Password:\t\t%s\n"ANSI_COLOR_RESET, ALMInputs.Email, ALMInputs.PhoneNumber, ALMInputs.Username, (!ALMShowThePassword) ? ALMInputs.HiddenPasswordShown : ALMInputs.Password);
@@ -7910,7 +7910,7 @@ void AccountRecoveryMenu(int ACMSelected) {
         while (strlen(InputEmail) <= 3 || strchr(InputEmail, '@') == NULL || strchr(InputEmail, '.') == NULL) {
             CE = true;
             if (AllEmpty >= 0 && AllEmpty <= 4 && !VisitedCE) { AllEmpty += 1; EmptyCE = true; VisitedCE = true; }
-            strcpy(ACMInputs.Email, "...?");
+            strcpy(ACMInputs.Email, "... (Unknown)?");
             AccountRecoveryMenu(ACMSelected);
         }
         
@@ -7952,7 +7952,7 @@ void AccountRecoveryMenu(int ACMSelected) {
         while ((strlen(DigitsNumber) <= 4 || strlen(DigitsNumber) > 13) || CountryCode[0] != '+' || strchr(InputPhoneNumber, ' ') == NULL) {
             CPN = true;
             if (AllEmpty >= 0 && AllEmpty <= 4 && !VisitedCPN) { AllEmpty += 1; EmptyCPN = true; VisitedCPN = true; }
-            strcpy(ACMInputs.PhoneNumber, "...?");
+            strcpy(ACMInputs.PhoneNumber, "... (Unknown)?");
             AccountRecoveryMenu(ACMSelected);
         }
         
@@ -7995,7 +7995,7 @@ void AccountRecoveryMenu(int ACMSelected) {
         while (strlen(InputUsername) <= 3 || strchr(InputUsername, ' ') != NULL) {
             CU = true;
             if (AllEmpty >= 0 && AllEmpty <= 4 && !VisitedCU) { AllEmpty += 1; EmptyCU = true; VisitedCU = true; }
-            strcpy(ACMInputs.Username, "...?");
+            strcpy(ACMInputs.Username, "... (Unknown)?");
             AccountRecoveryMenu(ACMSelected);
         }
         
@@ -8029,7 +8029,7 @@ void AccountRecoveryMenu(int ACMSelected) {
         while (strlen(InputPassword) <= 8) {
             CP = true;
             if (AllEmpty >= 0 && AllEmpty <= 4 && !VisitedCP) { AllEmpty += 1; EmptyCP = true; VisitedCP = true; }
-            strcpy(ACMInputs.HiddenPasswordShown, "...?");
+            strcpy(ACMInputs.HiddenPasswordShown, "... (Unknown)?");
             AccountRecoveryMenu(ACMSelected);
         }
         
