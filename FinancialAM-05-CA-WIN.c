@@ -171,7 +171,7 @@ char ProfileSaveFileData[BUFSIZE07];
 
 const char* ApplicationPresent       = "SKYR Corp. Foundation Inc., PRESENTS:\n";
 const char* ApplicationTitle         = "SKYR Corp. :: Personal Financial Management System [CLI-Win32] Application\n";
-const char* ApplicationVersion       = "SKYR Corp. :: @PRE-RELEASE V2.13.62.85.7593 [ba559b8] (February 18, 2024)\n";
+const char* ApplicationVersion       = "SKYR Corp. :: @PRE-RELEASE V2.13.65.85.8102 [f887bc7] (March 08, 2024)\n";
 const char* AppGuideOnUsageUDRL      = "\n\t   " ANSI_COLOR_LIGHTGREEN"[^]\t\t\t\t\t        "ANSI_COLOR_RESET BRIGHTGREEN156"[ENTER]:\t\t\t   Confirm Selection\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN"[>]"ANSI_COLOR_RESET ANSI_COLOR_LIGHTGREEN"[v]"ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN"[<]\t\t (Direct) "ANSI_COLOR_RESET BRIGHTBLUE159"[1][2][...][N - 1][N]: Auto-Enter Selection " ANSI_STYLE_ITALIC"(up to N-availability)\n\n\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN ANSI_STYLE_ITALIC"[^]: Go UP, [v]: Go DOWN, "ANSI_COLOR_RESET ANSI_COLOR_CYAN ANSI_STYLE_ITALIC"[>]: Go RIGHT, [<]: Go LEFT\n"ANSI_COLOR_RESET;
 const char* AppRegistrationUDRL      = "\n\t   " ANSI_COLOR_LIGHTGREEN"[^]\t\t\t\t\t\t\t\t       "ANSI_COLOR_RESET BRIGHTGREEN156"[ENTER]:    Confirm Selection\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN"[>]"ANSI_COLOR_RESET ANSI_COLOR_LIGHTGREEN"[v]"ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN"[<]\t\t\t       (Direct) "ANSI_COLOR_RESET BRIGHTBLUE159"[1][2][3][4][5] | [6][7][8][9]: Auto-Enter Selection\n\n\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN ANSI_STYLE_ITALIC"[^]: Go UP, [v]: Go DOWN, "ANSI_COLOR_RESET ANSI_COLOR_CYAN ANSI_STYLE_ITALIC"[>]: Go RIGHT " ANSI_STYLE_UNDERLINE"(Login Menu)"ANSI_COLOR_RESET ANSI_COLOR_CYAN ANSI_STYLE_ITALIC", [<]: Go LEFT " ANSI_STYLE_UNDERLINE"(...)\n"ANSI_COLOR_RESET;
 const char* AppLoginUDRL             = "\n\t   " ANSI_COLOR_LIGHTGREEN"[^]\t\t\t\t\t\t\t\t       "ANSI_COLOR_RESET BRIGHTGREEN156"[ENTER]:    Confirm Selection\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN"[>]"ANSI_COLOR_RESET ANSI_COLOR_LIGHTGREEN"[v]"ANSI_COLOR_RESET ANSI_COLOR_LIGHTCYAN"[<]\t\t\t\t\t\t (Direct) "ANSI_COLOR_RESET BRIGHTBLUE159"[1][2][3][4]: Auto-Enter Selection\n\n\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN ANSI_STYLE_ITALIC"[^]: Go UP, [v]: Go DOWN, "ANSI_COLOR_RESET ANSI_COLOR_CYAN ANSI_STYLE_ITALIC"[>]: Go RIGHT " ANSI_STYLE_UNDERLINE"(Recovery Menu)"ANSI_COLOR_RESET ANSI_COLOR_CYAN ANSI_STYLE_ITALIC", [<]: Go LEFT " ANSI_STYLE_UNDERLINE"(Registration Menu)\n"ANSI_COLOR_RESET;
@@ -457,7 +457,7 @@ void MainMenuApplicationInformations(int);
 void HelpMenu(int);
 
 void EncryptTxtFile(const char*, const char*, int, bool);
-void DecryptTxtFile(const char*, bool, int, char ReadDecryptedKeyString[BUFSIZE16]);
+void DecryptTxtFile(const char*, bool, int, char ReadDecryptedKeyString[]);
 void MatchSaveFileTxt(const char*, const char*);
 void SaveDataInTxtFile(const char*, const int, bool);
 void OverWriteStringAtLine(const char*, const char*, const int, signed int);
@@ -466,6 +466,8 @@ int  RandInt(int, int);
 int  FindOccurences(const char*, char);
 char *TrimWhiteSpaces(char*);
 char *StringUppercase(char*);
+char *StringLowercase(char*);
+char *StringCapitalize(char*);
 char *ReadAndPrintLine(const char*, intmax_t);
 
 // Notifications Features (CORE FEATURES)
@@ -478,12 +480,12 @@ int ErrorMessageBox_OKCANCEL(const char*, const char*);
 
 // Available main application features: 6
 
-void F1_MoneytoryTransactionsRegister(int);    // Easy     (PRIORITY)
-void F2_MoneytoryGroupingPerCategory(int);     // Medium   (LATER)
-void F3_BudgetCreationAndMonitoring(int);      // Easy     (PRIORITY)
-void F4_FilterSearchingData(int);              // Medium   (LATER)
-void F5_ReminderAndSetNotifications(int);      // Hard     (LAST BUT NOT LEAST)
-void F6_DataVisualization(int);                // Harder   (LAST BUT NOT LEAST)
+void F1_MoneytoryTransactionsRegister(int);    // Easy     (PRIORITY)           -- DONE!
+void F2_MoneytoryGroupingPerCategory(int);     // Medium   (LATER)              -- WIP
+void F3_BudgetCreationAndMonitoring(int);      // Easy     (PRIORITY)           -- DONE! (Update soon)
+void F4_FilterSearchingData(int);              // Medium   (LATER)              -- DONE! (Update soon)
+void F5_ReminderAndSetNotifications(int);      // Hard     (LAST BUT NOT LEAST) -- DONE! (Update soon)
+void F6_DataVisualization(int);                // Harder   (LAST BUT NOT LEAST) -- DONE!
 
 void F1_FUC01_FinancialUsesCategoryUI(int);
 void F1_FUC02_FinancialUsesCategoryUI(int);
@@ -639,7 +641,22 @@ void OverWriteStringAtLine(const char* FSourceTxtFile, const char* NewOverWriteS
 
 char *StringUppercase(char* SourceString) {
     for (int i = 0; SourceString[i] != '\0'; i++) {
-        if (SourceString[i] >= 'a' && SourceString[i] <= 'z') { SourceString[i] -= 32; }
+        if (SourceString[i] >= 'a' && SourceString[i] <= 'z') SourceString[i] -= 32;
+    } return SourceString;
+}
+
+char *StringLowercase(char* SourceString) {
+    for (int i = 0; SourceString[i] != '\0'; i++) {
+        if (SourceString[i] >= 'A' && SourceString[i] <= 'Z') SourceString[i] += 32;
+    } return SourceString;
+}
+
+char *StringCapitalize(char* SourceString) {
+    for (int i = 0; SourceString[i] != '\0'; i++) {
+        if      (SourceString[0] >= 'A' && SourceString[0] <= 'Z') NULL;
+        else if (SourceString[0] >= 'a' && SourceString[0] <= 'z') SourceString[0] -= 32;
+        else if (i != 0 && (SourceString[i] >= 'A' && SourceString[i] <= 'Z')) SourceString[i] += 32;
+        else if (i != 0 && (SourceString[i] >= 'a' && SourceString[i] <= 'z')) NULL;
     } return SourceString;
 }
 
@@ -697,7 +714,7 @@ and the return type function is `void()`, and requires the program to accept:
 `[Format: 2nd argument] <TRUE> || <FALSE>`
 `[Format: 4th argument] <TEXTFILE.txt> > <STRINGKEY8LIST>`
 */
-void DecryptTxtFile(const char* DestinationTextFile, bool ReadDecryptedFile, int DecryptionKey, char ReadDecryptedKeyString[BUFSIZE16]) {
+void DecryptTxtFile(const char* DestinationTextFile, bool ReadDecryptedFile, int DecryptionKey, char ReadDecryptedKeyString[]) {
     FILE *FDestination, *FTempDestination;
     int BufLen, Ptr = 0, KeyTracker = 0, LineTracker = 0, FTDPos = 0;
     char C, FDBuffer[BUFSIZE16], DeleteTempDestinationTxtFile[128], TxtFileName[128];
@@ -796,7 +813,7 @@ void SaveDataInTxtFile(const char* DestinationTextFile, const int EncryptionKey,
     */
 
     FILE *FDestination, *FTempDestination;
-    char FDBuffer[BUFSIZE16], DeleteTempDestinationTxtFile[BUFSIZE07];
+    char FDBuffer[BUFSIZE16];
     int BufLen;
 
     FDestination     = fopen("SKYR-FMSA-RegisteredAccounts.txt", "r");
@@ -946,7 +963,7 @@ int ArrowKeyChoiceDialog(const char* AppModeMenu, char* MessagesShown_ArrowKeyCh
           else               { return false; }
 
     } else if (strcmp(AppModeMenu, ArrowKeyChoiceDialogModes[2]) == 0) {
-        char WelcomingMessages[BUFSIZE16];
+        char WelcomingMessages[BUFSIZE11], CreditsAfterwards[BUFSIZE11];
         int Selected = 0;
         int AvailableOptions = 2;
         bool Selecting = true, Updated = false, FirstRun = true;
@@ -960,8 +977,9 @@ int ArrowKeyChoiceDialog(const char* AppModeMenu, char* MessagesShown_ArrowKeyCh
             /* Welcoming Page */
             /* Welcoming Page */
             /* Welcoming Page */
-            printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\n\t"ANSI_COLOR_RESET BRIGHTGREEN156 ANSI_STYLE_BOLD"\t      Welcome to the: " ANSI_STYLE_UNDERLINE"SKYR Personal Financial Management Supports Application!\n\t"ANSI_COLOR_RESET BRIGHTPURPLE218 ANSI_STYLE_BOLD"\t\t   Save more for better future, and live happily ever after... :)\n\n\t"ANSI_COLOR_RESET BRIGHTBLUE159"Creation and Designing by: @EintsWaveX (Immanuel Eben); "ANSI_COLOR_RESET ANSI_COLOR_WHITE ANSI_STYLE_ITALIC"(support me on GitHub)!\n\t"ANSI_COLOR_RESET BRIGHTBLUE157"Ideas and Supporting by:\n\t    > @Ardia Pasha, @Arif Darmansyah, @Ilham Jamil, @Indah Natalia, and @Zaki Risqulah;\n\t      "ANSI_COLOR_RESET BRIGHTRED216 ANSI_STYLE_BOLD ANSI_STYLE_ITALIC"(F3)          (F5)              (F4)          (F1, F2)            (F6)" BRIGHTBLUE159"\n\n\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppLanguageUI, UserName);
-            if (CatchDefaultAKDC) printf(ANSI_COLOR_LIGHTRED"\tError: The auto-enter shortcut key labeled as '%c' (ID: 0x%02X) is not registered at the moment!\n\n"ANSI_COLOR_RESET, ((int)PreviousAKDC != 12) ? (char)PreviousAKDC : "\\n", (int)PreviousAKDC);
+            printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\n\t"ANSI_COLOR_RESET BRIGHTGREEN156 ANSI_STYLE_BOLD"\t      Welcome to the: " ANSI_STYLE_UNDERLINE"SKYR Personal Financial Management Supports Application!\n\t"ANSI_COLOR_RESET BRIGHTPURPLE218 ANSI_STYLE_BOLD"\t\t   Save more for better future, and live happily ever after... :)\n\n\t"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppLanguageUI, UserName);
+            printf(BRIGHTBLUE159"Creation and Designing by: @EintsWaveX (Immanuel Eben); "ANSI_COLOR_RESET ANSI_COLOR_WHITE ANSI_STYLE_ITALIC"(support me on GitHub)!\n\t"ANSI_COLOR_RESET BRIGHTBLUE157"Ideas and Supporting by:\n\t    > @Ardia Pasha, @Arif Darmansyah, @Ilham Jamil, @Indah Natalia, and @Zaki Risqulah;\n\t      "ANSI_COLOR_RESET BRIGHTRED216 ANSI_STYLE_BOLD ANSI_STYLE_ITALIC"(F3)          (F5)              (F4)          (F1, F2)            (F6)" BRIGHTBLUE159"\n\n\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\n"ANSI_COLOR_RESET);
+            if (CatchDefaultAKDC) printf(ANSI_COLOR_LIGHTRED"\tError: The auto-enter shortcut key labeled as '%c' (ID: 0x%02X) is not registered at the moment!\n\n"ANSI_COLOR_RESET, ((int)PreviousAKDC != 12) ? (char)PreviousAKDC : 10, (int)PreviousAKDC);
             /* Welcoming Page */
             /* Welcoming Page */
             /* Welcoming Page */
@@ -1011,18 +1029,20 @@ int ArrowKeyChoiceDialog(const char* AppModeMenu, char* MessagesShown_ArrowKeyCh
             puts(ANSI_COLOR_WHITE"\n\tApakah Anda yakin penggunaan bahasa ini pada seluruh isi aplikasi?\n\tMode bahasa pilihan adalah: Bahasa Indonesia.\n"ANSI_COLOR_RESET);
         }
 
-        snprintf(WelcomingMessages, BUFSIZE16, ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\n\t"ANSI_COLOR_RESET BRIGHTGREEN156 ANSI_STYLE_BOLD"\t      Welcome to the: " ANSI_STYLE_UNDERLINE"SKYR Personal Financial Management Supports Application!\n\t"ANSI_COLOR_RESET BRIGHTPURPLE218 ANSI_STYLE_BOLD"\t\t   Save more for better future, and live happily ever after... :)\n\n\t"ANSI_COLOR_RESET BRIGHTBLUE159"Creation and Designing by: @EintsWaveX (Immanuel Eben); "ANSI_COLOR_RESET ANSI_COLOR_WHITE ANSI_STYLE_ITALIC"(support me on GitHub)!\n\t"ANSI_COLOR_RESET BRIGHTBLUE157"Ideas and Supporting by:\n\t    > @Ardia Pasha, @Arif Darmansyah, @Ilham Jamil, @Indah Natalia, and @Zaki Risqulah;\n\t      "ANSI_COLOR_RESET BRIGHTRED216 ANSI_STYLE_BOLD ANSI_STYLE_ITALIC"(F3)          (F5)              (F4)          (F1, F2)            (F6)" BRIGHTBLUE159"\n\n\t────────────────────────────────────────────────────────────────────────────────────────────────────\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppLanguageUI, UserName);
+        snprintf(WelcomingMessages, BUFSIZE11, ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\n\t"ANSI_COLOR_RESET BRIGHTGREEN156 ANSI_STYLE_BOLD"\t      Welcome to the: " ANSI_STYLE_UNDERLINE"SKYR Personal Financial Management Supports Application!\n\t"ANSI_COLOR_RESET BRIGHTPURPLE218 ANSI_STYLE_BOLD"\t\t   Save more for better future, and live happily ever after... :)\n\t"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppLanguageUI, UserName);
+        snprintf(CreditsAfterwards, BUFSIZE11, BRIGHTBLUE159"\tCreation and Designing by: @EintsWaveX (Immanuel Eben); "ANSI_COLOR_RESET ANSI_COLOR_WHITE ANSI_STYLE_ITALIC"(support me on GitHub)!\n\t"ANSI_COLOR_RESET BRIGHTBLUE157"Ideas and Supporting by:\n\t    > @Ardia Pasha, @Arif Darmansyah, @Ilham Jamil, @Indah Natalia, and @Zaki Risqulah;\n\t      "ANSI_COLOR_RESET BRIGHTRED216 ANSI_STYLE_BOLD ANSI_STYLE_ITALIC"(F3)          (F5)              (F4)          (F1, F2)            (F6)" BRIGHTBLUE159"\n\n\t────────────────────────────────────────────────────────────────────────────────────────────────────\n"ANSI_COLOR_RESET);
         MessagesShown_ArrowKeyChoiceDialog[20] = WelcomingMessages;
-        MessagesShown_ArrowKeyChoiceDialog[21] = \
+        MessagesShown_ArrowKeyChoiceDialog[21] = CreditsAfterwards;
+        MessagesShown_ArrowKeyChoiceDialog[22] = \
             (Selected == 0) ? \
             "\tPlease select your prefered language mode:\n\tSilakan memilih mode bahasa berikut:\n\n\t" ANSI_COLOR_BLUE"> English"ANSI_COLOR_RESET "\tBahasa Indonesia\n\t" ANSI_COLOR_GREEN"(default)"ANSI_COLOR_RESET ANSI_COLOR_ORANGE"       (to be implemented...)"ANSI_COLOR_RESET : \
             "\tPlease select your prefered language mode:\n\tSilakan memilih mode bahasa berikut:\n\n\tEnglish" ANSI_COLOR_BLUE"\t\t> Bahasa Indonesia\n\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN"(default)"ANSI_COLOR_RESET ANSI_COLOR_ORANGE"       (to be implemented...)"ANSI_COLOR_RESET;
-        MessagesShown_ArrowKeyChoiceDialog[22] = \
+        MessagesShown_ArrowKeyChoiceDialog[23] = \
             (Selected == 0) ? \
             ANSI_COLOR_WHITE"\n\tAre you sure that's your prefered language for the whole app usages?\n\tLanguage mode choice is: English.\n"ANSI_COLOR_RESET : \
             ANSI_COLOR_WHITE"\n\tApakah Anda yakin penggunaan bahasa ini pada seluruh isi aplikasi?\n\tMode bahasa pilihan adalah: Bahasa Indonesia.\n"ANSI_COLOR_RESET;
 
-        TruthConfirmation = ArrowKeyChoiceDialog("Truth Confirmation", MessagesShown_ArrowKeyChoiceDialog, 20, 23);
+        TruthConfirmation = ArrowKeyChoiceDialog("Truth Confirmation", MessagesShown_ArrowKeyChoiceDialog, 20, 24);
         if (!TruthConfirmation) { ClearScreen(); LanguageMenu(); }
         else {
             puts((Selected == 0) ? \
@@ -3313,6 +3333,7 @@ int main(void) {
     // DecryptTxtFile("aaa-F1-MTR-December-2023.txt", false, EncryptionKey, "aaa-F1-MTR-December-2023.txt > :");
     // DecryptTxtFile("aaa-F3-BCAM-December-2023.txt", true, EncryptionKey, "None");
     // DecryptTxtFile("TemporaryDecProfile.txt", false, 0, "TemporaryDecProfile.txt > vers, ");
+    // DecryptTxtFile("Updates.txt", false, 0, "Updates.txt > Change(s)");
     // return 0;
 
     FILE *FDestination, *FTempDestination;
@@ -3426,7 +3447,7 @@ void MainMenuApplicationFeatures(int MMAFSelected) {
     while (Selecting) {
         if (!FirstRun) {
             printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN"(STATUS) Profile Account Linked to: "ANSI_COLOR_RESET ANSI_STYLE_BOLD BRIGHTBLUE158 ANSI_STYLE_ITALIC ANSI_STYLE_UNDERLINE"%s.\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"────────────────────────────────────────────────────────────────────────────────────────────────────\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppMainMenuUI, UserName);
-            if (CatchDefaultAKDC) printf(ANSI_COLOR_LIGHTRED"\tError: The auto-enter shortcut key labeled as '%c' (ID: 0x%02X) is not registered at the moment!\n\n"ANSI_COLOR_RESET, ((int)PreviousAKDC != 12) ? (char)PreviousAKDC : "\\n", (int)PreviousAKDC);
+            if (CatchDefaultAKDC) printf(ANSI_COLOR_LIGHTRED"\tError: The auto-enter shortcut key labeled as '%c' (ID: 0x%02X) is not registered at the moment!\n\n"ANSI_COLOR_RESET, ((int)PreviousAKDC != 12) ? (char)PreviousAKDC : 10, (int)PreviousAKDC);
 
             if ((MMAFSelected + 1) > 0 && (MMAFSelected + 1) <= 6 && (AvailableOptions == 6)) {
                 if ((MMAFSelected + 1) == 1) {
@@ -3449,7 +3470,7 @@ void MainMenuApplicationFeatures(int MMAFSelected) {
             FirstRun = false;
 
             printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN"(STATUS) Profile Account Linked to: "ANSI_COLOR_RESET ANSI_STYLE_BOLD BRIGHTBLUE158 ANSI_STYLE_ITALIC ANSI_STYLE_UNDERLINE"%s.\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"────────────────────────────────────────────────────────────────────────────────────────────────────\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppMainMenuUI, UserName);
-            if (CatchDefaultAKDC) printf(ANSI_COLOR_LIGHTRED"\tError: The auto-enter shortcut key labeled as '%c' (ID: 0x%02X) is not registered at the moment!\n\n"ANSI_COLOR_RESET, ((int)PreviousAKDC != 12) ? (char)PreviousAKDC : "\\n", (int)PreviousAKDC);
+            if (CatchDefaultAKDC) printf(ANSI_COLOR_LIGHTRED"\tError: The auto-enter shortcut key labeled as '%c' (ID: 0x%02X) is not registered at the moment!\n\n"ANSI_COLOR_RESET, ((int)PreviousAKDC != 12) ? (char)PreviousAKDC : 10, (int)PreviousAKDC);
 
             if ((MMAFSelected + 1) > 0 && (MMAFSelected + 1) <= 6 && (AvailableOptions == 6)) {
                 if ((MMAFSelected + 1) == 1) {
@@ -3550,7 +3571,7 @@ void MainMenuProfileManager(int MMPMSelected) {
     while (Selecting) {
         if (!FirstRun) {
             printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN"(STATUS) Profile Account Linked to: "ANSI_COLOR_RESET ANSI_STYLE_BOLD BRIGHTBLUE158 ANSI_STYLE_ITALIC ANSI_STYLE_UNDERLINE"%s.\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"────────────────────────────────────────────────────────────────────────────────────────────────────\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppProfileManagerUI, UserName);
-            if (CatchDefaultAKDC) printf(ANSI_COLOR_LIGHTRED"\tError: The auto-enter shortcut key labeled as '%c' (ID: 0x%02X) is not registered at the moment!\n\n"ANSI_COLOR_RESET, ((int)PreviousAKDC != 12) ? (char)PreviousAKDC : "\\n", (int)PreviousAKDC);
+            if (CatchDefaultAKDC) printf(ANSI_COLOR_LIGHTRED"\tError: The auto-enter shortcut key labeled as '%c' (ID: 0x%02X) is not registered at the moment!\n\n"ANSI_COLOR_RESET, ((int)PreviousAKDC != 12) ? (char)PreviousAKDC : 10, (int)PreviousAKDC);
 
             if ((MMPMSelected + 1) > 0 && (MMPMSelected + 1) <= 5 && (AvailableOptions == 5)) {
                 if ((MMPMSelected + 1) == 1) {
@@ -3570,7 +3591,7 @@ void MainMenuProfileManager(int MMPMSelected) {
         } else {
             FirstRun = false;
             printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN"(STATUS) Profile Account Linked to: "ANSI_COLOR_RESET ANSI_STYLE_BOLD BRIGHTBLUE158 ANSI_STYLE_ITALIC ANSI_STYLE_UNDERLINE"%s.\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"────────────────────────────────────────────────────────────────────────────────────────────────────\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppProfileManagerUI, UserName);
-            if (CatchDefaultAKDC) printf(ANSI_COLOR_LIGHTRED"\tError: The auto-enter shortcut key labeled as '%c' (ID: 0x%02X) is not registered at the moment!\n\n"ANSI_COLOR_RESET, ((int)PreviousAKDC != 12) ? (char)PreviousAKDC : "\\n", (int)PreviousAKDC);
+            if (CatchDefaultAKDC) printf(ANSI_COLOR_LIGHTRED"\tError: The auto-enter shortcut key labeled as '%c' (ID: 0x%02X) is not registered at the moment!\n\n"ANSI_COLOR_RESET, ((int)PreviousAKDC != 12) ? (char)PreviousAKDC : 10, (int)PreviousAKDC);
 
             if ((MMPMSelected + 1) > 0 && (MMPMSelected + 1) <= 5 && (AvailableOptions == 5)) {
                 if ((MMPMSelected + 1) == 1) {
@@ -3695,7 +3716,7 @@ void MainMenuApplicationInformations(int MMAISelected) {
     while (Selecting) {
         if (!FirstRun) {
             printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN"(STATUS) Profile Account Linked to: "ANSI_COLOR_RESET ANSI_STYLE_BOLD BRIGHTBLUE158 ANSI_STYLE_ITALIC ANSI_STYLE_UNDERLINE"%s.\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"────────────────────────────────────────────────────────────────────────────────────────────────────\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppInformationsUI, UserName);
-            if (CatchDefaultAKDC) printf(ANSI_COLOR_LIGHTRED"\tError: The auto-enter shortcut key labeled as '%c' (ID: 0x%02X) is not registered at the moment!\n\n"ANSI_COLOR_RESET, ((int)PreviousAKDC != 12) ? (char)PreviousAKDC : "\\n", (int)PreviousAKDC);
+            if (CatchDefaultAKDC) printf(ANSI_COLOR_LIGHTRED"\tError: The auto-enter shortcut key labeled as '%c' (ID: 0x%02X) is not registered at the moment!\n\n"ANSI_COLOR_RESET, ((int)PreviousAKDC != 12) ? (char)PreviousAKDC : 10, (int)PreviousAKDC);
 
             if ((MMAISelected + 1) > 0 && (MMAISelected + 1) <= 6 && (AvailableOptions == 6)) {
                 if ((MMAISelected + 1) == 1) {
@@ -3717,7 +3738,7 @@ void MainMenuApplicationInformations(int MMAISelected) {
         } else {
             FirstRun = false;
             printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN"(STATUS) Profile Account Linked to: "ANSI_COLOR_RESET ANSI_STYLE_BOLD BRIGHTBLUE158 ANSI_STYLE_ITALIC ANSI_STYLE_UNDERLINE"%s.\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"────────────────────────────────────────────────────────────────────────────────────────────────────\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppInformationsUI, UserName);
-            if (CatchDefaultAKDC) printf(ANSI_COLOR_LIGHTRED"\tError: The auto-enter shortcut key labeled as '%c' (ID: 0x%02X) is not registered at the moment!\n\n"ANSI_COLOR_RESET, ((int)PreviousAKDC != 12) ? (char)PreviousAKDC : "\\n", (int)PreviousAKDC);
+            if (CatchDefaultAKDC) printf(ANSI_COLOR_LIGHTRED"\tError: The auto-enter shortcut key labeled as '%c' (ID: 0x%02X) is not registered at the moment!\n\n"ANSI_COLOR_RESET, ((int)PreviousAKDC != 12) ? (char)PreviousAKDC : 10, (int)PreviousAKDC);
 
             if ((MMAISelected + 1) > 0 && (MMAISelected + 1) <= 6 && (AvailableOptions == 6)) {
                 if ((MMAISelected + 1) == 1) {
@@ -4642,10 +4663,10 @@ void F3_BudgetCreationAndMonitoring(int F3Selected) {
         
         snprintf(MessageID23, BUFSIZE10, ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t"ANSI_COLOR_RESET ANSI_COLOR_GREEN"(STATUS) Profile Account Linked to: "ANSI_COLOR_RESET ANSI_STYLE_BOLD BRIGHTBLUE158 ANSI_STYLE_ITALIC ANSI_STYLE_UNDERLINE"%s.\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"────────────────────────────────────────────────────────────────────────────────────────────────────\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppFeature03, UserName);
         snprintf(MessageID24, BUFSIZE10, BRIGHTRED216"\tWarning: It's the date at %02d on current month, %s. You're going to make a monthly budget\n\t         limit, but there's only few days up ahead before getting into the next month, and since in\n\t         a new month IS THE SAME AS a new monthly limit budget, so then we need you to fill in the\n\t         monthly budget every EARLY DATE of each month, so it will be refreshed every next 30\n\t         DAYS... ."ANSI_COLOR_RESET, ManageTime.tm_mday, MonthsOfYear[ManageTime.tm_mon]);
-        MessagesShown_ArrowKeyChoiceDialog[23] = MessageID23;
-        MessagesShown_ArrowKeyChoiceDialog[24] = MessageID24;
-        MessagesShown_ArrowKeyChoiceDialog[25] = "\n\t" ANSI_COLOR_LIGHTBLUE"(Optional)"ANSI_COLOR_RESET " Here all are the given choices before you proceed... \n\t" ANSI_COLOR_LIGHTRED"> CONFIRM: "ANSI_COLOR_RESET ANSI_COLOR_RED"Ignore"ANSI_COLOR_RESET " and " ANSI_COLOR_GREEN"Continue"ANSI_COLOR_RESET" to fulfill in the given informations, or \n\t" ANSI_COLOR_LIGHTGREEN"> CANCEL: "ANSI_COLOR_RESET ANSI_COLOR_GREEN"Stop Here"ANSI_COLOR_RESET " and " ANSI_COLOR_CYAN"Wait"ANSI_COLOR_RESET " for next month came and at \n\tthe early date making the monthly budget creation?\n";
-        KeepContinue = ArrowKeyChoiceDialog("Truth Confirmation", MessagesShown_ArrowKeyChoiceDialog, 23, 26);
+        MessagesShown_ArrowKeyChoiceDialog[24] = MessageID23;
+        MessagesShown_ArrowKeyChoiceDialog[25] = MessageID24;
+        MessagesShown_ArrowKeyChoiceDialog[26] = "\n\t" ANSI_COLOR_LIGHTBLUE"(Optional)"ANSI_COLOR_RESET " Here all are the given choices before you proceed... \n\t" ANSI_COLOR_LIGHTRED"> CONFIRM: "ANSI_COLOR_RESET ANSI_COLOR_RED"Ignore"ANSI_COLOR_RESET " and " ANSI_COLOR_GREEN"Continue"ANSI_COLOR_RESET" to fulfill in the given informations, or \n\t" ANSI_COLOR_LIGHTGREEN"> CANCEL: "ANSI_COLOR_RESET ANSI_COLOR_GREEN"Stop Here"ANSI_COLOR_RESET " and " ANSI_COLOR_CYAN"Wait"ANSI_COLOR_RESET " for next month came and at \n\tthe early date making the monthly budget creation?\n";
+        KeepContinue = ArrowKeyChoiceDialog("Truth Confirmation", MessagesShown_ArrowKeyChoiceDialog, 24, 27);
 
         if (KeepContinue) { ClearScreen(); NULL; }
         else {
@@ -4699,9 +4720,8 @@ void F3_BudgetCreationAndMonitoring(int F3Selected) {
                 NULL;
             }
 
-        } else if ((ManageTime.tm_year > CFTNBC_Year) || (ManageTime.tm_year == CFTNBC_Year) && ((((ManageTime.tm_mon + 1) != 12) ? ((ManageTime.tm_mon + 1) + 1) : 1) > CFTNBC_Month) || \
-                   (ManageTime.tm_year == CFTNBC_Year) && ((((ManageTime.tm_mon + 1) != 12) ? ((ManageTime.tm_mon + 1) + 1) : 1) == CFTNBC_Month) && (ManageTime.tm_mday > CFTNBC_Date)) {
-                        
+        } else if ((ManageTime.tm_year > CFTNBC_Year) || ((ManageTime.tm_year == CFTNBC_Year) && ((((ManageTime.tm_mon + 1) != 12) ? ((ManageTime.tm_mon + 1) + 1) : 1) > CFTNBC_Month)) || \
+                  ((ManageTime.tm_year == CFTNBC_Year) && ((((ManageTime.tm_mon + 1) != 12) ? ((ManageTime.tm_mon + 1) + 1) : 1) == CFTNBC_Month) && (ManageTime.tm_mday > CFTNBC_Date))) {   
                         NULL;
 
         } else {
@@ -5579,7 +5599,7 @@ void AccountRegistrationMenu(int ARMSelected) {
             >   Date of Birth, Age on Present, Phone  Number, Sex/Gender
             */
             printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRegisterUI);
-            if (CatchDefaultAKDC) printf(ANSI_COLOR_LIGHTRED"\tError: The auto-enter shortcut key labeled as '%c' (ID: 0x%02X) is not registered at the moment!\n\n"ANSI_COLOR_RESET, ((int)PreviousAKDC != 12) ? (char)PreviousAKDC : "\\n", (int)PreviousAKDC);
+            if (CatchDefaultAKDC) printf(ANSI_COLOR_LIGHTRED"\tError: The auto-enter shortcut key labeled as '%c' (ID: 0x%02X) is not registered at the moment!\n\n"ANSI_COLOR_RESET, ((int)PreviousAKDC != 12) ? (char)PreviousAKDC : 10, (int)PreviousAKDC);
             
             if ((ARMSelected + 1) > 0 && (ARMSelected + 1) <= 5 && (AvailableOptions == 5)) {
                 if ((ARMSelected + 1) == 1) {
@@ -6696,7 +6716,7 @@ void AccountLoginMenu(int ALMSelected) {
         >   Personal E-mail, SKYR Username, SKYR Password
         */
         printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppLoginUI);
-        if (CatchDefaultAKDC) printf(ANSI_COLOR_LIGHTRED"\tError: The auto-enter shortcut key labeled as '%c' (ID: 0x%02X) is not registered at the moment!\n\n"ANSI_COLOR_RESET, ((int)PreviousAKDC != 12) ? (char)PreviousAKDC : "\\n", (int)PreviousAKDC);
+        if (CatchDefaultAKDC) printf(ANSI_COLOR_LIGHTRED"\tError: The auto-enter shortcut key labeled as '%c' (ID: 0x%02X) is not registered at the moment!\n\n"ANSI_COLOR_RESET, ((int)PreviousAKDC != 12) ? (char)PreviousAKDC : 10, (int)PreviousAKDC);
 
         if ((ALMSelected + 1) > 0 && (ALMSelected + 1) <= 4 && (AvailableOptions == 4)) {
             if ((ALMSelected + 1) == 1) {
@@ -6831,7 +6851,7 @@ void AccountLoginMenu(int ALMSelected) {
             FirstRun = false;
             
             printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppLoginUI);
-            if (CatchDefaultAKDC) printf(ANSI_COLOR_LIGHTRED"\tError: The auto-enter shortcut key labeled as '%c' (ID: 0x%02X) is not registered at the moment!\n\n"ANSI_COLOR_RESET, ((int)PreviousAKDC != 12) ? (char)PreviousAKDC : "\\n", (int)PreviousAKDC);
+            if (CatchDefaultAKDC) printf(ANSI_COLOR_LIGHTRED"\tError: The auto-enter shortcut key labeled as '%c' (ID: 0x%02X) is not registered at the moment!\n\n"ANSI_COLOR_RESET, ((int)PreviousAKDC != 12) ? (char)PreviousAKDC : 10, (int)PreviousAKDC);
 
             if ((ALMSelected + 1) > 0 && (ALMSelected + 1) <= 4 && (AvailableOptions == 4)) {
                 if ((ALMSelected + 1) == 1) {
@@ -7549,7 +7569,7 @@ void AccountRecoveryMenu(int ACMSelected) {
 
     while (Selecting) {
         printf(ANSI_COLOR_LIGHTBLUE"\n\n\n\n\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\t%s\t%s\t\n\t"ANSI_COLOR_RESET ANSI_COLOR_LIGHTMAGENTA"%s\t────────────────────────────────────────────────────────────────────────────────────────────────────\n\n"ANSI_COLOR_RESET, ApplicationTitle, ApplicationVersion, AppRecoveryUI);
-        if (CatchDefaultAKDC) { (AllEmpty != 4) ? printf(ANSI_COLOR_LIGHTRED"\tError: The auto-enter shortcut key labeled as '%c' (ID: 0x%02X) is not registered at the moment!\n\n"ANSI_COLOR_RESET, ((int)PreviousAKDC != 12) ? (char)PreviousAKDC : "\\n", (int)PreviousAKDC) : printf(ANSI_COLOR_LIGHTRED"\tError:   The auto-enter shortcut key labeled as '%c' (ID: 0x%02X) is not registered at the moment!\n"ANSI_COLOR_RESET, ((int)PreviousAKDC != 12) ? (char)PreviousAKDC : "\\n", (int)PreviousAKDC); }
+        if (CatchDefaultAKDC) { (AllEmpty != 4) ? printf(ANSI_COLOR_LIGHTRED"\tError: The auto-enter shortcut key labeled as '%c' (ID: 0x%02X) is not registered at the moment!\n\n"ANSI_COLOR_RESET, ((int)PreviousAKDC != 12) ? (char)PreviousAKDC : 10, (int)PreviousAKDC) : printf(ANSI_COLOR_LIGHTRED"\tError:   The auto-enter shortcut key labeled as '%c' (ID: 0x%02X) is not registered at the moment!\n"ANSI_COLOR_RESET, ((int)PreviousAKDC != 12) ? (char)PreviousAKDC : 10, (int)PreviousAKDC); }
         
         if (AllEmpty == 4 && !ACMNotificationEnabled_03) {
             WarningMessageBox_CANCELTRYCONTINUE("(Warning): @SKYR-PFMSA; Empty Pre-requisites for Recovery Process", "Unfortunately, we can't process on the recovery account here because you've not providing anything but empty inputs, meaning you didn't know anything on what you're trying to revocer for about the little details on your missing account.\n\nPlease make sure you at least remember something about your missing profile account, at least from the phone number or the username you used when you're creating the account for the first time... .");

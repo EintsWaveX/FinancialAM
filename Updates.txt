@@ -6,7 +6,7 @@
 
 # ----------------------------------------------------------------------------------------------------
 # Contributors: EintsWaveX
-# Total Commits: 35 (thirty-five)
+# Total Commits: 57 (fifty-seven)
 # Verified Date: October 27, 2023
 # ----------------------------------------------------------------------------------------------------
 
@@ -20,7 +20,7 @@ List of signs (description):
 
 # [01] FIRST Publishing 
 # Commit(s): 4 (four)
->>> Commited on: October 27, 2023
+>>> Committed on: October 27, 2023
     + GNU GPLv3.0 License; community-work.
     + Destination text file commit; dest-decryption.
     + Source text file commit; simulation for sourcing.
@@ -28,12 +28,12 @@ List of signs (description):
 
 # [02] FIRST Addition(s)
 # Commit(s): 1 (one)
->>> Commited on: November 1, 2023
+>>> Committed on: November 1, 2023
     + Added a new feature for safety-inputs-precaution.
 
 # [03] FIRST Update(s)
 # Commit(s): 7 (seven)
->>> Commited on: November 7, 2023
+>>> Committed on: November 7, 2023
     ^ Updating: Graphics User Interface Application.
     ^ Updating all the source code files.
     ^ Updating the temporary destination textfile.
@@ -44,7 +44,7 @@ List of signs (description):
 
 # [04] SECOND Addition(s); FIRST Change(s)
 # Commit(s): 4 (four)
->>> Commited on: November 15, 2023
+>>> Committed on: November 15, 2023
     + Adding 6 main features by head of structures.
     + Adding 9/14 registration data for profile account.
     + 9/14 regs. data; 6 main structures of features.
@@ -52,24 +52,24 @@ List of signs (description):
 
 # [05] SECOND Change(s)
 # Commit(s): 2 (two)
->>> Commited on: November 17, 2023
+>>> Committed on: November 17, 2023
     ~ By chances account managing textfile.
     ~ Beta testing the login feature, not completed.
 
 # [06] THIRD Change(s)
 # Commit(s): 1 (one)
->>> Commited on: November 18, 2023
+>>> Committed on: November 18, 2023
     ~ Login feature done, revision for strstr checking.
 
 # [07] THIRD Addition(s)
 # Commit(s): 2 (two)
->>> Commited on: November 19, 2023
+>>> Committed on: November 19, 2023
     + Adding interactive UI into login and registration.
     + Successfully implement the login account feature.
 
 # [08] FOURTH Addition(s); FIRST Deletion(s); FOURTH Change(s)
 # Commit(s): 9 (eight)
->>> Commited on: November 27, 2023
+>>> Committed on: November 27, 2023
     + (1) Implemented multiple registered accounts.
     + (2) Implemented multiple registered accounts.
     + Listed 43 warnings and 2 notes for now.
@@ -81,7 +81,7 @@ List of signs (description):
 
 # [09] FIFTH Addition(s)
 # Commit(s): 1 (one)
->>> Commited on: December 16, 2023
+>>> Committed on: December 16, 2023
     + Adding a basic horizontal histogram CLI.
 
 # [10] SECOND Update(s)
@@ -92,18 +92,18 @@ List of signs (description):
 
 # [11] THIRD Update(s); FIFTH Change(s)
 # Commit(s): 2 (two)
->>> Commited on: January 3, 2024
+>>> Committed on: January 3, 2024
     ^ UPDATE: V2.0 PRE-RELEASE (90% DONE with Cores and UIs).
     ~ Fixing some multiple popups and few bugs in features.
 
 # [12] SIXTH Change(s)
 # Commit(s): 1 (one)
->>> Commited on: February 13, 2024
+>>> Committed on: February 13, 2024
     ~ Fixed counting 30 days further formula.
 
 # [13] SIXTH Addition(s); SECOND Deletion(s); FOURTH Update(s); SEVENTH Change(s)
 # Commit(s): 12 (ten)
->>> Commited on: February 18, 2024
+>>> Committed on: February 18, 2024
     ^ (3) Updating the Updates.txt file.
     ^ (3) Updating the application title/status version and/or details.
     ^ Updating confirmation UI, array-of-struct simplifying, small code(s) refactoring.
@@ -115,10 +115,11 @@ List of signs (description):
 
 # [14] FIFTH Update(s); EIGHTH Change(s)
 # Commit(s): 8 (eight)
->>> Commited on: March 4, 2024
-    ^ (4) Updating the Updates.txt file.
+>>> Committed on: March 4, 2024
+    ^ (5) Updating the Updates.txt file.
     ^ [Part: 1] UI update, adding some shortcuts.
     ^ [Part: 1-TEMP] Using "aaa" account for testing purposes.
     ^ [Part: 2] Updating few leftover changes from the [Part: 1].
     + [BETA: 1] Releasing both versions for WINDOWS and UNIX/POSIX platforms.
+    ~ Fixing some warnings on both WIN and UNIX C file codes.
     - Deleting old CA and GUI files because of the newer and unused ones.
